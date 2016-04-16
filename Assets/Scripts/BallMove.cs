@@ -8,7 +8,7 @@ public class BallMove : MonoBehaviour {
 	float radius;
 	float laneX = 0.0f, vx = 0.0f;
 	float starty;
-	float posX = 0.0f, posY = 0.0f;
+	float posX = 0.0f, posY = 0.0f, posZ = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -21,16 +21,18 @@ public class BallMove : MonoBehaviour {
 	void Update () {
 		posX = 0.0f;
 		posY = 0.0f;
-		// Input
-		if (Input.GetKey (KeyCode.LeftArrow))
-			posX = 1.0f;
-		if (Input.GetKey (KeyCode.RightArrow))
-			posX = -1.0f;
-		if (Input.GetKey (KeyCode.UpArrow))
-			posY = 1.0f;
-		if (Input.GetKey (KeyCode.DownArrow))
-			posY = -1.0f;
+        posZ = 0.0f;
 
-		transform.Translate(posX, posY, 0.0f);
+		// Input
+		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+			posX = -1.0f;
+		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+			posX = 1.0f;
+		if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+			posZ = 1.0f;
+		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+			posZ = -1.0f;
+
+		transform.Translate(posX, posY, posZ);
 	}
 }
