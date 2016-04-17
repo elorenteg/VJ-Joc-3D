@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MenuKeyboard : MonoBehaviour {
@@ -52,10 +53,13 @@ public class MenuKeyboard : MonoBehaviour {
             
             mainMenuButtons[mainMenuSelected] = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.Return) == true) {
+            if (mainMenuSelected == 0) SceneManager.LoadScene("Level2");
+        }
     }
 
-    void OnGUI()
-    {
+    void OnGUI() {
         float w_backg = 1920;
         float h_backg = 1200;
         Graphics.DrawTexture(new Rect(0,0,w_backg,h_backg), backgroundTexture);
@@ -94,6 +98,7 @@ public class MenuKeyboard : MonoBehaviour {
         if (mainMenuButtons[3]) { }
 
         if (mainMenuButtons[4]) {
+            Debug.Log("4");
             Application.Quit();
         }
 
