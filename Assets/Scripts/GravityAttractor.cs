@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GravityAttractor : MonoBehaviour {
-
+public class GravityAttractor : MonoBehaviour
+{
     public float gravity = -20;
 
-	public void Attract(Transform body)
+    public void Attract(Transform body)
     {
         Vector3 gravityUp = (body.position - transform.position).normalized;
         Vector3 bodyUp = body.up;
