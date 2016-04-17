@@ -3,21 +3,19 @@ using System.Collections;
 
 public class BallMove : MonoBehaviour {
 
-	public float regularSpeed = 1.0f, jumpSpeed = 1.0f, turboSpeed = 1.0f, turboTime = 0.5f, turboSize = 0.5f;
+	public float regularSpeed = 1.0f, jumpSpeed = 1.0f, turboSpeed = 1.0f, turboTime = 0.5f;
 	float currentSpeed;
 	float radius;
 	float laneX = 0.0f, vx = 0.0f;
 	float starty;
 	float posX = 0.0f, posY = 0.0f, posZ = 0.0f;
 
-	// Use this for initialization
 	void Start () {
 		radius = transform.localScale.magnitude / 2.0f;
 		starty = transform.position.y;
 		currentSpeed = regularSpeed;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		posX = 0.0f;
 		posY = 0.0f;
@@ -33,6 +31,6 @@ public class BallMove : MonoBehaviour {
 		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 			posZ = -1.0f;
 
-		transform.Translate(posX, posY, posZ);
+		transform.Translate(posX*currentSpeed, posY*currentSpeed, posZ*currentSpeed);
 	}
 }
