@@ -31,6 +31,9 @@ public class BallMove : MonoBehaviour {
 		if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 			posZ = -1.0f;
 
-		transform.Translate(posX*currentSpeed, posY*currentSpeed, posZ*currentSpeed);
-	}
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX 
+                                              | RigidbodyConstraints.FreezeRotationY
+                                              | RigidbodyConstraints.FreezeRotationZ;
+        transform.Translate(posX*currentSpeed, posY*currentSpeed, posZ*currentSpeed);
+    }
 }
