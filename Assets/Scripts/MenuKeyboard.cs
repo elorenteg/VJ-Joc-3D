@@ -38,7 +38,7 @@ public class MenuKeyboard : MonoBehaviour {
         selectFont.alignment = TextAnchor.UpperCenter;
 
         normalFont.normal.textColor = Color.yellow;
-        selectFont.normal.textColor = new Color32(153,209,26,255);
+        selectFont.normal.textColor = new Color32(41,174,54,255);
     }
 
     void Update() {
@@ -68,33 +68,37 @@ public class MenuKeyboard : MonoBehaviour {
     }
 
     void OnGUI() {
-        float w_backg = 1920;
-        float h_backg = 1200;
-        Graphics.DrawTexture(new Rect(0,0,w_backg,h_backg), backgroundTexture);
+        float width = Screen.width;
+        float height = Screen.height;
+        Graphics.DrawTexture(new Rect(0, 0, width, height), backgroundTexture);
 
-        float w_logo = 500;
-        float h_logo = 150;
-        Graphics.DrawTexture(new Rect(Screen.width / 2 - w_logo / 2, 10, w_logo, h_logo), logoTexture);
+        float h1_space = height/6;
+
+        float h_logo = height / 4;
+        float w_logo = h_logo * 2.5f;
+        Graphics.DrawTexture(new Rect(width / 2 - w_logo / 2, h1_space, w_logo, h_logo), logoTexture);
 
         float w_text = 200;
-        float h_text = 40;
-        float xo_text = Screen.width / 2 - w_text / 2;
-        float yo_text = 200;
+        float h_text = height/10;
+        float xo_text = width / 2 - w_text / 2;
+        float yo_text = h1_space + h_logo + 50;
 
         float w_sep = 500;
-        float h_sep = 40;
+        float h_sep = height/15;
 
         float w_sel = 250;
-        float h_sel = 60;
+        float h_sel = height/15;
 
-        Graphics.DrawTexture(new Rect(Screen.width / 2 - w_sep / 2, yo_text-h_sep, w_sep, h_sep), separatorTexture);
-        Graphics.DrawTexture(new Rect(Screen.width / 2 - w_sep / 2, yo_text+mainMenuLabels.Length*50 -20, w_sep, h_sep), separatorTexture);
+        float inc_sep = (height/3)/mainMenuLabels.Length;
+
+        Graphics.DrawTexture(new Rect(width / 2 - w_sep / 2, yo_text-h_sep, w_sep, h_sep), separatorTexture);
+        Graphics.DrawTexture(new Rect(width / 2 - w_sep / 2, yo_text+mainMenuLabels.Length*inc_sep - 10, w_sep, h_sep), separatorTexture);
         for (int i = 0; i < mainMenuLabels.Length; i++) {
             if (mainMenuSelected == i) {
-                GUI.Button(new Rect(xo_text, yo_text + i * 50, w_text, h_text), mainMenuLabels[i], selectFont);
-                Graphics.DrawTexture(new Rect(Screen.width / 2 - w_sel / 2, yo_text - 10 + i * 50, w_sel, h_sel), selectTexture);
+                GUI.Button(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], selectFont);
+                Graphics.DrawTexture(new Rect(width / 2 - w_sel / 2, yo_text - h_sel/6 + i * inc_sep, w_sel, h_sel), selectTexture);
             }
-            else GUI.Button(new Rect(xo_text, yo_text + i * 50, w_text, h_text), mainMenuLabels[i], normalFont);
+            else GUI.Button(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], normalFont);
         }
 
         switch(mainMenuAction)
