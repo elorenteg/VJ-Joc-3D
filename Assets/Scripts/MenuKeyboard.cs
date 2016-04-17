@@ -28,8 +28,6 @@ public class MenuKeyboard : MonoBehaviour {
     void Start() {
         mainMenuAction = -1;
         mainMenuSelected = 0;
-        //mainMenuButtons = new bool[mainMenuLabels.Length];
-        //mainMenuButtons[mainMenuSelected] = true;
 
         normalFont = new GUIStyle(); normalFont.fontSize = 28;
         selectFont = new GUIStyle(); selectFont.fontSize = 32;
@@ -38,28 +36,22 @@ public class MenuKeyboard : MonoBehaviour {
         selectFont.alignment = TextAnchor.UpperCenter;
 
         normalFont.normal.textColor = Color.yellow;
-        selectFont.normal.textColor = new Color32(41,174,54,255);
+        selectFont.normal.textColor = new Color32(168,214,22,255);
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.DownArrow) == true) {
             AudioSource.PlayClipAtPoint(moveSound, transform.position);
-            //mainMenuButtons[mainMenuSelected] = false;
 
             mainMenuSelected++;
             mainMenuSelected = Mathf.Min(mainMenuSelected, mainMenuLabels.Length-1);
-            
-            //mainMenuButtons[mainMenuSelected] = true;
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow) == true) {
             AudioSource.PlayClipAtPoint(moveSound, transform.position);
-            //mainMenuButtons[mainMenuSelected] = false;
 
             mainMenuSelected--;
             mainMenuSelected = Mathf.Max(mainMenuSelected, 0);
-            
-            //mainMenuButtons[mainMenuSelected] = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Return) == true) {
@@ -79,15 +71,16 @@ public class MenuKeyboard : MonoBehaviour {
         Graphics.DrawTexture(new Rect(width / 2 - w_logo / 2, h1_space, w_logo, h_logo), logoTexture);
 
         float w_text = 200;
-        float h_text = height/10;
+        float h_text = 40;
         float xo_text = width / 2 - w_text / 2;
         float yo_text = h1_space + h_logo + 50;
 
         float w_sep = 500;
-        float h_sep = height/15;
+        float h_sep = 60;
 
-        float w_sel = 250;
-        float h_sel = height/15;
+        float w_sel = 300;
+        float h_sel = 60;
+        float yo_sel = yo_text - h_text / 3;
 
         float inc_sep = (height/3)/mainMenuLabels.Length;
 
@@ -95,8 +88,8 @@ public class MenuKeyboard : MonoBehaviour {
         Graphics.DrawTexture(new Rect(width / 2 - w_sep / 2, yo_text+mainMenuLabels.Length*inc_sep - 10, w_sep, h_sep), separatorTexture);
         for (int i = 0; i < mainMenuLabels.Length; i++) {
             if (mainMenuSelected == i) {
+                GUI.DrawTexture(new Rect(width / 2 - w_sel / 2, yo_sel + i * inc_sep, w_sel, h_sel), selectTexture);
                 GUI.Button(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], selectFont);
-                Graphics.DrawTexture(new Rect(width / 2 - w_sel / 2, yo_text - h_sel/6 + i * inc_sep, w_sel, h_sel), selectTexture);
             }
             else GUI.Button(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], normalFont);
         }
