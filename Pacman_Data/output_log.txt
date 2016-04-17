@@ -14,13 +14,25 @@ Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.UI.dll 
 Loading D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.040 seconds
+- Completed reload, in  0.107 seconds
 Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.453598 ms
+UnloadTime: 1.114254 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1208 -> priority: 1 
+  Thread -> id: 355c -> priority: 1 
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.237669 ms
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 293.
+Total: 0.135032 ms (FindLiveObjects: 0.017640 ms CreateObjectMapping: 0.009301 ms MarkObjects: 0.098146 ms  DeleteObjects: 0.009301 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.551033 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 293.
+Total: 0.147540 ms (FindLiveObjects: 0.034960 ms CreateObjectMapping: 0.008018 ms MarkObjects: 0.100071 ms  DeleteObjects: 0.004490 ms)
+

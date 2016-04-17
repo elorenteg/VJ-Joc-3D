@@ -97,7 +97,7 @@ public class MenuKeyboard : MonoBehaviour {
         switch(mainMenuAction)
         {
             case JUGAR:
-                SceneManager.LoadScene("Level2");
+                SceneManager.LoadScene("Level1");
                 break;
             case INSTR:
                 break;
