@@ -83,10 +83,11 @@ public class FollowBall : MonoBehaviour
         if (actualFace != CubeFace.None)
         {
             //transform.position = basePosition + ball.transform.position;
-            transform.position = basePosition + perspecPosition;
+            //transform.position = basePosition + perspecPosition;
+            transform.position = Vector3.Lerp(this.transform.position, basePosition + perspecPosition, 0.05f);
             //transform.rotation = Quaternion.Euler(baseRotation + perspecRotation);
         }
-
+        
         transform.LookAt(cube.transform);
 
         lastFace = actualFace;
