@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 3aac81f6b36afd94a97e3661e93eedbe
+timeCreated: 1461004621
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ArmaturePlayer
+    100002: Eye_L
+    100004: Eye_R
+    100006: Eyes_Ctrl
+    100008: mouth_down
+    100010: mouth_up
+    100012: OpenMouth_Ctrl
+    100014: //RootNode
+    100016: PlayerMeshLP_02
+    100018: Root
+    100020: Root_Loc
+    100022: Shape_Root_001
+    100024: Shape_RootLoc_001
+    100026: Stretch
+    100028: Stretch_Ctrl
+    100030: Stretch_down
+    100032: Stretch_up
+    400000: ArmaturePlayer
+    400002: Eye_L
+    400004: Eye_R
+    400006: Eyes_Ctrl
+    400008: mouth_down
+    400010: mouth_up
+    400012: OpenMouth_Ctrl
+    400014: //RootNode
+    400016: PlayerMeshLP_02
+    400018: Root
+    400020: Root_Loc
+    400022: Shape_Root_001
+    400024: Shape_RootLoc_001
+    400026: Stretch
+    400028: Stretch_Ctrl
+    400030: Stretch_down
+    400032: Stretch_up
+    2300000: Shape_Root_001
+    2300002: Shape_RootLoc_001
+    3300000: Shape_Root_001
+    3300002: Shape_RootLoc_001
+    4300000: PlayerMeshLP_02
+    4300002: Shape_Root_001
+    4300004: Shape_RootLoc_001
+    7400000: Default Take
+    7400002: ArmatureActionPlayer
+    7400004: EatLeft
+    7400006: EatRight
+    7400008: EatDown
+    7400010: EatUp
+    7400012: Die
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: PlayerMeshLP_02
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Default Take
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 249
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmaturePlayer
+        weight: 1
+      - path: ArmaturePlayer/Root
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: PlayerMeshLP_02
+        weight: 1
+      - path: Shape_Root_001
+        weight: 1
+      - path: Shape_RootLoc_001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: EatLeft
+      takeName: Default Take
+      firstFrame: 10
+      lastFrame: 21
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmaturePlayer
+        weight: 1
+      - path: ArmaturePlayer/Root
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: PlayerMeshLP_02
+        weight: 1
+      - path: Shape_Root_001
+        weight: 1
+      - path: Shape_RootLoc_001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: EatRight
+      takeName: Default Take
+      firstFrame: 30
+      lastFrame: 41
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmaturePlayer
+        weight: 1
+      - path: ArmaturePlayer/Root
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: PlayerMeshLP_02
+        weight: 1
+      - path: Shape_Root_001
+        weight: 1
+      - path: Shape_RootLoc_001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: EatDown
+      takeName: Default Take
+      firstFrame: 49
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmaturePlayer
+        weight: 1
+      - path: ArmaturePlayer/Root
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: PlayerMeshLP_02
+        weight: 1
+      - path: Shape_Root_001
+        weight: 1
+      - path: Shape_RootLoc_001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: EatUp
+      takeName: Default Take
+      firstFrame: 70
+      lastFrame: 81
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmaturePlayer
+        weight: 1
+      - path: ArmaturePlayer/Root
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: PlayerMeshLP_02
+        weight: 1
+      - path: Shape_Root_001
+        weight: 1
+      - path: Shape_RootLoc_001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Die
+      takeName: Default Take
+      firstFrame: 90
+      lastFrame: 144
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmaturePlayer
+        weight: 1
+      - path: ArmaturePlayer/Root
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: PlayerMeshLP_02
+        weight: 1
+      - path: Shape_Root_001
+        weight: 1
+      - path: Shape_RootLoc_001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

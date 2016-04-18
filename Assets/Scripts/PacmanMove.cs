@@ -12,22 +12,25 @@ public class PacmanMove : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        bool move = false;
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) {
-            transform.Rotate(Vector3.up, -turnSpeed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            GetComponent<Animation>().Play("EatLeft", PlayMode.StopAll);
+            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) {
-            transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            GetComponent<Animation>().Play("EatRight", PlayMode.StopAll);
+            transform.Translate(-Vector3.left * moveSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            GetComponent<Animation>().Play("ArmatureActionPlayer", PlayMode.StopAll);
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            GetComponent<Animation>().Play("EatUp", PlayMode.StopAll);
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            GetComponent<Animation>().Play("ArmatureActionPlayer", PlayMode.StopAll);
-            transform.Translate(-Vector3.left * moveSpeed * Time.deltaTime);
+            GetComponent<Animation>().Play("EatDown", PlayMode.StopAll);
+            transform.Translate(-Vector3.forward * moveSpeed * Time.deltaTime);
         }
     }
 }
