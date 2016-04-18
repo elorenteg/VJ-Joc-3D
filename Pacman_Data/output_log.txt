@@ -14,25 +14,25 @@ Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.UI.dll 
 Loading D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.039 seconds
+- Completed reload, in  0.040 seconds
 Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: D:\Works\VJ\VJ-Joc-3D\Pacman_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.432429 ms
+UnloadTime: 0.985637 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 103c -> priority: 1 
+  Thread -> id: 3d74 -> priority: 1 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.241518 ms
+UnloadTime: 0.247291 ms
 
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 481.
-Total: 0.139522 ms (FindLiveObjects: 0.019565 ms CreateObjectMapping: 0.014433 ms MarkObjects: 0.096863 ms  DeleteObjects: 0.008339 ms)
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 484.
+Total: 0.153314 ms (FindLiveObjects: 0.023734 ms CreateObjectMapping: 0.014433 ms MarkObjects: 0.104561 ms  DeleteObjects: 0.009942 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.349928 ms
+UnloadTime: 0.353777 ms
 
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 481.
-Total: 0.126051 ms (FindLiveObjects: 0.014433 ms CreateObjectMapping: 0.010905 ms MarkObjects: 0.095901 ms  DeleteObjects: 0.004811 ms)
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 484.
+Total: 0.353777 ms (FindLiveObjects: 0.044903 ms CreateObjectMapping: 0.035602 ms MarkObjects: 0.259800 ms  DeleteObjects: 0.012829 ms)
 
