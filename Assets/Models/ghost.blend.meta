@@ -159,8 +159,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Move
       takeName: Default Take
-      firstFrame: 0
-      lastFrame: 42
+      firstFrame: 9
+      lastFrame: 27
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
