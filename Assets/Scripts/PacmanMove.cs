@@ -10,17 +10,23 @@ public class PacmanMove : MonoBehaviour
     private int timeState;
     private int MAX_TIME_STATE;
 
-    public Texture tex;
+    private SkinnedMeshRenderer skinnedMeshRenderer;
+    public Texture eyeState1Tex;
+    public Texture eyeState2Tex;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         state = 0;
         timeState = 0;
-        MAX_TIME_STATE = 70;
+        MAX_TIME_STATE = 10;
+
+        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        UpdateTextures();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             GetComponent<Animation>().Play("EatLeft", PlayMode.StopAll);
@@ -42,19 +48,24 @@ public class PacmanMove : MonoBehaviour
             transform.Translate(-Vector3.forward * moveSpeed * Time.deltaTime);
         }
 
-        //UpdateEyes();
-    }
-
-    void UpdateEyes()
-    {
         if (timeState == MAX_TIME_STATE)
         {
             timeState = 0;
-            state = (state++) % 2;
-
-            //Renderer renderer = GetComponent<Renderer>();
-            //renderer.material.shader = Shader.Find("pacman_eyes");
+            state = state + 1;
+            if (state == 2) state = 0;
         }
+
         ++timeState;
+
+        UpdateTextures();
+    }
+
+    void UpdateTextures()
+    {
+        // skinnedMeshRenderer.materials: vector de los materiales del modelo
+        // 0: ojos
+        // 1: cuerpo
+        if (state == 0) skinnedMeshRenderer.materials[0].mainTexture = eyeState1Tex;
+        else skinnedMeshRenderer.materials[0].mainTexture = eyeState2Tex;
     }
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3aac81f6b36afd94a97e3661e93eedbe
-timeCreated: 1461004621
+guid: 281ecbec762abca45ad7264add04577a
+timeCreated: 1461088552
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -50,8 +50,8 @@ ModelImporter:
     7400002: ArmatureActionPlayer
     7400004: EatLeft
     7400006: EatRight
-    7400008: EatDown
-    7400010: EatUp
+    7400008: EatUp
+    7400010: EatDown
     7400012: Die
     9500000: //RootNode
     11100000: //RootNode
@@ -264,10 +264,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: EatDown
+      name: EatUp
       takeName: Default Take
-      firstFrame: 49
-      lastFrame: 60
+      firstFrame: 70
+      lastFrame: 81
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -326,10 +326,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: EatUp
+      name: EatDown
       takeName: Default Take
-      firstFrame: 70
-      lastFrame: 81
+      firstFrame: 49
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: bb91403d693e7924e8d245cf9f2bfeca
-timeCreated: 1461010045
+guid: 162ce7fe80aa3a7429511ac02ce1de30
+timeCreated: 1461088550
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: ArmatureEnemy_04
-    100002: //RootNode
-    100004: EnemyMeshLP_04
-    100006: Eye_L
-    100008: Eye_R
-    100010: Eyes_Ctrl
+    100002: EnemyMeshLP_04
+    100004: Eye_L
+    100006: Eye_R
+    100008: Eyes_Ctrl
+    100010: //RootNode
     100012: Key
     100014: mouth_down
     100016: mouth_up
@@ -28,11 +28,11 @@ ModelImporter:
     100040: WheelsFront
     100042: WheelsRear
     400000: ArmatureEnemy_04
-    400002: //RootNode
-    400004: EnemyMeshLP_04
-    400006: Eye_L
-    400008: Eye_R
-    400010: Eyes_Ctrl
+    400002: EnemyMeshLP_04
+    400004: Eye_L
+    400006: Eye_R
+    400008: Eyes_Ctrl
+    400010: //RootNode
     400012: Key
     400014: mouth_down
     400016: mouth_up
@@ -61,6 +61,7 @@ ModelImporter:
     7400004: Move
     7400006: Die
     9500000: //RootNode
+    11100000: //RootNode
     13700000: EnemyMeshLP_04
   materials:
     importMaterials: 1
@@ -336,7 +337,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
