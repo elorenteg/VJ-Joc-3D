@@ -49,7 +49,7 @@ public class GhostMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Animation>().Play("Die", PlayMode.StopAll);
+        //GetComponent<Animation>().Play("Die", PlayMode.StopAll);
 
         if (timeState == MAX_TIME_STATE)
         {
