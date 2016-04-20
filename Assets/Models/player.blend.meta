@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 281ecbec762abca45ad7264add04577a
-timeCreated: 1461088552
+guid: 571f3a301fb4cf34b8999ee4dcd5545a
+timeCreated: 1461189190
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -48,13 +48,9 @@ ModelImporter:
     4300004: Shape_RootLoc_001
     7400000: Default Take
     7400002: ArmatureActionPlayer
-    7400004: EatLeft
-    7400006: EatRight
-    7400008: EatUp
-    7400010: EatDown
-    7400012: Die
+    7400004: Move
+    7400006: Die
     9500000: //RootNode
-    11100000: //RootNode
     13700000: PlayerMeshLP_02
   materials:
     importMaterials: 1
@@ -140,196 +136,72 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: EatLeft
+      name: ArmatureActionPlayer
+      takeName: ArmatureActionPlayer
+      firstFrame: 10
+      lastFrame: 143
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmaturePlayer
+        weight: 1
+      - path: ArmaturePlayer/Root
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: PlayerMeshLP_02
+        weight: 1
+      - path: Shape_Root_001
+        weight: 1
+      - path: Shape_RootLoc_001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Move
       takeName: Default Take
       firstFrame: 10
       lastFrame: 21
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: ArmaturePlayer
-        weight: 1
-      - path: ArmaturePlayer/Root
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
-        weight: 1
-      - path: PlayerMeshLP_02
-        weight: 1
-      - path: Shape_Root_001
-        weight: 1
-      - path: Shape_RootLoc_001
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: EatRight
-      takeName: Default Take
-      firstFrame: 30
-      lastFrame: 41
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: ArmaturePlayer
-        weight: 1
-      - path: ArmaturePlayer/Root
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
-        weight: 1
-      - path: PlayerMeshLP_02
-        weight: 1
-      - path: Shape_Root_001
-        weight: 1
-      - path: Shape_RootLoc_001
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: EatUp
-      takeName: Default Take
-      firstFrame: 70
-      lastFrame: 81
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: ArmaturePlayer
-        weight: 1
-      - path: ArmaturePlayer/Root
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/mouth_down
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/mouth_down/Stretch_down
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/OpenMouth_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/Eyes_Ctrl
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
-        weight: 1
-      - path: ArmaturePlayer/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
-        weight: 1
-      - path: PlayerMeshLP_02
-        weight: 1
-      - path: Shape_Root_001
-        weight: 1
-      - path: Shape_RootLoc_001
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: EatDown
-      takeName: Default Take
-      firstFrame: 49
-      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -486,7 +358,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

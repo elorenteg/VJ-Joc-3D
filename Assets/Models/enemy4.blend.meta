@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 162ce7fe80aa3a7429511ac02ce1de30
-timeCreated: 1461088550
+guid: 29044490aa77c2f40a946d78807e037c
+timeCreated: 1461189494
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: ArmatureEnemy_04
-    100002: EnemyMeshLP_04
-    100004: Eye_L
-    100006: Eye_R
-    100008: Eyes_Ctrl
-    100010: //RootNode
+    100002: //RootNode
+    100004: EnemyMeshLP_04
+    100006: Eye_L
+    100008: Eye_R
+    100010: Eyes_Ctrl
     100012: Key
     100014: mouth_down
     100016: mouth_up
@@ -28,11 +28,11 @@ ModelImporter:
     100040: WheelsFront
     100042: WheelsRear
     400000: ArmatureEnemy_04
-    400002: EnemyMeshLP_04
-    400004: Eye_L
-    400006: Eye_R
-    400008: Eyes_Ctrl
-    400010: //RootNode
+    400002: //RootNode
+    400004: EnemyMeshLP_04
+    400006: Eye_L
+    400008: Eye_R
+    400010: Eyes_Ctrl
     400012: Key
     400014: mouth_down
     400016: mouth_up
@@ -61,7 +61,6 @@ ModelImporter:
     7400004: Move
     7400006: Die
     9500000: //RootNode
-    11100000: //RootNode
     13700000: EnemyMeshLP_04
   materials:
     importMaterials: 1
@@ -157,10 +156,82 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
+      name: ArmatActionEnemy_001
+      takeName: ArmatActionEnemy_001
+      firstFrame: 0
+      lastFrame: 143
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmatureEnemy_04
+        weight: 1
+      - path: ArmatureEnemy_04/Root
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Key
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCenter
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCTRL
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsFront
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsRear
+        weight: 1
+      - path: EnemyMeshLP_04
+        weight: 1
+      - path: Shape_Root_002
+        weight: 1
+      - path: Shape_RootLoc_002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
       name: Move
       takeName: Default Take
-      firstFrame: 9
-      lastFrame: 27
+      firstFrame: 0
+      lastFrame: 42
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -337,7 +408,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
