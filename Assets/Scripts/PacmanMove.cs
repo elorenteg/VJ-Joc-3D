@@ -11,6 +11,9 @@ public class PacmanMove : MonoBehaviour
     private int MAX_TIME_STATE;
 
     private SkinnedMeshRenderer skinnedMeshRenderer;
+    private int BODY = 1;
+    private int EYES = 0;
+
     public Texture eyesNormalTex;
 
     // Use this for initialization
@@ -61,26 +64,22 @@ public class PacmanMove : MonoBehaviour
 
     void UpdateTextures()
     {
-        skinnedMeshRenderer.materials[0].mainTexture = eyesNormalTex;
+        skinnedMeshRenderer.materials[EYES].mainTexture = eyesNormalTex;
 
         UpdateCoordinates();
     }
 
     void UpdateCoordinates()
     {
-        // skinnedMeshRenderer.materials: vector de los materiales del modelo
-        // 0: ojos
-        // 1: cuerpo
-
         if (state == 0)
         {
             Vector2 offset = new Vector2(0.0f, 0.0f);
-            skinnedMeshRenderer.materials[0].mainTextureOffset = offset;
+            skinnedMeshRenderer.materials[EYES].mainTextureOffset = offset;
         }
         else
         {
             Vector2 offset = new Vector2(0.5f, 0.0f);
-            skinnedMeshRenderer.materials[0].mainTextureOffset = offset;
+            skinnedMeshRenderer.materials[EYES].mainTextureOffset = offset;
         }
     }
 }
