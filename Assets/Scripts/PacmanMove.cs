@@ -6,13 +6,15 @@ public class PacmanMove : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
 
+    private const float ERROR = 1.5f;
+
     private int state;
     private int timeState;
     private int MAX_TIME_STATE;
 
     private SkinnedMeshRenderer skinnedMeshRenderer;
-    private int BODY = 1;
-    private int EYES = 0;
+    private const int BODY = 1;
+    private const int EYES = 0;
 
     public Texture eyesNormalTex;
 
@@ -30,43 +32,90 @@ public class PacmanMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Mathf.Abs(transform.rotation.eulerAngles.y - 180));
+        float prevAngle = transform.rotation.eulerAngles.y;
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            GetComponent<Animation>().Play("Move", PlayMode.StopAll);
-            while (Mathf.Abs(transform.rotation.eulerAngles.y - 180) > 3.0f)
+            if ((prevAngle > 0.0f && prevAngle < 180.0f && Mathf.Abs(prevAngle - 0) > ERROR) ||
+                (prevAngle > 180.0f && prevAngle < 360.0f && Mathf.Abs(prevAngle - 360) > ERROR))
             {
-                float prevAngle = transform.rotation.eulerAngles.y;
-                if (prevAngle > 0.0f && prevAngle < 180.0f)
+                
+                if (prevAngle < 180.0f)
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
                 else
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
-                float newAngle = transform.rotation.eulerAngles.y;
             }
-            transform.Translate(-Vector3.left * moveSpeed * Time.deltaTime);
+            else {
+                float newAngle = transform.rotation.eulerAngles.y;
+                float angle = Mathf.Abs(prevAngle - newAngle);
+                if (angle > 0.1f) Debug.Log(angle);
+                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
+                Vector3 euler = transform.eulerAngles;
+                euler.y = 0.0f;
+                transform.eulerAngles = euler;
+                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            }
         }
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            GetComponent<Animation>().Play("Move", PlayMode.StopAll);
-            while (Mathf.Abs(transform.rotation.eulerAngles.y - 180) > 3.0f)
+            if (Mathf.Abs(prevAngle - 180) > ERROR)
             {
-                float prevAngle = transform.rotation.eulerAngles.y;
                 if (prevAngle < 180.0f)
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
                 else
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
-                float newAngle = transform.rotation.eulerAngles.y;
             }
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            else {
+                float newAngle = transform.rotation.eulerAngles.y;
+                float angle = Mathf.Abs(prevAngle - newAngle);
+                if (angle > 0.1f) Debug.Log(angle);
+                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
+                Vector3 euler = transform.eulerAngles;
+                euler.y = 180.0f;
+                transform.eulerAngles = euler;
+                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            }
         }
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            //GetComponent<Animation>().Play("EatUp", PlayMode.StopAll);
+            if (Mathf.Abs(prevAngle - 90) > ERROR)
+            {
+                if (prevAngle > 90.0f && prevAngle < 270.0f)
+                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
+                else
+                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
+            }
+            else {
+                float newAngle = transform.rotation.eulerAngles.y;
+                float angle = Mathf.Abs(prevAngle - newAngle);
+                if (angle > 0.1f) Debug.Log(angle);
+                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
+                Vector3 euler = transform.eulerAngles;
+                euler.y = 90.0f;
+                transform.eulerAngles = euler;
+                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            }
         }
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            //GetComponent<Animation>().Play("EatDown", PlayMode.StopAll);
+            if (Mathf.Abs(prevAngle - 270) > ERROR)
+            {
+                if (prevAngle > 90.0f && prevAngle < 270.0f)
+                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
+                else
+                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
+            }
+            else {
+                float newAngle = transform.rotation.eulerAngles.y;
+                float angle = Mathf.Abs(prevAngle - newAngle);
+                if (angle > 0.1f) Debug.Log(angle);
+                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
+                Vector3 euler = transform.eulerAngles;
+                euler.y = 270.0f;
+                transform.eulerAngles = euler;
+                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            }
         }
+        
 
         if (timeState == MAX_TIME_STATE)
         {
