@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Level1Manager : MonoBehaviour
 {
+    public Texture wallTexture;
+
     private static int numberOfExternalWalls = 4;
 
     private float[] externalWallsPositions = {  50.0f, 0.0f,  0.0f,
@@ -55,6 +57,10 @@ public class Level1Manager : MonoBehaviour
         {
             GameObject newObject = Instantiate(cube, getExternalWallPosition(i * 3), getExternalWallRotation(i * 3)) as GameObject;
             newObject.transform.localScale = getExternalWallScale();
+
+            Renderer rend = newObject.GetComponent<Renderer>();
+            rend.material.mainTexture = wallTexture;
+            rend.material.mainTextureScale = new Vector2(3.0f, 1.0f);
         }
 
         // Placing internal walls
@@ -62,6 +68,10 @@ public class Level1Manager : MonoBehaviour
         {
             GameObject newObject = Instantiate(cube, getInternalWallPosition(i * 3), getInternalWallRotation(i * 3)) as GameObject;
             newObject.transform.localScale = getInternalWallScale();
+
+            Renderer rend = newObject.GetComponent<Renderer>();
+            rend.material.mainTexture = wallTexture;
+            rend.material.mainTextureScale = new Vector2(0.4f, 1.0f);
         }
     }
 
