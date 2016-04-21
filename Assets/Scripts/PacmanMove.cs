@@ -6,6 +6,9 @@ public class PacmanMove : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
 
+    private AudioSource audioSource;
+    public AudioClip moveSound;
+
     private const float ERROR = 1.5f;
 
     private int state;
@@ -25,6 +28,7 @@ public class PacmanMove : MonoBehaviour
         timeState = 0;
         MAX_TIME_STATE = 15;
 
+        audioSource = GetComponent<AudioSource>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         UpdateTextures();
     }
@@ -32,6 +36,9 @@ public class PacmanMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool move = false;
+        float fixedAngle = 0.0f;
+
         float prevAngle = transform.rotation.eulerAngles.y;
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
@@ -45,14 +52,8 @@ public class PacmanMove : MonoBehaviour
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
             }
             else {
-                float newAngle = transform.rotation.eulerAngles.y;
-                float angle = Mathf.Abs(prevAngle - newAngle);
-                if (angle > 0.1f) Debug.Log(angle);
-                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
-                Vector3 euler = transform.eulerAngles;
-                euler.y = 0.0f;
-                transform.eulerAngles = euler;
-                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                move = true;
+                fixedAngle = 0.0f;
             }
         }
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
@@ -64,15 +65,10 @@ public class PacmanMove : MonoBehaviour
                 else
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
             }
-            else {
-                float newAngle = transform.rotation.eulerAngles.y;
-                float angle = Mathf.Abs(prevAngle - newAngle);
-                if (angle > 0.1f) Debug.Log(angle);
-                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
-                Vector3 euler = transform.eulerAngles;
-                euler.y = 180.0f;
-                transform.eulerAngles = euler;
-                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            else
+            {
+                move = true;
+                fixedAngle = 180.0f;
             }
         }
         else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
@@ -84,15 +80,10 @@ public class PacmanMove : MonoBehaviour
                 else
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
             }
-            else {
-                float newAngle = transform.rotation.eulerAngles.y;
-                float angle = Mathf.Abs(prevAngle - newAngle);
-                if (angle > 0.1f) Debug.Log(angle);
-                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
-                Vector3 euler = transform.eulerAngles;
-                euler.y = 90.0f;
-                transform.eulerAngles = euler;
-                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            else
+            {
+                move = true;
+                fixedAngle = 90.0f;
             }
         }
         else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
@@ -104,16 +95,28 @@ public class PacmanMove : MonoBehaviour
                 else
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
             }
-            else {
-                float newAngle = transform.rotation.eulerAngles.y;
-                float angle = Mathf.Abs(prevAngle - newAngle);
-                if (angle > 0.1f) Debug.Log(angle);
-                GetComponent<Animation>().Play("Move", PlayMode.StopAll);
-                Vector3 euler = transform.eulerAngles;
-                euler.y = 270.0f;
-                transform.eulerAngles = euler;
-                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            else
+            {
+                move = true;
+                fixedAngle = 270.0f;
             }
+        }
+
+        if (move)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.volume = 0.5f;
+                audioSource.clip = moveSound;
+                audioSource.Play();
+            }
+            //AudioSource.PlayClipAtPoint(moveSound, transform.position);
+            GetComponent<Animation>().Play("Move", PlayMode.StopAll);
+
+            Vector3 euler = transform.eulerAngles;
+            euler.y = fixedAngle;
+            transform.eulerAngles = euler;
+            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
         }
         
 
