@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
+using System.Text;
 
 public class Level1Manager : MonoBehaviour
 {
     public Texture wallTexture;
+
+    public static string appPath = "..\\VJ-Joc-3D";
+
+    private static string fileName = appPath + ".\\Assets\\Maps\\level_1.txt";
 
     private static int numberOfExternalWalls = 4;
 
@@ -17,7 +23,7 @@ public class Level1Manager : MonoBehaviour
                                                 0.0f,  0.0f,  0.0f,
                                                 0.0f,  0.0f,  0.0f};
 
-    private float[] externalWallsScale = {102.0f, 10.0f, 2.0f};
+    private float[] externalWallsScale = { 102.0f, 10.0f, 2.0f };
 
     private static int numberOfInternalWalls = 4;
 
@@ -38,6 +44,7 @@ public class Level1Manager : MonoBehaviour
 
     void Start()
     {
+        readMap();
         PlaceWalls();
     }
 
@@ -48,6 +55,44 @@ public class Level1Manager : MonoBehaviour
             Application.Quit();
         }
 
+    }
+
+    bool readMap()
+    {
+        Debug.Log(Application.dataPath);
+        // Handle any problems that might arise when reading the text
+        try
+        {
+            string line;
+            // Create a new StreamReader, tell it which file to read and what encoding the file was saved as
+            StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+            // Immediately clean up the reader after this block of code is done.
+            // You generally use the "using" statement for potentially memory-intensive objects
+            // instead of relying on garbage collection.
+            using (theReader)
+            {
+                // While there's lines left in the text file, do this:
+                do
+                {
+                    line = theReader.ReadLine();
+
+                    if (line != null)
+                    {
+                        // Do whatever you need to do with the text line, it's a string now
+                        Debug.Log(line);
+                        //DoStuff(line);
+                    }
+                } while (line != null);
+
+                theReader.Close();
+                return true;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
     }
 
     void PlaceWalls()
