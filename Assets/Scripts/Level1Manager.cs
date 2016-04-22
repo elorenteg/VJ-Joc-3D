@@ -14,13 +14,19 @@ public class Level1Manager : MonoBehaviour
 
     private static string fileName = appPath + ".\\Assets\\Maps\\level_1.txt";
 
-    private List<List<int>> Map = new List<List<int>>();
+    private int[][] Map;
+    private int MAP_WIDTH;
+    private int MAP_HEIGHT;
+
+    private float WALL_HEIGHT = 7.5f;
 
     private static int CELL_EMPTY = 0;
     private static char WALL_V = 'V';
     private static int WALL_V_C = 1;
     private static char WALL_H = 'H';
     private static int WALL_H_C = 2;
+
+    private const int TILE_SIZE = 2;
 
     void Start()
     {
@@ -45,30 +51,38 @@ public class Level1Manager : MonoBehaviour
             StreamReader theReader = new StreamReader(fileName, Encoding.Default);
             using (theReader)
             {
+                MAP_HEIGHT = File.ReadAllLines(fileName).Length;
+
+                Map = new int[MAP_HEIGHT][];
+
                 // While there's lines left in the text file, do this:
+                int i = MAP_HEIGHT - 1;
                 do
                 {
                     line = theReader.ReadLine();
 
                     if (line != null)
                     {
-                        List<int> MapLine = new List<int>();
-                        for (int i = 0; i < line.Length; ++i)
+                        MAP_WIDTH = line.Length;
+
+                        int[] MapLine = new int[MAP_WIDTH];
+                        for (int j = 0; j < MAP_WIDTH; ++j)
                         {
-                            if (line[i] == WALL_V)
+                            if (line[j] == WALL_V)
                             {
-                                MapLine.Add(WALL_V_C);
+                                MapLine[j] = WALL_V_C;
                             }
-                            else if (line[i] == WALL_H)
+                            else if (line[j] == WALL_H)
                             {
-                                MapLine.Add(WALL_H_C);
+                                MapLine[j] = WALL_H_C;
                             }
                             else
                             {
-                                MapLine.Add(CELL_EMPTY);
+                                MapLine[j] = CELL_EMPTY;
                             }
                         }
-                        Map.Add(MapLine);
+                        Map[i] = MapLine;
+                        --i;
                     }
                 } while (line != null);
 
@@ -85,11 +99,9 @@ public class Level1Manager : MonoBehaviour
 
     void placeFloor()
     {
-        float mapHeight = Map.Count;
-        float mapWidth = Map[0].Count;
-        Vector3 floorPosition = new Vector3(mapHeight, 0.0f, mapWidth);
+        Vector3 floorPosition = new Vector3(MAP_HEIGHT, 0.0f, MAP_WIDTH);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
-        Vector3 floorScale = new Vector3(mapHeight*2, 1.0f, mapWidth*2);
+        Vector3 floorScale = new Vector3(MAP_HEIGHT * 2, 1.0f, MAP_WIDTH * 2);
 
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;
@@ -97,51 +109,55 @@ public class Level1Manager : MonoBehaviour
 
     void placeWalls()
     {
-        for (int i = 0; i < Map.Count; ++i)
+        for (int i = 0; i < MAP_HEIGHT; ++i)
         {
-            for (int j = 0; j < Map[i].Count; ++j)
+            for (int j = 0; j < MAP_WIDTH; ++j)
             {
                 int cell = Map[i][j];
                 if (cell != CELL_EMPTY)
                 {
                     Vector3 cellPosition;
-                    Vector3 cellRotation;
                     Vector3 cellScale;
                     Texture texture;
                     Vector2 textureScale;
+                    Quaternion cellQuaternion;
 
                     if (cell == WALL_V_C)
                     {
-                        cellPosition = new Vector3(i * 2, 0, j * 2);
-                        cellRotation = new Vector3(0.0f, 0.0f, 0.0f);
-                        cellScale = new Vector3(2.0f, 15.0f, 2.5f);
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT/2, i * TILE_SIZE);
+                        cellScale = new Vector3(2.0f, WALL_HEIGHT, 2.5f);
                         texture = wallTexture;
                         textureScale = new Vector2(0.5f, 1.0f);
+
+                        cellQuaternion = Quaternion.AngleAxis(90.0f, Vector3.up);
                     }
                     else if (cell == WALL_H_C)
                     {
-                        cellPosition = new Vector3(i * 2, 0, j * 2);
-                        cellRotation = new Vector3(0.0f, 90.0f, 0.0f);
-                        cellScale = new Vector3(2.0f, 15.0f, 2.5f);
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT/2, i * TILE_SIZE);
+                        cellScale = new Vector3(2.0f, WALL_HEIGHT, 2.5f);
                         texture = wallTexture;
                         textureScale = new Vector2(0.5f, 1.0f);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
                     }
                     else
                     {
                         Debug.LogError("Creating a non empty cell");
                         cellPosition = new Vector3(0, 0, 0);
-                        cellRotation = new Vector3(0.0f, 0.0f, 0.0f);
                         cellScale = new Vector3(0.0f, 0.0f, 0.0f);
                         texture = wallTexture;
                         textureScale = new Vector2(0.0f, 0.0f);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
                     }
 
-                    GameObject newObject = Instantiate(cube, cellPosition, Quaternion.Euler(cellRotation)) as GameObject;
+                    GameObject newObject = Instantiate(cube, cellPosition, cube.transform.rotation) as GameObject;
+                    newObject.transform.parent = transform;
                     newObject.transform.localScale = cellScale;
 
-                    Renderer rend = newObject.GetComponent<Renderer>();
-                    rend.material.mainTexture = texture;
-                    rend.material.mainTextureScale = textureScale;
+                    //Renderer rend = newObject.GetComponent<Renderer>();
+                    //rend.material.mainTexture = texture;
+                    //rend.material.mainTextureScale = textureScale;
                 }
             }
         }
