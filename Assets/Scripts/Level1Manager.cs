@@ -7,6 +7,8 @@ using System.Collections.Generic;
 public class Level1Manager : MonoBehaviour
 {
     public Texture wallTexture;
+    public GameObject cube;
+    public GameObject floor;
 
     public static string appPath = "..\\VJ-Joc-3D";
 
@@ -49,11 +51,10 @@ public class Level1Manager : MonoBehaviour
     private float[] internalWallsScaleLittle = { 10.0f, 10.0f, 2.0f };
     private float[] internalWallsScaleLarge = { 10.0f, 10.0f, 2.0f };
 
-    public GameObject cube;
-
     void Start()
     {
         readMap();
+        placeFloor();
         placeWalls();
         //PlaceWallsOld();
     }
@@ -69,16 +70,10 @@ public class Level1Manager : MonoBehaviour
 
     bool readMap()
     {
-        Debug.Log(Application.dataPath);
-        // Handle any problems that might arise when reading the text
         try
         {
             string line;
-            // Create a new StreamReader, tell it which file to read and what encoding the file was saved as
             StreamReader theReader = new StreamReader(fileName, Encoding.Default);
-            // Immediately clean up the reader after this block of code is done.
-            // You generally use the "using" statement for potentially memory-intensive objects
-            // instead of relying on garbage collection.
             using (theReader)
             {
                 // While there's lines left in the text file, do this:
@@ -88,7 +83,6 @@ public class Level1Manager : MonoBehaviour
 
                     if (line != null)
                     {
-                        // Do whatever you need to do with the text line, it's a string now
                         List<int> MapLine = new List<int>();
                         for (int i = 0; i < line.Length; ++i)
                         {
@@ -106,7 +100,6 @@ public class Level1Manager : MonoBehaviour
                             }
                         }
                         Map.Add(MapLine);
-                        //Debug.Log(line);
                     }
                 } while (line != null);
 
@@ -119,6 +112,18 @@ public class Level1Manager : MonoBehaviour
             Debug.Log(e.Message);
             return false;
         }
+    }
+
+    void placeFloor()
+    {
+        float mapHeight = Map.Count;
+        float mapWidth = Map[0].Count;
+        Vector3 floorPosition = new Vector3(mapHeight, 0.0f, mapWidth);
+        Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 floorScale = new Vector3(mapHeight*2, 1.0f, mapWidth*2);
+
+        GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
+        newFloor.transform.localScale = floorScale;
     }
 
     void placeWalls()
