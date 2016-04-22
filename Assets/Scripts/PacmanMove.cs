@@ -9,6 +9,7 @@ public class PacmanMove : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip moveSound;
 
+    private Animation animation;
     private const float ERROR = 1.5f;
 
     private int state;
@@ -28,6 +29,7 @@ public class PacmanMove : MonoBehaviour
         timeState = 0;
         MAX_TIME_STATE = 15;
 
+        animation = GetComponent<Animation>();
         audioSource = GetComponent<AudioSource>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         UpdateTextures();
@@ -111,7 +113,7 @@ public class PacmanMove : MonoBehaviour
                 audioSource.Play();
             }
             //AudioSource.PlayClipAtPoint(moveSound, transform.position);
-            GetComponent<Animation>().Play("Move", PlayMode.StopAll);
+            animation.Play("Move", PlayMode.StopAll);
 
             Vector3 euler = transform.eulerAngles;
             euler.y = fixedAngle;
