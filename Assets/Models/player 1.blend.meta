@@ -1,47 +1,55 @@
 fileFormatVersion: 2
-guid: 398e1ff9676ed8149a6ae6548ee3231d
-timeCreated: 1461268288
+guid: 7d973749399c4f640af327932a93a217
+timeCreated: 1461306295
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Bolt
-    100002: Bolt_1
-    100004: Bolt_2
-    100006: Bolt_3
-    100008: //RootNode
-    100010: Nut
-    100012: Washer
-    100014: Washer_1
-    400000: Bolt
-    400002: Bolt_1
-    400004: Bolt_2
-    400006: Bolt_3
-    400008: //RootNode
-    400010: Nut
-    400012: Washer
-    400014: Washer_1
-    2300000: Bolt
-    2300002: Bolt_1
-    2300004: Bolt_2
-    2300006: Bolt_3
-    2300008: Nut
-    2300010: Washer
-    2300012: Washer_1
-    3300000: Bolt
-    3300002: Bolt_1
-    3300004: Bolt_2
-    3300006: Bolt_3
-    3300008: Nut
-    3300010: Washer
-    3300012: Washer_1
-    4300000: Bolt
-    4300002: Bolt_1
-    4300004: Bolt_2
-    4300006: Bolt_3
-    4300008: Nut
-    4300010: Washer
-    4300012: Washer_1
+    100000: ArmaturePlayer
+    100002: Eye_L
+    100004: Eye_R
+    100006: Eyes_Ctrl
+    100008: mouth_down
+    100010: mouth_up
+    100012: OpenMouth_Ctrl
+    100014: //RootNode
+    100016: PlayerMeshLP_02
+    100018: Root
+    100020: Root_Loc
+    100022: Shape_Root_001
+    100024: Shape_RootLoc_001
+    100026: Stretch
+    100028: Stretch_Ctrl
+    100030: Stretch_down
+    100032: Stretch_up
+    400000: ArmaturePlayer
+    400002: Eye_L
+    400004: Eye_R
+    400006: Eyes_Ctrl
+    400008: mouth_down
+    400010: mouth_up
+    400012: OpenMouth_Ctrl
+    400014: //RootNode
+    400016: PlayerMeshLP_02
+    400018: Root
+    400020: Root_Loc
+    400022: Shape_Root_001
+    400024: Shape_RootLoc_001
+    400026: Stretch
+    400028: Stretch_Ctrl
+    400030: Stretch_down
+    400032: Stretch_up
+    2300000: Shape_Root_001
+    2300002: Shape_RootLoc_001
+    3300000: Shape_Root_001
+    3300002: Shape_RootLoc_001
+    4300000: PlayerMeshLP_02
+    4300002: Shape_Root_001
+    4300004: Shape_RootLoc_001
+    7400000: Default Take
+    7400002: ArmatureActionPlayer
+    9500000: //RootNode
+    13700000: PlayerMeshLP_02
   materials:
     importMaterials: 1
     materialName: 0
@@ -100,7 +108,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
