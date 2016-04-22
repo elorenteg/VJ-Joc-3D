@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 public class Level1Manager : MonoBehaviour
 {
@@ -10,6 +11,14 @@ public class Level1Manager : MonoBehaviour
     public static string appPath = "..\\VJ-Joc-3D";
 
     private static string fileName = appPath + ".\\Assets\\Maps\\level_1.txt";
+
+    private List<List<int>> Map = new List<List<int>>();
+
+    private static int CELL_EMPTY = 0;
+    private static char WALL_V = 'V';
+    private static int WALL_V_C = 1;
+    private static char WALL_H = 'H';
+    private static int WALL_H_C = 2;
 
     private static int numberOfExternalWalls = 4;
 
@@ -45,7 +54,8 @@ public class Level1Manager : MonoBehaviour
     void Start()
     {
         readMap();
-        PlaceWalls();
+        placeWalls();
+        //PlaceWallsOld();
     }
 
     void Update()
@@ -79,8 +89,24 @@ public class Level1Manager : MonoBehaviour
                     if (line != null)
                     {
                         // Do whatever you need to do with the text line, it's a string now
-                        Debug.Log(line);
-                        //DoStuff(line);
+                        List<int> MapLine = new List<int>();
+                        for (int i = 0; i < line.Length; ++i)
+                        {
+                            if (line[i] == WALL_V)
+                            {
+                                MapLine.Add(WALL_V_C);
+                            }
+                            else if (line[i] == WALL_H)
+                            {
+                                MapLine.Add(WALL_H_C);
+                            }
+                            else
+                            {
+                                MapLine.Add(CELL_EMPTY);
+                            }
+                        }
+                        Map.Add(MapLine);
+                        //Debug.Log(line);
                     }
                 } while (line != null);
 
@@ -95,7 +121,59 @@ public class Level1Manager : MonoBehaviour
         }
     }
 
-    void PlaceWalls()
+    void placeWalls()
+    {
+        for (int i = 0; i < Map.Count; ++i)
+        {
+            for (int j = 0; j < Map[i].Count; ++j)
+            {
+                int cell = Map[i][j];
+                if (cell != CELL_EMPTY)
+                {
+                    Vector3 cellPosition;
+                    Vector3 cellRotation;
+                    Vector3 cellScale;
+                    Texture texture;
+                    Vector2 textureScale;
+
+                    if (cell == WALL_V_C)
+                    {
+                        cellPosition = new Vector3(i * 2, 0, j * 2);
+                        cellRotation = new Vector3(0.0f, 0.0f, 0.0f);
+                        cellScale = new Vector3(2.0f, 15.0f, 2.5f);
+                        texture = wallTexture;
+                        textureScale = new Vector2(0.5f, 1.0f);
+                    }
+                    else if (cell == WALL_H_C)
+                    {
+                        cellPosition = new Vector3(i * 2, 0, j * 2);
+                        cellRotation = new Vector3(0.0f, 90.0f, 0.0f);
+                        cellScale = new Vector3(2.0f, 15.0f, 2.5f);
+                        texture = wallTexture;
+                        textureScale = new Vector2(0.5f, 1.0f);
+                    }
+                    else
+                    {
+                        Debug.LogError("Creating a non empty cell");
+                        cellPosition = new Vector3(0, 0, 0);
+                        cellRotation = new Vector3(0.0f, 0.0f, 0.0f);
+                        cellScale = new Vector3(0.0f, 0.0f, 0.0f);
+                        texture = wallTexture;
+                        textureScale = new Vector2(0.0f, 0.0f);
+                    }
+
+                    GameObject newObject = Instantiate(cube, cellPosition, Quaternion.Euler(cellRotation)) as GameObject;
+                    newObject.transform.localScale = cellScale;
+
+                    Renderer rend = newObject.GetComponent<Renderer>();
+                    rend.material.mainTexture = texture;
+                    rend.material.mainTextureScale = textureScale;
+                }
+            }
+        }
+    }
+
+    void PlaceWallsOld()
     {
         // Placing external walls
         for (int i = 0; i < numberOfExternalWalls; ++i)
