@@ -190,6 +190,10 @@ Prefab:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11403812, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
   m_IsPrefabParent: 0
