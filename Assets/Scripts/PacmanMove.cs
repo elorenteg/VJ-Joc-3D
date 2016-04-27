@@ -131,6 +131,10 @@ public class PacmanMove : MonoBehaviour
 
         ++timeState;
 
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
+                                      | RigidbodyConstraints.FreezeRotationY
+                                      | RigidbodyConstraints.FreezeRotationZ;
+
         UpdateCoordinates();
     }
 
