@@ -39,6 +39,9 @@ public class GhostAnimate : MonoBehaviour
         animation = GetComponent<Animation>();
         audioSource = GetComponent<AudioSource>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+
+        // Example loading another texture
+        bodyNormalTex = (Texture) Resources.Load("Textures/ghost_pink");
     }
 
     public int stateMove()
