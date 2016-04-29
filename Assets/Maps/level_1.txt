@@ -18,6 +18,8 @@ VHHH     HHHH     HHHHHHVHHHHHH     HHHH      HHHV
 VHHH     HHHH                       HHHH      HHHV
 V                 HHHH     HHHH                  V
 V                 H           H                  V
+V                 H  B        H                  V
+V                 H           H                  V
 V                 H           H                  V
 V                 H           H                  V
 V                 H           H                  V
@@ -27,9 +29,7 @@ V        HHHH                       HHHH         V
 V        HHHH                       HHHH         V
 V        HHHH                       HHHH         V
 V        HHHH                       HHHH         V
-V     HHHHHHH                       HHHHHH       V
-V                                                V
-V                                                V
+V     HHHHHHH                       HHHHHHH      V
 V                 HHHH     HHHH                  V
 V                 HHHH     HHHH                  V
 V                 HHHHHHHHHHHHH                  V
