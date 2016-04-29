@@ -147,9 +147,10 @@ GameObject:
   - 4: {fileID: 445856}
   - 54: {fileID: 5437074}
   - 135: {fileID: 13576872}
-  - 114: {fileID: 11403812}
   - 111: {fileID: 11143080}
   - 82: {fileID: 8212624}
+  - 114: {fileID: 11403812}
+  - 114: {fileID: 11456052}
   m_Layer: 0
   m_Name: Pacman
   m_TagString: Untagged
@@ -669,7 +670,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   turnSpeed: 200
+--- !u!114 &11456052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aafb28f3beca5847b8c9d613ff33902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   moveSound: {fileID: 8300000, guid: 1612810d6681ceb4083f56015ed85d61, type: 3}
+  bodyNormalTex: {fileID: 2800000, guid: ad231fe5130849f4ea16ba0c94d6c4c3, type: 3}
   eyesNormalTex: {fileID: 2800000, guid: be26627c58159ec4dae515377c5d864f, type: 3}
 --- !u!135 &13576872
 SphereCollider:
