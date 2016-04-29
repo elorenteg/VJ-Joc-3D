@@ -28,7 +28,7 @@ public class GhostMove : MonoBehaviour
 
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         animationScript = GetComponent<GhostAnimate>();
-        animationScript.SetTextures(animationScript.stateMove(), state);
+        //animationScript.SetTextures(animationScript.stateMove(), state);
     }
 
     // Update is called once per frame
@@ -48,7 +48,5 @@ public class GhostMove : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
                                       | RigidbodyConstraints.FreezeRotationY
                                       | RigidbodyConstraints.FreezeRotationZ;
-
-        UpdateCoordinates();
     }
 }
