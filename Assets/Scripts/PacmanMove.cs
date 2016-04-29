@@ -24,7 +24,7 @@ public class PacmanMove : MonoBehaviour
 
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         animationScript = GetComponent<PacmanAnimate>();
-        animationScript.SetTextures(state);
+        //animationScript.SetTextures(state);
     }
 
     // Update is called once per frame
