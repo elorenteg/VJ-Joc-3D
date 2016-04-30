@@ -131,6 +131,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 263508c16139fd041bbba38d50640697, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &271754755 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 152278, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
+  m_PrefabInternal: {fileID: 435216761}
 --- !u!1001 &435216761
 Prefab:
   m_ObjectHideFlags: 0
@@ -205,6 +209,10 @@ Prefab:
     - target: {fileID: 445856, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
       propertyPath: m_LocalScale.z
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 152278, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
@@ -441,6 +449,7 @@ MonoBehaviour:
   cube: {fileID: 495272784}
   floor: {fileID: 1240582029}
   wallTexture: {fileID: 2800000, guid: 9b9a5cdd14dc81c438fec68b6a11e18d, type: 3}
+  pacman: {fileID: 271754755}
   ghost: {fileID: 189578, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
 --- !u!4 &1160761899
 Transform:

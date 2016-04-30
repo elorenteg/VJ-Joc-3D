@@ -9,18 +9,17 @@ public class Level1Manager : MonoBehaviour
     public GameObject cube;
     public GameObject floor;
     public Texture wallTexture;
+    public GameObject pacman;
     public GameObject ghost;
 
     public static string appPath = "..\\VJ-Joc-3D";
 
     private static string fileName = appPath + ".\\Assets\\Maps\\level_1.txt";
 
+    private const int TILE_SIZE = 2;
     private int[][] Map;
     private int MAP_WIDTH;
     private int MAP_HEIGHT;
-
-    private float WALL_HEIGHT = 7.5f;
-    private float GHOST_Y_POS = 18.5f;
 
     private static int CELL_EMPTY = 0;
     private static char WALL_V = 'V';
@@ -35,11 +34,18 @@ public class Level1Manager : MonoBehaviour
     private static int GHOST_P_C = 5;
     private static char GHOST_R = 'B';
     private static int GHOST_R_C = 6;
+    private static char PACMAN = 'P';
+    private static int PACMAN_C = 10;
 
-    private const int TILE_SIZE = 2;
+    private float WALL_HEIGHT = 7.5f;
+    private float PACMAN_Y_POS = 18.0f;
+    private float GHOST_Y_POS = 18.5f;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+
+    private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
+    private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     void Start()
     {
@@ -104,6 +110,10 @@ public class Level1Manager : MonoBehaviour
                             else if (line[j] == GHOST_R)
                             {
                                 MapLine[j] = GHOST_R_C;
+                            }
+                            else if (line[j] == PACMAN)
+                            {
+                                MapLine[j] = PACMAN_C;
                             }
                             else
                             {
@@ -182,6 +192,46 @@ public class Level1Manager : MonoBehaviour
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
                     }
+                    else if (cell == GHOST_O_C)
+                    {
+                        element = ghost;
+                        cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
+                        cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
+                        texture = null;
+                        textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+                    }
+                    else if (cell == GHOST_P_C)
+                    {
+                        element = ghost;
+                        cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
+                        cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
+                        texture = null;
+                        textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+                    }
+                    else if (cell == GHOST_R_C)
+                    {
+                        element = ghost;
+                        cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
+                        cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
+                        texture = null;
+                        textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+                    }
+                    else if (cell == PACMAN_C)
+                    {
+                        element = pacman;
+                        cellPosition = new Vector3(j * TILE_SIZE, PACMAN_Y_POS, i * TILE_SIZE);
+                        cellScale = new Vector3(PACMAN_SCALE.x, PACMAN_SCALE.y, PACMAN_SCALE.z);
+                        texture = null;
+                        textureScale = new Vector2(PACMAN_TEXTURE_SCALE.x, PACMAN_TEXTURE_SCALE.y);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+                    }
                     else
                     {
                         Debug.LogError("Creating a non empty cell");
@@ -197,6 +247,8 @@ public class Level1Manager : MonoBehaviour
                     GameObject newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
                     newObject.transform.parent = transform;
                     newObject.transform.localScale = cellScale;
+
+                    newObject.SetActive(true);
 
                     //Renderer rend = newObject.GetComponent<Renderer>();
                     //rend.material.mainTexture = texture;
