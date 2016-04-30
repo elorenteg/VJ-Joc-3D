@@ -20,7 +20,7 @@ public class Level1Manager : MonoBehaviour
     private int MAP_HEIGHT;
 
     private float WALL_HEIGHT = 7.5f;
-    private float GHOST_Y_POS = 19.0f;
+    private float GHOST_Y_POS = 18.5f;
 
     private static int CELL_EMPTY = 0;
     private static char WALL_V = 'V';

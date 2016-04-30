@@ -7,6 +7,8 @@ public class GhostMove : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
 
+    private float GHOST_Y_POS = 18.5f;
+
     public int varDead;
 
     private bool isDead;
@@ -44,6 +46,10 @@ public class GhostMove : MonoBehaviour
         }
 
         ++timeState;
+
+        Vector3 pos = transform.position;
+        pos.y = GHOST_Y_POS;
+        transform.position = pos;
 
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
                                       | RigidbodyConstraints.FreezeRotationY
