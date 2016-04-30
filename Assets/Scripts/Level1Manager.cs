@@ -30,11 +30,11 @@ public class Level1Manager : MonoBehaviour
     private static int GHOST_B_C = 3;
     private static char GHOST_O = 'O';
     private static int GHOST_O_C = 4;
-    private static char GHOST_P = 'B';
+    private static char GHOST_P = 'P';
     private static int GHOST_P_C = 5;
-    private static char GHOST_R = 'B';
+    private static char GHOST_R = 'R';
     private static int GHOST_R_C = 6;
-    private static char PACMAN = 'P';
+    private static char PACMAN = '+';
     private static int PACMAN_C = 10;
 
     private float WALL_HEIGHT = 7.5f;
