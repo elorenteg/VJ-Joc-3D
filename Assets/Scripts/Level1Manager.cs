@@ -46,7 +46,7 @@ public class Level1Manager : MonoBehaviour
     private float WALL_HEIGHT = 7.5f;
     private float GHOST_Y_POS = 18.5f;
     private float PACMAN_Y_POS = 18.0f;
-    private float COIN_Y_POS = 18.5f;
+    private float COIN_Y_POS = 14.0f;
     private float BONUS_Y_POS = 18.0f;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
@@ -166,6 +166,8 @@ public class Level1Manager : MonoBehaviour
 
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;
+
+        newFloor.SetActive(true);
     }
 
     void placeObjects()

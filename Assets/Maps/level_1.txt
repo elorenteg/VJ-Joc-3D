@@ -11,30 +11,30 @@ V                       V                        V
 V                       V                        V
 V                       V                        V
 VHHH     HHHH     HHHHHHVHHHHHH     HHHH      HHHV
+   H     HHHH                       HHHH      H   
+   H     HHHH                       HHHH      H   
    H     HHHH  . . . . . . . . . .  HHHH      H   
-   H     HHHH  .                 .  HHHH      H   
-   H     HHHH  .                 .  HHHH      H   
-   H     HHHH  .                 .  HHHH      H   
+   H     HHHH                       HHHH      H   
 VHHH     HHHH  .                 .  HHHH      HHHV
-V              .  HHHH     HHHH  .               V
+V                 HHHH     HHHH                  V
 V              .  H           H  .               V
-V              .  H           H  .               V
+V                 H           H                  V
 V              .  H  B     O  H  .               V
-V              .  H           H  .               V
+V                 H           H                  V
 V              .  H  P     R  H  .               V
-V              .  H           H  .               V
+V                 H           H                  V
 V              .  HHHHHHHHHHHHH  .               V
+V        HHHH                       HHHH         V
+V        HHHH  .                 .  HHHH         V
+V        HHHH                       HHHH         V
 V        HHHH  . . . . . . . . . .  HHHH         V
-V        HHHH                       HHHH         V
-V        HHHH           +           HHHH         V
-V        HHHH                       HHHH         V
 V        HHHH                       HHHH         V
 V     HHHHHHH                       HHHHHHH      V
 V                 HHHH     HHHH                  V
 V                 HHHH     HHHH                  V
 V                 HHHHHHHHHHHHH                  V
 V                 HHHHHHHHHHHHH                  V
-V                 HHHH     HHHH                  V
+V                 HHHH  +  HHHH                  V
 V                 HHHH     HHHH                  V
 VHHHH                                        HHHHV
 VHHHH                                        HHHHV
