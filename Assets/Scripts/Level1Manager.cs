@@ -11,6 +11,7 @@ public class Level1Manager : MonoBehaviour
     public Texture wallTexture;
     public GameObject pacman;
     public GameObject ghost;
+    public GameObject coin;
 
     public static string appPath = "..\\VJ-Joc-3D";
 
@@ -37,15 +38,28 @@ public class Level1Manager : MonoBehaviour
     private static char PACMAN = '+';
     private static int PACMAN_C = 10;
 
+    private static char COIN = '.';
+    private static int COIN_C = 20;
+    private static char BONUS = '*';
+    private static int BONUS_C = 21;
+
     private float WALL_HEIGHT = 7.5f;
-    private float PACMAN_Y_POS = 18.0f;
     private float GHOST_Y_POS = 18.5f;
+    private float PACMAN_Y_POS = 18.0f;
+    private float COIN_Y_POS = 18.5f;
+    private float BONUS_Y_POS = 18.0f;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+
+    private Vector3 COIN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
+    private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+
+    private Vector3 BONUS_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
+    private Vector2 BONUS_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     void Start()
     {
@@ -114,6 +128,14 @@ public class Level1Manager : MonoBehaviour
                             else if (line[j] == PACMAN)
                             {
                                 MapLine[j] = PACMAN_C;
+                            }
+                            else if (line[j] == COIN)
+                            {
+                                MapLine[j] = COIN_C;
+                            }
+                            else if (line[j] == BONUS)
+                            {
+                                MapLine[j] = BONUS_C;
                             }
                             else
                             {
@@ -229,6 +251,26 @@ public class Level1Manager : MonoBehaviour
                         cellScale = new Vector3(PACMAN_SCALE.x, PACMAN_SCALE.y, PACMAN_SCALE.z);
                         texture = null;
                         textureScale = new Vector2(PACMAN_TEXTURE_SCALE.x, PACMAN_TEXTURE_SCALE.y);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+                    }
+                    else if (cell == COIN_C)
+                    {
+                        element = coin;
+                        cellPosition = new Vector3(j * TILE_SIZE, COIN_Y_POS, i * TILE_SIZE);
+                        cellScale = new Vector3(COIN_SCALE.x, COIN_SCALE.y, COIN_SCALE.z);
+                        texture = null;
+                        textureScale = new Vector2(COIN_TEXTURE_SCALE.x, COIN_TEXTURE_SCALE.y);
+
+                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+                    }
+                    else if (cell == BONUS_C)
+                    {
+                        element = null;
+                        cellPosition = new Vector3(j * TILE_SIZE, BONUS_Y_POS, i * TILE_SIZE);
+                        cellScale = new Vector3(BONUS_SCALE.x, BONUS_SCALE.y, BONUS_SCALE.z);
+                        texture = null;
+                        textureScale = new Vector2(BONUS_TEXTURE_SCALE.x, BONUS_TEXTURE_SCALE.y);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
                     }

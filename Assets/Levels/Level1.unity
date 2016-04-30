@@ -85,52 +85,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &105383700
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -12.999838
-      objectReference: {fileID: 0}
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -23.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071067
-      objectReference: {fileID: 0}
-    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 138094, guid: 263508c16139fd041bbba38d50640697, type: 2}
-      propertyPath: m_Name
-      value: Nut (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 263508c16139fd041bbba38d50640697, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &271754755 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 152278, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
@@ -451,6 +405,7 @@ MonoBehaviour:
   wallTexture: {fileID: 2800000, guid: 9b9a5cdd14dc81c438fec68b6a11e18d, type: 3}
   pacman: {fileID: 271754755}
   ghost: {fileID: 189578, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
+  coin: {fileID: 138094, guid: 263508c16139fd041bbba38d50640697, type: 2}
 --- !u!4 &1160761899
 Transform:
   m_ObjectHideFlags: 0
@@ -575,7 +530,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 454858, guid: 263508c16139fd041bbba38d50640697, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 263508c16139fd041bbba38d50640697, type: 2}
@@ -868,6 +827,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 189578, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293144, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293144, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
