@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31ad9de168ec3d419a00e39ee18b960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 1907456638}
   cube: {fileID: 495272784}
   floor: {fileID: 1240582029}
   wallTexture: {fileID: 2800000, guid: 9b9a5cdd14dc81c438fec68b6a11e18d, type: 3}
@@ -493,4 +494,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3b38d41aa2f914da523a05ebfb7f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  smooth: 5

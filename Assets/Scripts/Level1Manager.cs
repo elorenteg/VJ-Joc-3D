@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class Level1Manager : MonoBehaviour
 {
+    public GameObject camera;
     public GameObject cube;
     public GameObject floor;
     public Texture wallTexture;
@@ -46,7 +47,7 @@ public class Level1Manager : MonoBehaviour
     private float WALL_HEIGHT = 7.5f;
     private float GHOST_Y_POS = 18.5f;
     private float PACMAN_Y_POS = 18.0f;
-    private float COIN_Y_POS = 14.0f;
+    private float COIN_Y_POS = 13.0f;
     private float BONUS_Y_POS = 18.0f;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
@@ -326,6 +327,13 @@ public class Level1Manager : MonoBehaviour
                     {
                         SkinnedMeshRenderer skinnedMeshRenderer = newObject.GetComponentInChildren<SkinnedMeshRenderer>();
                         newObject.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
+                    }
+                    
+                    if (cell == PACMAN_C)
+                    {
+                        FollowPacman cameraScript = camera.GetComponent<FollowPacman>();
+                        cameraScript.SetPacman(newObject);
+                        //cameraScript.Start();
                     }
 
                     //Renderer rend = newObject.GetComponent<Renderer>();
