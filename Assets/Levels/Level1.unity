@@ -197,7 +197,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 471808, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 471808, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
       propertyPath: m_LocalScale.x
@@ -309,6 +309,7 @@ MonoBehaviour:
   pacman: {fileID: 152278, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
   ghost: {fileID: 189578, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
   coin: {fileID: 138094, guid: 263508c16139fd041bbba38d50640697, type: 2}
+  bonus: {fileID: 104492, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
 --- !u!4 &1160761899
 Transform:
   m_ObjectHideFlags: 0

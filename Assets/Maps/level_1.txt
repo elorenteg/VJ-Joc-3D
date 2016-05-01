@@ -1,6 +1,6 @@
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 V                       V                       V
-V . . . . . . . . . . . V . . . . . . . . . . . V
+V * . . . . . . . . .   V   . . . . . . . . . * V
 V                       V                       V
 V .       .         .   V   .         .       . V
 V                                               V

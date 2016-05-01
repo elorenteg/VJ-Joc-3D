@@ -13,6 +13,7 @@ public class Level1Manager : MonoBehaviour
     public GameObject pacman;
     public GameObject ghost;
     public GameObject coin;
+    public GameObject bonus;
 
     public static string appPath = "..\\VJ-Joc-3D";
 
@@ -48,7 +49,7 @@ public class Level1Manager : MonoBehaviour
     private float GHOST_Y_POS = 18.5f;
     private float PACMAN_Y_POS = 18.0f;
     private float COIN_Y_POS = 13.0f;
-    private float BONUS_Y_POS = 18.0f;
+    private float BONUS_Y_POS = 13.0f;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -62,7 +63,7 @@ public class Level1Manager : MonoBehaviour
     private Vector3 COIN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
-    private Vector3 BONUS_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
+    private Vector3 BONUS_SCALE = new Vector3(8.0f, 8.0f, 8.0f);
     private Vector2 BONUS_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     void Start()
@@ -286,13 +287,18 @@ public class Level1Manager : MonoBehaviour
                     }
                     else if (cell == BONUS_C)
                     {
-                        element = null;
+                        element = bonus;
                         cellPosition = new Vector3(j * TILE_SIZE, BONUS_Y_POS, i * TILE_SIZE);
                         cellScale = new Vector3(BONUS_SCALE.x, BONUS_SCALE.y, BONUS_SCALE.z);
                         texture = null;
                         textureScale = new Vector2(BONUS_TEXTURE_SCALE.x, BONUS_TEXTURE_SCALE.y);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+
+                        cellPosition.x -= 0.2f * TILE_SIZE;
+                        cellPosition.z += 0.5f * TILE_SIZE;
+
+                        cellPosition.y -= 4 * TILE_SIZE;
                     }
                     else
                     {
@@ -317,6 +323,7 @@ public class Level1Manager : MonoBehaviour
                     if (cell == GHOST_O_C) { texPath = "Textures/ghost_orange"; angle = 90; }
                     else if (cell == GHOST_P_C) texPath = "Textures/ghost_pink";
                     else if (cell == GHOST_R_C) { texPath = "Textures/ghost_red"; angle = 90; }
+
                     if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C) {
                         GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
                         animationScript.SetBodyTexture(texPath);
@@ -328,19 +335,26 @@ public class Level1Manager : MonoBehaviour
                         SkinnedMeshRenderer skinnedMeshRenderer = newObject.GetComponentInChildren<SkinnedMeshRenderer>();
                         newObject.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
                     }
+                    if (cell == BONUS_C)
+                    {
+                        //newObject.transform.RotateAround(newObject.transform.position, new Vector3(1, 0, 0), 30);
+                        //newObject.transform.RotateAround(newObject.transform.position, new Vector3(0, 0, 1), 120);
+                        //newObject.transform.RotateAround(newObject.transform.position, new Vector3(0, 1, 0), 180);
+                        //newObject.transform.rotation = new Quaternion(-20,200,200, 1);
+                    }
                     
                     if (cell == PACMAN_C)
                     {
                         FollowPacman cameraScript = camera.GetComponent<FollowPacman>();
-                        cameraScript.SetPacman(newObject);
+                        //cameraScript.SetPacman(newObject);
                         //cameraScript.Start();
                     }
 
                     //Renderer rend = newObject.GetComponent<Renderer>();
                     //rend.material.mainTexture = texture;
                     //rend.material.mainTextureScale = textureScale;
+                    }
                 }
-            }
         }
     }
 }
