@@ -577,7 +577,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1612810d6681ceb4083f56015ed85d61, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -654,7 +654,7 @@ Animation:
   - {fileID: 7400004, guid: 571f3a301fb4cf34b8999ee4dcd5545a, type: 3}
   - {fileID: 7400006, guid: 571f3a301fb4cf34b8999ee4dcd5545a, type: 3}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!114 &11403812

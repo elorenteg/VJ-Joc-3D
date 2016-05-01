@@ -34,14 +34,13 @@ public class GhostAnimate : MonoBehaviour
     private const int RIGHT = 1;
 
     // Use this for initialization
-    private void Start()
+    public void Start()
     {
         animation = GetComponent<Animation>();
         audioSource = GetComponent<AudioSource>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
-        // Example loading another texture
-        bodyNormalTex = (Texture) Resources.Load("Textures/ghost_pink");
+        SetTextures(MOVE, LEFT);
     }
 
     public int stateMove()
@@ -52,6 +51,11 @@ public class GhostAnimate : MonoBehaviour
     public int stateDead()
     {
         return DIE;
+    }
+
+    public void SetBodyTexture(string texPath)
+    {
+        bodyNormalTex = (Texture) Resources.Load(texPath);
     }
 
     public void SetTextures(int alive, int state)
