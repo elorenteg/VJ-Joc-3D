@@ -51,9 +51,12 @@ public class Level1Manager : MonoBehaviour
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+    private float GHOST_OFFSET_X = 11.0f;
+    private float GHOST_OFFSET_Z = 13.5f;
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+    private float PACMAN_OFFSET_Z = 7.0f;
 
     private Vector3 COIN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -216,8 +219,8 @@ public class Level1Manager : MonoBehaviour
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
-                        cellPosition.x += 11 * TILE_SIZE;
-                        cellPosition.z += 13.5f * TILE_SIZE;
+                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
+                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
                     }
                     else if (cell == GHOST_O_C)
                     {
@@ -229,8 +232,8 @@ public class Level1Manager : MonoBehaviour
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
-                        cellPosition.x += 11 * TILE_SIZE;
-                        cellPosition.z += 13.5f * TILE_SIZE;
+                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
+                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
                     }
                     else if (cell == GHOST_P_C)
                     {
@@ -242,8 +245,8 @@ public class Level1Manager : MonoBehaviour
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
-                        cellPosition.x += 11 * TILE_SIZE;
-                        cellPosition.z += 13.5f * TILE_SIZE;
+                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
+                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
                     }
                     else if (cell == GHOST_R_C)
                     {
@@ -255,8 +258,8 @@ public class Level1Manager : MonoBehaviour
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
-                        cellPosition.x += 11 * TILE_SIZE;
-                        cellPosition.z += 13.5f * TILE_SIZE;
+                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
+                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
                     }
                     else if (cell == PACMAN_C)
                     {
@@ -268,8 +271,7 @@ public class Level1Manager : MonoBehaviour
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
-                        //cellPosition.x += 11 * TILE_SIZE;
-                        cellPosition.z -= 7.0f * TILE_SIZE;
+                        cellPosition.z -= PACMAN_OFFSET_Z * TILE_SIZE;
                     }
                     else if (cell == COIN_C)
                     {
