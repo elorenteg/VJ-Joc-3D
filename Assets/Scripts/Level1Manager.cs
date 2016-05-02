@@ -350,6 +350,12 @@ public class Level1Manager : MonoBehaviour
                         //cameraScript.Start();
                     }
 
+                    if (cell == COIN_C)
+                    {
+                        //Animation animation = newObject.GetComponent<Animation>();
+                        //animation.Play("nut_move");
+                    }
+
                     //Renderer rend = newObject.GetComponent<Renderer>();
                     //rend.material.mainTexture = texture;
                     //rend.material.mainTextureScale = textureScale;

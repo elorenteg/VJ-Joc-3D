@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 454858}
   - 33: {fileID: 3362054}
   - 23: {fileID: 2330562}
+  - 95: {fileID: 9531958}
   m_Layer: 0
   m_Name: Nut
   m_TagString: Untagged
@@ -62,6 +63,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 138094}
   m_Mesh: {fileID: 4300008, guid: 398e1ff9676ed8149a6ae6548ee3231d, type: 3}
+--- !u!95 &9531958
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138094}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 309e7f96640cc494883ce31b86c0aa4e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
