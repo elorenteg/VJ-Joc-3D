@@ -4,28 +4,35 @@ using System.Collections;
 public class FollowPacman : MonoBehaviour
 {
     public float smooth = 5.0f;
-    
-    private SkinnedMeshRenderer skinnedMeshRenderer;
+
+    private GameObject pacman = null;
 
     public void Start()
     {
-        skinnedMeshRenderer = null;
     }
 
     public void SetPacman(GameObject player)
     {
-        skinnedMeshRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
+        pacman = player;
 
         Update();
 
         transform.rotation = Quaternion.Euler(50, 0, 0);
     }
 
+    public void SetInitPosition(int h, int w)
+    {
+        Vector3 cameraPosition = new Vector3(h/2, 30, w/2);
+
+        transform.position = cameraPosition;
+        //transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
+    }
+
     private void Update()
     {
-        if (skinnedMeshRenderer != null)
+        if (pacman != null)
         {
-            Vector3 pacmanPosition = skinnedMeshRenderer.bounds.center;
+            Vector3 pacmanPosition = pacman.GetComponentInChildren<SkinnedMeshRenderer>().bounds.center;
             Vector3 cameraPosition = new Vector3(0, 30, -30);
             transform.position = Vector3.Lerp(transform.position, pacmanPosition + cameraPosition, Time.deltaTime * smooth);
         }

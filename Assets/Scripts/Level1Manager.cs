@@ -48,7 +48,7 @@ public class Level1Manager : MonoBehaviour
     private float WALL_HEIGHT = 7.5f;
     private float GHOST_Y_POS = 18.5f;
     private float PACMAN_Y_POS = 18.0f;
-    private float COIN_Y_POS = 13.0f;
+    private float COIN_Y_POS = 8.0f;
     private float BONUS_Y_POS = 13.0f;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
@@ -60,7 +60,7 @@ public class Level1Manager : MonoBehaviour
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
     private float PACMAN_OFFSET_Z = 7.0f;
 
-    private Vector3 COIN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
+    private Vector3 COIN_SCALE = new Vector3(3.0f, 3.0f, 3.0f);
     private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     private Vector3 BONUS_SCALE = new Vector3(8.0f, 8.0f, 8.0f);
@@ -346,14 +346,8 @@ public class Level1Manager : MonoBehaviour
                     if (cell == PACMAN_C)
                     {
                         FollowPacman cameraScript = camera.GetComponent<FollowPacman>();
-                        //cameraScript.SetPacman(newObject);
-                        //cameraScript.Start();
-                    }
-
-                    if (cell == COIN_C)
-                    {
-                        //Animation animation = newObject.GetComponent<Animation>();
-                        //animation.Play("nut_move");
+                        cameraScript.SetPacman(newObject);
+                        cameraScript.SetInitPosition(MAP_HEIGHT*TILE_SIZE, MAP_WIDTH*TILE_SIZE);
                     }
 
                     //Renderer rend = newObject.GetComponent<Renderer>();
