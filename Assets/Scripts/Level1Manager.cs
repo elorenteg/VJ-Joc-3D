@@ -335,13 +335,6 @@ public class Level1Manager : MonoBehaviour
                         SkinnedMeshRenderer skinnedMeshRenderer = newObject.GetComponentInChildren<SkinnedMeshRenderer>();
                         newObject.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
                     }
-                    if (cell == BONUS_C)
-                    {
-                        //newObject.transform.RotateAround(newObject.transform.position, new Vector3(1, 0, 0), 30);
-                        //newObject.transform.RotateAround(newObject.transform.position, new Vector3(0, 0, 1), 120);
-                        //newObject.transform.RotateAround(newObject.transform.position, new Vector3(0, 1, 0), 180);
-                        //newObject.transform.rotation = new Quaternion(-20,200,200, 1);
-                    }
                     
                     if (cell == PACMAN_C)
                     {
