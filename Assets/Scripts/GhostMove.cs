@@ -9,8 +9,6 @@ public class GhostMove : MonoBehaviour
 
     private float GHOST_Y_POS = 18.5f;
 
-    public int varDead;
-
     private bool isDead;
 
     private int state;
@@ -21,9 +19,9 @@ public class GhostMove : MonoBehaviour
     private GhostAnimate animationScript;
 
     // Use this for initialization
-    void Start ()
+    public void Start ()
     {
-        isDead = varDead == 0;
+        isDead = false;
         state = 0;
         timeState = 0;
         MAX_TIME_STATE = 15;
@@ -34,7 +32,7 @@ public class GhostMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (timeState == MAX_TIME_STATE)
         {
@@ -42,7 +40,8 @@ public class GhostMove : MonoBehaviour
             state = state + 1;
             if (state == 2) state = 0;
 
-            animationScript.SetTextures(animationScript.stateMove(), state);
+            if (!isDead) animationScript.SetTextures(animationScript.stateMove(), state);
+            else animationScript.SetTextures(animationScript.stateDead(), state);
         }
 
         ++timeState;
@@ -54,5 +53,14 @@ public class GhostMove : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
                                       | RigidbodyConstraints.FreezeRotationY
                                       | RigidbodyConstraints.FreezeRotationZ;
+    }
+
+    public void SetDead()
+    {
+        isDead = true;
+        animationScript.SetTextures(animationScript.stateDead(), state);
+
+        // Mover a base
+        // isDead = false;
     }
 }

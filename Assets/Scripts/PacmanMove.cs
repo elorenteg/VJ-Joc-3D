@@ -126,14 +126,21 @@ public class PacmanMove : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "ghost")
+        {
+            Debug.Log("Collision - GHOST :D");
+            GhostMove ghostScript = collision.gameObject.GetComponent<GhostMove>();
+            ghostScript.SetDead();
+        }
         if (collision.gameObject.tag == "coin")
         {
             Debug.Log("Collision - COIN :D");
             Destroy(collision.gameObject);
         }
-        else
+        if (collision.gameObject.tag == "bonus")
         {
-            Debug.Log("Collision - but not a COIN D:");
+            Debug.Log("Collision - BONUS :D");
+            Destroy(collision.gameObject);
         }
     }
 }
