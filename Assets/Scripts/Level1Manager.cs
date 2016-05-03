@@ -60,7 +60,7 @@ public class Level1Manager : MonoBehaviour
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
     private float PACMAN_OFFSET_Z = 7.0f;
 
-    private Vector3 COIN_SCALE = new Vector3(3.0f, 3.0f, 3.0f);
+    private Vector3 COIN_SCALE = new Vector3(4.0f, 4.0f, 4.0f);
     private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     private Vector3 BONUS_SCALE = new Vector3(8.0f, 8.0f, 8.0f);

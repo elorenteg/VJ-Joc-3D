@@ -123,4 +123,17 @@ public class PacmanMove : MonoBehaviour
                                       | RigidbodyConstraints.FreezeRotationY
                                       | RigidbodyConstraints.FreezeRotationZ;
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "coin")
+        {
+            Debug.Log("Collision - COIN :D");
+            Destroy(collision.gameObject);
+        }
+        else
+        {
+            Debug.Log("Collision - but not a COIN D:");
+        }
+    }
 }
