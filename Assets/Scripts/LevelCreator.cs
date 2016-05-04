@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class LevelCreator : MonoBehaviour
 {
     public GameObject camera;
-    public GameObject cube;
+    public GameObject wall;
     public GameObject floor;
     public Texture wallTexture;
     public GameObject pacman;
@@ -195,7 +195,7 @@ public class LevelCreator : MonoBehaviour
 
                     if (cell == WALL_V_C)
                     {
-                        element = cube;
+                        element = wall;
                         cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
                         cellScale = new Vector3(2.0f, WALL_HEIGHT, 2.5f);
                         texture = wallTexture;
@@ -205,7 +205,7 @@ public class LevelCreator : MonoBehaviour
                     }
                     else if (cell == WALL_H_C)
                     {
-                        element = cube;
+                        element = wall;
                         cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
                         cellScale = new Vector3(2.0f, WALL_HEIGHT, 2.5f);
                         texture = wallTexture;
