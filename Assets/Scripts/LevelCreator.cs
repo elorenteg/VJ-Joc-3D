@@ -77,10 +77,7 @@ public class LevelCreator : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) == true)
-        {
-            Application.Quit();
-        }
+        
     }
 
     bool readMap()
