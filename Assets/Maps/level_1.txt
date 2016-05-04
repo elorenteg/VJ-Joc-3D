@@ -21,18 +21,18 @@ Hhhh  .  Hhhh  .  HhhhHhhhHhhhHhhh  .  Hhhh  .  Hhhh
 hhhh     hhhh                          hhhh     hhhh
 Hhhh  .  Hhhh  .                    .  Hhhh  .  Hhhh
 vv                                                vv
-vv             .                    .             vv
-vv . . . . . .                        . . . . . . vv
-Vv             .  vvhhhh    hhhhvv  .             Vv
-vv                vvHhhh    Hhhhvv                vv
-vv             .  vv            vv  .             vv
-vv                Vv  B      O  Vv                vv
+vv             .  vvhhhh    hhhhvv  .             vv
+vv . . . . . .    vvHhhh    Hhhhvv    . . . . . . vv
 Vv             .  vv            vv  .             Vv
-vv                vv            vv                vv
-vv             .  vv  P      R  vv  .             vv
 vv                Vv            Vv                vv
-Vv        hhhh .  hhhhhhhhhhhhhhhh  . hhhh        Vv
-vv        Hhhh    HhhhHhhhHhhhHhhh    Hhhh        vv
+vv             .  vv  B      O  vv  .             vv
+vv                vv            vv                vv
+Vv             .  vv            vv  .             Vv
+vv                Vv  P      R  Vv                vv
+vv             .  vv            vv  .             vv
+vv                vv            vv                vv
+Vv        hhhh .  vvhhhhhhhhhhhhvv  . hhhh        Vv
+vv        Hhhh    VvHhhhHhhhHhhhVv    Hhhh        vv
 vv        hhhh .                    . hhhh        vv
 vv        Hhhh                        Hhhh        vv
 Vv    hhhhhhhh . . . . .    . . . . . hhhhhhhh    Vv
@@ -42,7 +42,7 @@ vv                 Hhhh    Hhhh                   vv
 Vv                 hhhhhhhhhhhh                   Vv
 vv                 HhhhHhhhHhhh                   vv
 vv                hhhh      hhhh                  vv
-vv                Hhhh   +  Hhhh                  vv
+vv                Hhhh  +   Hhhh                  vv
 Vv                                                Vv
 hhhh                                            hhhh
 Hhhh                                            Hhhh
