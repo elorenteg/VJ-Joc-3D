@@ -179,6 +179,9 @@ public class LevelCreator : MonoBehaviour
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;
 
+        Renderer renderer = newFloor.GetComponent<Renderer>();
+        renderer.material.mainTexture = floorTexture;
+
         newFloor.SetActive(true);
     }
 
@@ -328,29 +331,30 @@ public class LevelCreator : MonoBehaviour
                     int angle = -90;
                     if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 90;
 
-                    if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
-                    {
-                        GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
-                        animationScript.SetBodyTexture(texture);
-                        animationScript.Start();
-                    }
-
                     if (cell == PACMAN_C || cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
                     {
                         SkinnedMeshRenderer skinnedMeshRenderer = newObject.GetComponentInChildren<SkinnedMeshRenderer>();
                         newObject.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
                     }
 
-                    if (cell == PACMAN_C)
+                    if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
+                    {
+                        GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
+                        animationScript.SetBodyTexture(texture);
+                        animationScript.Start();
+                    }
+                    else if (cell == PACMAN_C)
                     {
                         FollowPacman cameraScript = cameraObject.GetComponent<Camera>().GetComponent<FollowPacman>();
                         cameraScript.SetPacman(newObject);
                         cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
                     }
-
-                    //Renderer rend = newObject.GetComponent<Renderer>();
-                    //rend.material.mainTexture = texture;
-                    //rend.material.mainTextureScale = textureScale;
+                    else if (cell == WALL_H_C || cell == WALL_V_C)
+                    {
+                        Renderer renderer = newObject.GetComponent<Renderer>();
+                        renderer.material.mainTexture = texture;
+                        //rend.material.mainTextureScale = textureScale;
+                    }
                 }
             }
         }
