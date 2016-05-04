@@ -15,7 +15,7 @@ public class GhostMove : MonoBehaviour
     private int timeState;
     private int MAX_TIME_STATE;
 
-    private SkinnedMeshRenderer skinnedMeshRenderer;
+
     private GhostAnimate animationScript;
 
     // Use this for initialization
@@ -25,8 +25,7 @@ public class GhostMove : MonoBehaviour
         state = 0;
         timeState = 0;
         MAX_TIME_STATE = 15;
-
-        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        
         animationScript = GetComponent<GhostAnimate>();
         //animationScript.SetTextures(animationScript.stateMove(), state);
     }

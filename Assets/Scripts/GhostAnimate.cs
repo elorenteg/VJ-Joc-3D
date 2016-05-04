@@ -9,7 +9,7 @@ public class GhostAnimate : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip moveSound;
 
-    private Animation animation;
+    private Animation ghostAnimation;
 
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private const int BODY = 0;
@@ -36,7 +36,7 @@ public class GhostAnimate : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
-        animation = GetComponent<Animation>();
+        ghostAnimation = GetComponent<Animation>();
         audioSource = GetComponent<AudioSource>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
@@ -53,9 +53,9 @@ public class GhostAnimate : MonoBehaviour
         return DIE;
     }
 
-    public void SetBodyTexture(string texPath)
+    public void SetBodyTexture(Texture tex)
     {
-        bodyNormalTex = (Texture) Resources.Load(texPath);
+        bodyNormalTex = tex;
     }
 
     public void SetTextures(int alive, int state)
@@ -106,10 +106,10 @@ public class GhostAnimate : MonoBehaviour
         switch (anim)
         {
             case MOVE:
-                animation.Play("Move", PlayMode.StopAll);
+                ghostAnimation.Play("Move", PlayMode.StopAll);
                 break;
             case DIE:
-                animation.Play("Die", PlayMode.StopAll);
+                ghostAnimation.Play("Die", PlayMode.StopAll);
                 break;
         }
     }
