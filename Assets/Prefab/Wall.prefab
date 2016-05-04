@@ -78,7 +78,7 @@ GameObject:
   - 4: {fileID: 474328}
   - 65: {fileID: 6529286}
   m_Layer: 0
-  m_Name: Cube_pref
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
