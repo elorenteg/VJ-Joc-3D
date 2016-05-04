@@ -53,9 +53,9 @@ public class GhostAnimate : MonoBehaviour
         return DIE;
     }
 
-    public void SetBodyTexture(string texPath)
+    public void SetBodyTexture(Texture tex)
     {
-        bodyNormalTex = (Texture) Resources.Load(texPath);
+        bodyNormalTex = tex;
     }
 
     public void SetTextures(int alive, int state)

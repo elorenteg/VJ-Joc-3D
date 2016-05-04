@@ -6,12 +6,17 @@ using System.Collections.Generic;
 
 public class LevelCreator : MonoBehaviour
 {
-    public GameObject camera;
+    public GameObject cameraObject;
     public GameObject wall;
-    public GameObject floor;
     public Texture wallTexture;
+    public GameObject floor;
+    public Texture floorTexture;
     public GameObject pacman;
     public GameObject ghost;
+    public Texture blueGhostTexture;
+    public Texture orangeGhostTexture;
+    public Texture pinkGhostTexture;
+    public Texture redGhostTexture;
     public GameObject coin;
     public GameObject bonus;
     public string actualLevel;
@@ -218,7 +223,7 @@ public class LevelCreator : MonoBehaviour
                         element = ghost;
                         cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
-                        texture = null;
+                        texture = blueGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
@@ -231,7 +236,7 @@ public class LevelCreator : MonoBehaviour
                         element = ghost;
                         cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
-                        texture = null;
+                        texture = orangeGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
@@ -244,7 +249,7 @@ public class LevelCreator : MonoBehaviour
                         element = ghost;
                         cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
-                        texture = null;
+                        texture = pinkGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
@@ -257,7 +262,7 @@ public class LevelCreator : MonoBehaviour
                         element = ghost;
                         cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
-                        texture = null;
+                        texture = redGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
@@ -319,17 +324,14 @@ public class LevelCreator : MonoBehaviour
                     newObject.transform.localScale = cellScale;
 
                     newObject.SetActive(true);
-
-                    string texPath = "Textures/ghost_blue";
+                    
                     int angle = -90;
-                    if (cell == GHOST_O_C) { texPath = "Textures/ghost_orange"; angle = 90; }
-                    else if (cell == GHOST_P_C) texPath = "Textures/ghost_pink";
-                    else if (cell == GHOST_R_C) { texPath = "Textures/ghost_red"; angle = 90; }
+                    if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 90;
 
                     if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
                     {
                         GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
-                        animationScript.SetBodyTexture(texPath);
+                        animationScript.SetBodyTexture(texture);
                         animationScript.Start();
                     }
 
@@ -341,7 +343,7 @@ public class LevelCreator : MonoBehaviour
 
                     if (cell == PACMAN_C)
                     {
-                        FollowPacman cameraScript = camera.GetComponent<FollowPacman>();
+                        FollowPacman cameraScript = cameraObject.GetComponent<Camera>().GetComponent<FollowPacman>();
                         cameraScript.SetPacman(newObject);
                         cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
                     }
