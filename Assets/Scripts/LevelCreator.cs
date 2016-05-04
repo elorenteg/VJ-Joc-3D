@@ -57,8 +57,8 @@ public class LevelCreator : MonoBehaviour
     private float BONUS_Y_POS = 13.0f;
     
     private const float WALL_HEIGHT = 7.5f;
-    private Vector3 WALL_H_SCALE = new Vector3(4*TILE_SIZE, WALL_HEIGHT, 2*TILE_SIZE);
-    private Vector3 WALL_V_SCALE = new Vector3(2*TILE_SIZE, WALL_HEIGHT, 4*TILE_SIZE);
+    private Vector3 WALL_SCALE = new Vector3(4*TILE_SIZE, WALL_HEIGHT, 2*TILE_SIZE);
+    private int WALL_V_ANGLE = -90;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -179,8 +179,8 @@ public class LevelCreator : MonoBehaviour
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
         Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, 1.0f, MAP_HEIGHT * TILE_SIZE);
 
-        floorPosition.x -= WALL_H_SCALE.x;
-        floorPosition.z += WALL_V_SCALE.z;
+        floorPosition.x -= WALL_SCALE.x;
+        floorPosition.z += WALL_SCALE.x;
 
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;
@@ -211,22 +211,28 @@ public class LevelCreator : MonoBehaviour
                     if (cell == WALL_V_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE + WALL_V_SCALE.x/2, WALL_HEIGHT / 2, i * TILE_SIZE + WALL_V_SCALE.z / 2);
-                        cellScale = WALL_V_SCALE;
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
+                        cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
 
                         cellQuaternion = Quaternion.AngleAxis(90.0f, Vector3.up);
+
+                        cellPosition.x += WALL_SCALE.z / 2;
+                        cellPosition.z += WALL_SCALE.x / 2;
                     }
                     else if (cell == WALL_H_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE + WALL_H_SCALE.x / 2, WALL_HEIGHT / 2, i * TILE_SIZE + WALL_H_SCALE.z / 2);
-                        cellScale = WALL_H_SCALE;
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
+                        cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+
+                        cellPosition.x += WALL_SCALE.x / 2;
+                        cellPosition.z += WALL_SCALE.z / 2;
                     }
                     else if (cell == GHOST_B_C)
                     {
@@ -366,11 +372,19 @@ public class LevelCreator : MonoBehaviour
                     }
                     else if (cell == WALL_H_C || cell == WALL_V_C)
                     {
+                        if (cell == WALL_V_C) {
+                            Vector3 center = newObject.transform.position;
+                            //center -= new Vector3(WALL_SCALE.x / (5f * TILE_SIZE), 0, WALL_SCALE.z / 2);
+                            newObject.transform.RotateAround(center, transform.up, WALL_V_ANGLE);
+                        }
+
+
                         GameObject front = newObject.transform.FindChild("Front").gameObject;
                         GameObject back = newObject.transform.FindChild("Back").gameObject;
 
-                        int rand = Random.Range(1, 2);
-                        if (rand == 1)
+                        bool rand = Random.value <= 0.5;
+                        Debug.Log(rand);
+                        if (rand)
                         {
                             Renderer renderer1 = front.GetComponent<Renderer>();
                             renderer1.material = wallMaterial1;
