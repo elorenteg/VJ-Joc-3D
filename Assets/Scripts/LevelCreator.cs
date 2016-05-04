@@ -175,9 +175,12 @@ public class LevelCreator : MonoBehaviour
 
     void placeFloor()
     {
-        Vector3 floorPosition = new Vector3(MAP_HEIGHT - WALL_H_SCALE.x, 0.0f, MAP_WIDTH + WALL_V_SCALE.z);
+        Vector3 floorPosition = new Vector3(MAP_HEIGHT*TILE_SIZE/2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
         Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, 1.0f, MAP_HEIGHT * TILE_SIZE);
+
+        floorPosition.x -= WALL_H_SCALE.x;
+        floorPosition.z += WALL_V_SCALE.z;
 
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;

@@ -28,8 +28,8 @@ public class PacmanMove : MonoBehaviour
         animationScript = GetComponent<PacmanAnimate>();
         //animationScript.SetTextures(state);
 
-        GameObject gObject = GameObject.Find("GameManager");
-        levelManager = (LevelManager)gObject.GetComponent(typeof(LevelManager));
+        GameObject gameManager = GameObject.Find("GameManager");
+        levelManager = gameManager.GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
