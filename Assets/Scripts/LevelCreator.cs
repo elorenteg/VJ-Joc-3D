@@ -62,15 +62,17 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
-    private float GHOST_OFFSET_X = 11.0f;
-    private float GHOST_OFFSET_Z = 13.5f;
+    private float GHOST_OFFSET_X = 11.6f;
+    private float GHOST_OFFSET_Z = 13.9f;
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
-    private float PACMAN_OFFSET_Z = 7.0f;
+    private float PACMAN_OFFSET_X = 0.38f;
+    private float PACMAN_OFFSET_Z = -6.2f;
 
     private Vector3 COIN_SCALE = new Vector3(4.0f, 4.0f, 4.0f);
     private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+    private float COIN_OFFSET = 0.55f;
 
     private Vector3 BONUS_SCALE = new Vector3(8.0f, 8.0f, 8.0f);
     private Vector2 BONUS_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -173,7 +175,7 @@ public class LevelCreator : MonoBehaviour
 
     void placeFloor()
     {
-        Vector3 floorPosition = new Vector3(MAP_HEIGHT - 8, 0.0f, MAP_WIDTH + 8);
+        Vector3 floorPosition = new Vector3(MAP_HEIGHT - WALL_H_SCALE.x, 0.0f, MAP_WIDTH + WALL_V_SCALE.z);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
         Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, 1.0f, MAP_HEIGHT * TILE_SIZE);
 
@@ -182,6 +184,7 @@ public class LevelCreator : MonoBehaviour
 
         Renderer renderer = newFloor.GetComponent<Renderer>();
         renderer.material.mainTexture = floorTexture;
+        renderer.material.mainTextureScale = new Vector2(MAP_WIDTH / 8, MAP_HEIGHT / 8);
 
         newFloor.SetActive(true);
     }
@@ -284,7 +287,12 @@ public class LevelCreator : MonoBehaviour
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
-                        cellPosition.z -= PACMAN_OFFSET_Z * TILE_SIZE;
+                        cellPosition.x += PACMAN_OFFSET_X * TILE_SIZE;
+                        cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
+
+                        // El mapa es de numTiles pares y asi colocamos al Pacman entre medio de dos tiles
+                        if (j < MAP_WIDTH/2) cellPosition.x += TILE_SIZE / 2;
+                        else cellPosition.x -= TILE_SIZE / 2;
                     }
                     else if (cell == COIN_C)
                     {
@@ -295,6 +303,9 @@ public class LevelCreator : MonoBehaviour
                         textureScale = new Vector2(COIN_TEXTURE_SCALE.x, COIN_TEXTURE_SCALE.y);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
+
+                        cellPosition.x += COIN_OFFSET * TILE_SIZE;
+                        cellPosition.z += COIN_OFFSET * TILE_SIZE;
                     }
                     else if (cell == BONUS_C)
                     {
