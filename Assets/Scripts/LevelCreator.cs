@@ -291,7 +291,8 @@ public class LevelCreator : MonoBehaviour
                         cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
 
                         // El mapa es de numTiles pares y asi colocamos al Pacman entre medio de dos tiles
-                        cellPosition.x += TILE_SIZE / 2;
+                        if (j < MAP_WIDTH/2) cellPosition.x += TILE_SIZE / 2;
+                        else cellPosition.x -= TILE_SIZE / 2;
                     }
                     else if (cell == COIN_C)
                     {
