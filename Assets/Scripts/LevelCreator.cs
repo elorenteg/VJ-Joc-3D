@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
-public class Level1Manager : MonoBehaviour
+public class LevelCreator : MonoBehaviour
 {
     public GameObject camera;
     public GameObject cube;
@@ -14,10 +14,10 @@ public class Level1Manager : MonoBehaviour
     public GameObject ghost;
     public GameObject coin;
     public GameObject bonus;
+    public string actualLevel;
 
     public static string appPath = "..\\VJ-Joc-3D";
-
-    private static string fileName = appPath + ".\\Assets\\Maps\\level_1.txt";
+    private string fileName = appPath + ".\\Assets\\Maps\\";
 
     private const int TILE_SIZE = 2;
     private int[][] Map;
@@ -68,6 +68,8 @@ public class Level1Manager : MonoBehaviour
 
     void Start()
     {
+        fileName += "level_" + actualLevel + ".txt";
+
         readMap();
         placeFloor();
         placeObjects();
@@ -324,7 +326,8 @@ public class Level1Manager : MonoBehaviour
                     else if (cell == GHOST_P_C) texPath = "Textures/ghost_pink";
                     else if (cell == GHOST_R_C) { texPath = "Textures/ghost_red"; angle = 90; }
 
-                    if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C) {
+                    if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
+                    {
                         GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
                         animationScript.SetBodyTexture(texPath);
                         animationScript.Start();
@@ -335,19 +338,19 @@ public class Level1Manager : MonoBehaviour
                         SkinnedMeshRenderer skinnedMeshRenderer = newObject.GetComponentInChildren<SkinnedMeshRenderer>();
                         newObject.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
                     }
-                    
+
                     if (cell == PACMAN_C)
                     {
                         FollowPacman cameraScript = camera.GetComponent<FollowPacman>();
                         cameraScript.SetPacman(newObject);
-                        cameraScript.SetInitPosition(MAP_HEIGHT*TILE_SIZE, MAP_WIDTH*TILE_SIZE);
+                        cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
                     }
 
                     //Renderer rend = newObject.GetComponent<Renderer>();
                     //rend.material.mainTexture = texture;
                     //rend.material.mainTextureScale = textureScale;
-                    }
                 }
+            }
         }
     }
 }

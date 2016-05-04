@@ -245,7 +245,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1160761897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d31ad9de168ec3d419a00e39ee18b960, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d892ade172f47d43b2652296e2958cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1907456638}
@@ -256,6 +256,7 @@ MonoBehaviour:
   ghost: {fileID: 189578, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
   coin: {fileID: 138094, guid: 263508c16139fd041bbba38d50640697, type: 2}
   bonus: {fileID: 104492, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
+  actualLevel: 1
 --- !u!4 &1160761899
 Transform:
   m_ObjectHideFlags: 0
