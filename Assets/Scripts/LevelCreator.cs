@@ -8,7 +8,8 @@ public class LevelCreator : MonoBehaviour
 {
     public GameObject cameraObject;
     public GameObject wall;
-    public Texture wallTexture;
+    public Material wallMaterial1;
+    public Material wallMaterial2;
     public GameObject floor;
     public Texture floorTexture;
     public GameObject pacman;
@@ -50,11 +51,14 @@ public class LevelCreator : MonoBehaviour
     private static char BONUS = '*';
     private static int BONUS_C = 21;
 
-    private float WALL_HEIGHT = 7.5f;
     private float GHOST_Y_POS = 18.5f;
     private float PACMAN_Y_POS = 18.0f;
     private float COIN_Y_POS = 10.0f;
     private float BONUS_Y_POS = 13.0f;
+    
+    private const float WALL_HEIGHT = 7.5f;
+    private Vector3 WALL_H_SCALE = new Vector3(4*TILE_SIZE, WALL_HEIGHT, 2*TILE_SIZE);
+    private Vector3 WALL_V_SCALE = new Vector3(2*TILE_SIZE, WALL_HEIGHT, 4*TILE_SIZE);
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -172,9 +176,9 @@ public class LevelCreator : MonoBehaviour
 
     void placeFloor()
     {
-        Vector3 floorPosition = new Vector3(MAP_HEIGHT, 0.0f, MAP_WIDTH);
+        Vector3 floorPosition = new Vector3(MAP_HEIGHT - 8, 0.0f, MAP_WIDTH + 8);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
-        Vector3 floorScale = new Vector3(MAP_HEIGHT * 2, 1.0f, MAP_WIDTH * 2);
+        Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, 1.0f, MAP_HEIGHT * TILE_SIZE);
 
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;
@@ -204,9 +208,9 @@ public class LevelCreator : MonoBehaviour
                     if (cell == WALL_V_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
-                        cellScale = new Vector3(2.0f, WALL_HEIGHT, 2.5f);
-                        texture = wallTexture;
+                        cellPosition = new Vector3(j * TILE_SIZE + WALL_V_SCALE.x/2, WALL_HEIGHT / 2, i * TILE_SIZE + WALL_V_SCALE.z / 2);
+                        cellScale = WALL_V_SCALE;
+                        texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
 
                         cellQuaternion = Quaternion.AngleAxis(90.0f, Vector3.up);
@@ -214,9 +218,9 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == WALL_H_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
-                        cellScale = new Vector3(2.0f, WALL_HEIGHT, 2.5f);
-                        texture = wallTexture;
+                        cellPosition = new Vector3(j * TILE_SIZE + WALL_H_SCALE.x / 2, WALL_HEIGHT / 2, i * TILE_SIZE + WALL_H_SCALE.z / 2);
+                        cellScale = WALL_H_SCALE;
+                        texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
 
                         cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
@@ -351,9 +355,24 @@ public class LevelCreator : MonoBehaviour
                     }
                     else if (cell == WALL_H_C || cell == WALL_V_C)
                     {
-                        Renderer renderer = newObject.GetComponent<Renderer>();
-                        renderer.material.mainTexture = texture;
-                        //rend.material.mainTextureScale = textureScale;
+                        GameObject front = newObject.transform.FindChild("Front").gameObject;
+                        GameObject back = newObject.transform.FindChild("Back").gameObject;
+
+                        int rand = Random.Range(1, 2);
+                        if (rand == 1)
+                        {
+                            Renderer renderer1 = front.GetComponent<Renderer>();
+                            renderer1.material = wallMaterial1;
+                            Renderer renderer2 = back.GetComponent<Renderer>();
+                            renderer2.material = wallMaterial2;
+                        }
+                        else
+                        {
+                            Renderer renderer1 = back.GetComponent<Renderer>();
+                            renderer1.material = wallMaterial1;
+                            Renderer renderer2 = front.GetComponent<Renderer>();
+                            renderer2.material = wallMaterial2;
+                        }
                     }
                 }
             }
