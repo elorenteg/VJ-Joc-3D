@@ -9,7 +9,7 @@ public class PacmanAnimate : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip moveSound;
 
-    private Animation animation;
+    private Animation pacmanAnimation;
 
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private const int BODY = 1;
@@ -24,7 +24,7 @@ public class PacmanAnimate : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        animation = GetComponent<Animation>();
+        pacmanAnimation = GetComponent<Animation>();
         audioSource = GetComponent<AudioSource>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
@@ -63,10 +63,10 @@ public class PacmanAnimate : MonoBehaviour
         switch (anim)
         {
             case MOVE:
-                animation.Play("Move", PlayMode.StopAll);
+                pacmanAnimation.Play("Move", PlayMode.StopAll);
                 break;
             case DIE:
-                animation.Play("Die", PlayMode.StopAll);
+                pacmanAnimation.Play("Die", PlayMode.StopAll);
                 break;
         }
     }
