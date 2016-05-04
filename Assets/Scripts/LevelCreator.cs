@@ -22,7 +22,7 @@ public class LevelCreator : MonoBehaviour
     public GameObject bonus;
     public string actualLevel;
 
-    public static string appPath = "..\\VJ-Joc-3D";
+    private static string appPath = "..\\VJ-Joc-3D";
     private string fileName = appPath + ".\\Assets\\Maps\\";
 
     private const int TILE_SIZE = 2;

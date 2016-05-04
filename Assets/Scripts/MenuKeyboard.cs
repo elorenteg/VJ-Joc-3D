@@ -5,7 +5,6 @@ using System.Collections;
 public class MenuKeyboard : MonoBehaviour {
 
     private string[] mainMenuLabels = {"Jugar", "Instruccions", "Opcions", "Crèdits", "Sortir"};
-    //private bool[] mainMenuButtons;
     private const int JUGAR = 0;
     private const int INSTR = 1;
     private const int OPTNS = 2;

@@ -15,8 +15,10 @@ public class PacmanMove : MonoBehaviour
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private PacmanAnimate animationScript;
 
+    private LevelManager levelManager;
+
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         state = 0;
         timeState = 0;
@@ -25,6 +27,9 @@ public class PacmanMove : MonoBehaviour
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         animationScript = GetComponent<PacmanAnimate>();
         //animationScript.SetTextures(state);
+
+        GameObject gObject = GameObject.Find("GameManager");
+        levelManager = (LevelManager)gObject.GetComponent(typeof(LevelManager));
     }
 
     // Update is called once per frame
@@ -39,7 +44,7 @@ public class PacmanMove : MonoBehaviour
             if ((prevAngle > 0.0f && prevAngle < 180.0f && Mathf.Abs(prevAngle - 0) > ERROR) ||
                 (prevAngle > 180.0f && prevAngle < 360.0f && Mathf.Abs(prevAngle - 360) > ERROR))
             {
-                
+
                 if (prevAngle < 180.0f)
                     transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
                 else
@@ -106,7 +111,7 @@ public class PacmanMove : MonoBehaviour
             transform.eulerAngles = euler;
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
         }
-        
+
 
         if (timeState == MAX_TIME_STATE)
         {
@@ -132,11 +137,16 @@ public class PacmanMove : MonoBehaviour
             GhostMove ghostScript = collision.gameObject.GetComponent<GhostMove>();
             ghostScript.SetDead();
         }
+
         if (collision.gameObject.tag == "coin")
         {
             Debug.Log("Collision - COIN :D");
             Destroy(collision.gameObject);
+
+            //TODO Hardcoded
+            levelManager.increaseScore(1);
         }
+
         if (collision.gameObject.tag == "bonus")
         {
             Debug.Log("Collision - BONUS :D");
