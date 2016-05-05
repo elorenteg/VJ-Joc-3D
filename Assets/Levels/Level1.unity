@@ -177,8 +177,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 1907456638}
   wall: {fileID: 162220, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
-  wallMaterial1: {fileID: 2100000, guid: c1767d61b7a76a24289cf885b533c9ae, type: 2}
-  wallMaterial2: {fileID: 2100000, guid: 7a9ebafed994caa48a6c7fa4030bede5, type: 2}
+  wallMat_LatSmall: {fileID: 2100000, guid: fd6ef1323d92b1a4b8bc04d2c7251124, type: 2}
+  wallMat_LatBig1: {fileID: 2100000, guid: 1b190bf415e760f468e94bec4922d876, type: 2}
+  wallMat_LatBig2: {fileID: 2100000, guid: 3fddffeb285b80240ac78c7d92572229, type: 2}
+  wallMat_LatBig3: {fileID: 2100000, guid: 50062f87e1b4d51419ee98aee1011f25, type: 2}
+  wallMat_Up1: {fileID: 2100000, guid: 7422d46a4e7eb2f4d80b6cd9043de56e, type: 2}
+  wallMat_Up2: {fileID: 2100000, guid: 03c2ce2cc7cb71443ac5ddb6b212028e, type: 2}
   floor: {fileID: 125800, guid: e318b761685e5de4ca4d8746dccfbdbc, type: 2}
   floorTexture: {fileID: 2800000, guid: 28184d57e2ff1d7419a87b36dfb0b512, type: 3}
   pacman: {fileID: 152278, guid: b9be12c69160e154e8ee7980728234fc, type: 2}

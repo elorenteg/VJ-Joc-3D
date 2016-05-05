@@ -7,9 +7,13 @@ using System.Collections.Generic;
 public class LevelCreator : MonoBehaviour
 {
     public GameObject cameraObject;
-    public GameObject wall;
-    public Material wallMaterial1;
-    public Material wallMaterial2;
+	public GameObject wall;
+	public Material wallMat_LatSmall;
+	public Material wallMat_LatBig1;
+	public Material wallMat_LatBig2;
+	public Material wallMat_LatBig3;
+	public Material wallMat_Up1;
+	public Material wallMat_Up2;
     public GameObject floor;
     public Texture floorTexture;
     public GameObject pacman;
@@ -77,9 +81,27 @@ public class LevelCreator : MonoBehaviour
     private Vector3 BONUS_SCALE = new Vector3(8.0f, 8.0f, 8.0f);
     private Vector2 BONUS_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
+	private List<GameObject> walls;
+	private List<bool> animUpWall;
+	private List<bool> animFrontWall;
+	private List<bool> animBackWall;
+
+	private int state;
+	private int timeState;
+	private int MAX_TIME_STATE;
+
     void Start()
     {
         fileName += "level_" + actualLevel + ".txt";
+	
+		walls = new List<GameObject>();
+		animUpWall = new List<bool>();
+		animFrontWall = new List<bool>();
+		animBackWall = new List<bool>();
+
+		state = 0;
+		timeState = 0;
+		MAX_TIME_STATE = 15;
 
         readMap();
         placeFloor();
@@ -88,7 +110,37 @@ public class LevelCreator : MonoBehaviour
 
     void Update()
     {
-        
+		if (timeState == MAX_TIME_STATE)
+		{
+			timeState = 0;
+			state = state + 1;
+			if (state == 2) state = 0;
+
+			float xOffset = 0.0f;
+			if (state == 1) xOffset = 0.5f;
+			Vector2 offset = new Vector2(xOffset, 1.0f);
+
+			for (int i = 0; i < walls.Count; ++i) {
+				if (animUpWall[i]) {
+					GameObject face = walls[i].transform.FindChild ("Top").gameObject;
+					Renderer rend = face.GetComponent<Renderer>();
+					rend.material.mainTextureOffset = offset;
+				}
+				if (animFrontWall[i]) {
+					GameObject face = walls[i].transform.FindChild ("Front").gameObject;
+					Renderer rend = face.GetComponent<Renderer>();
+					rend.material.mainTextureOffset = offset;
+				}
+				if (animBackWall[i]) {
+					GameObject face = walls[i].transform.FindChild ("Back").gameObject;
+					Renderer rend = face.GetComponent<Renderer>();
+					rend.material.mainTextureOffset = offset;
+				}
+			}
+		}
+
+		++timeState;
+
     }
 
     bool readMap()
@@ -376,28 +428,53 @@ public class LevelCreator : MonoBehaviour
                             Vector3 center = newObject.transform.position;
                             //center -= new Vector3(WALL_SCALE.x / (5f * TILE_SIZE), 0, WALL_SCALE.z / 2);
                             newObject.transform.RotateAround(center, transform.up, WALL_V_ANGLE);
-                        }
+						}
 
+						walls.Add (newObject);
 
-                        GameObject front = newObject.transform.FindChild("Front").gameObject;
-                        GameObject back = newObject.transform.FindChild("Back").gameObject;
+						GameObject front = newObject.transform.FindChild("Front").gameObject;
+						GameObject back = newObject.transform.FindChild("Back").gameObject;
+						GameObject top = newObject.transform.FindChild("Top").gameObject;
 
-                        bool rand = Random.value <= 0.5;
-                        Debug.Log(rand);
-                        if (rand)
-                        {
-                            Renderer renderer1 = front.GetComponent<Renderer>();
-                            renderer1.material = wallMaterial1;
-                            Renderer renderer2 = back.GetComponent<Renderer>();
-                            renderer2.material = wallMaterial2;
-                        }
-                        else
-                        {
-                            Renderer renderer1 = back.GetComponent<Renderer>();
-                            renderer1.material = wallMaterial1;
-                            Renderer renderer2 = front.GetComponent<Renderer>();
-                            renderer2.material = wallMaterial2;
-                        }
+                        float rand = Random.value;
+						Material matLat1, matLat2, matUp;
+						bool animLat1, animLat2, animUp;
+						if (rand <= 0.33f) {
+							matLat1 = wallMat_LatBig1;
+							matLat2 = wallMat_LatBig3;
+							animLat1 = true;
+							animLat2 = false;
+
+						} else if (rand <= 0.66f) {
+							matLat1 = wallMat_LatBig2;
+							matLat2 = wallMat_LatBig3;
+							animLat1 = false;
+							animLat2 = false;
+						} else {
+							matLat1 = wallMat_LatBig3;
+							matLat2 = wallMat_LatBig1;
+							animLat1 = false;
+							animLat2 = true;
+						}
+
+						if (rand <= 0.5f) {
+							matUp = wallMat_Up1;
+							animUp = true;
+						} else {
+							matUp = wallMat_Up2;
+							animUp = false;
+						}
+
+						animFrontWall.Add (animLat1);
+						animBackWall.Add (animLat2);
+						animUpWall.Add (animUp);
+
+						Renderer rend1 = front.GetComponent<Renderer>();
+						Renderer rend2 = back.GetComponent<Renderer>();
+						Renderer rend3 = top.GetComponent<Renderer>();
+						rend1.material = matLat1;
+						rend2.material = matLat2;
+						rend3.material = matUp;
                     }
                 }
             }
