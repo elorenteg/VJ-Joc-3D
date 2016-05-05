@@ -59,7 +59,9 @@ public class LevelCreator : MonoBehaviour
     private float PACMAN_Y_POS = 18.0f;
     private float COIN_Y_POS = 10.0f;
     private float BONUS_Y_POS = 13.0f;
-    
+
+
+    private float FLOOR_HEIGHT = 1.0f;
     private const float WALL_HEIGHT = 7.5f;
     private Vector3 WALL_SCALE = new Vector3(4*TILE_SIZE, WALL_HEIGHT, 2*TILE_SIZE);
     private int WALL_V_ANGLE = -90;
@@ -207,7 +209,7 @@ public class LevelCreator : MonoBehaviour
     {
         Vector3 floorPosition = new Vector3(MAP_HEIGHT*TILE_SIZE/2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
-        Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, 1.0f, MAP_HEIGHT * TILE_SIZE);
+        Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, FLOOR_HEIGHT, MAP_HEIGHT * TILE_SIZE);
 
         floorPosition.x -= WALL_SCALE.x;
         floorPosition.z += WALL_SCALE.x;
@@ -241,7 +243,7 @@ public class LevelCreator : MonoBehaviour
                     if (cell == WALL_V_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT/2, i * TILE_SIZE);
                         cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
@@ -254,7 +256,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == WALL_H_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2, i * TILE_SIZE);
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT/2, i * TILE_SIZE);
                         cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
