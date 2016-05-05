@@ -177,17 +177,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 1907456638}
   wall: {fileID: 162220, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
-  wallMat_LatSmall: {fileID: 2100000, guid: fd6ef1323d92b1a4b8bc04d2c7251124, type: 2}
-  wallMat_LatBig1: {fileID: 2100000, guid: 1b190bf415e760f468e94bec4922d876, type: 2}
-  wallMat_LatBig2: {fileID: 2100000, guid: 3fddffeb285b80240ac78c7d92572229, type: 2}
-  wallMat_LatBig3: {fileID: 2100000, guid: 50062f87e1b4d51419ee98aee1011f25, type: 2}
-  wallMat_Up1: {fileID: 2100000, guid: 7422d46a4e7eb2f4d80b6cd9043de56e, type: 2}
-  wallMat_Up2: {fileID: 2100000, guid: 03c2ce2cc7cb71443ac5ddb6b212028e, type: 2}
   texWallLatSmall: {fileID: 2800000, guid: 90ea9c25c1a3e80428b9cd851c3e5006, type: 3}
   texWallLatBig1: {fileID: 2800000, guid: bcb6baea1f8c6594a9e578dd6ca60df1, type: 3}
   texWallLatBig2: {fileID: 2800000, guid: 2fb6c89f80e8b7c44b720d9971f7486c, type: 3}
   texWallLatBig3: {fileID: 2800000, guid: d6c873bea11f82043a9dca218d1a7ee0, type: 3}
-  texWallUp1: {fileID: 2800000, guid: 4b88edde0b5e9ad4182b0cd29f787f81, type: 3}
+  texWallUp1: {fileID: 2800000, guid: 0da919437339dea4085d2eb91a8db267, type: 3}
   texWallUp2: {fileID: 2800000, guid: a1b97627875172342b93068aaf46a774, type: 3}
   floor: {fileID: 125800, guid: e318b761685e5de4ca4d8746dccfbdbc, type: 2}
   floorTexture: {fileID: 2800000, guid: 28184d57e2ff1d7419a87b36dfb0b512, type: 3}
