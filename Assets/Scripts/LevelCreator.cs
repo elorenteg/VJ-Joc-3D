@@ -99,7 +99,7 @@ public class LevelCreator : MonoBehaviour
 		animBackWall = new List<bool>();
 
 		timeState = 0;
-		MAX_TIME_STATE = 15;
+		MAX_TIME_STATE = 8;
 
         readMap();
         placeFloor();
