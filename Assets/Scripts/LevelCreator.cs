@@ -8,12 +8,12 @@ public class LevelCreator : MonoBehaviour
 {
     public GameObject cameraObject;
 	public GameObject wall;
-	public Material wallMat_LatSmall;
-	public Material wallMat_LatBig1;
-	public Material wallMat_LatBig2;
-	public Material wallMat_LatBig3;
-	public Material wallMat_Up1;
-	public Material wallMat_Up2;
+	public Texture texWallLatSmall;
+	public Texture texWallLatBig1;
+	public Texture texWallLatBig2;
+	public Texture texWallLatBig3;
+	public Texture texWallUp1;
+	public Texture texWallUp2;
     public GameObject floor;
     public Texture floorTexture;
     public GameObject pacman;
@@ -86,7 +86,6 @@ public class LevelCreator : MonoBehaviour
 	private List<bool> animFrontWall;
 	private List<bool> animBackWall;
 
-	private int state;
 	private int timeState;
 	private int MAX_TIME_STATE;
 
@@ -99,7 +98,6 @@ public class LevelCreator : MonoBehaviour
 		animFrontWall = new List<bool>();
 		animBackWall = new List<bool>();
 
-		state = 0;
 		timeState = 0;
 		MAX_TIME_STATE = 15;
 
@@ -113,29 +111,9 @@ public class LevelCreator : MonoBehaviour
 		if (timeState == MAX_TIME_STATE)
 		{
 			timeState = 0;
-			state = state + 1;
-			if (state == 2) state = 0;
-
-			float xOffset = 0.0f;
-			if (state == 1) xOffset = 0.5f;
-			Vector2 offset = new Vector2(xOffset, 1.0f);
 
 			for (int i = 0; i < walls.Count; ++i) {
-				if (animUpWall[i]) {
-					GameObject face = walls[i].transform.FindChild ("Top").gameObject;
-					Renderer rend = face.GetComponent<Renderer>();
-					rend.material.mainTextureOffset = offset;
-				}
-				if (animFrontWall[i]) {
-					GameObject face = walls[i].transform.FindChild ("Front").gameObject;
-					Renderer rend = face.GetComponent<Renderer>();
-					rend.material.mainTextureOffset = offset;
-				}
-				if (animBackWall[i]) {
-					GameObject face = walls[i].transform.FindChild ("Back").gameObject;
-					Renderer rend = face.GetComponent<Renderer>();
-					rend.material.mainTextureOffset = offset;
-				}
+				walls[i].GetComponent<WallAnimate>().AnimateTexture ();
 			}
 		}
 
@@ -432,49 +410,39 @@ public class LevelCreator : MonoBehaviour
 
 						walls.Add (newObject);
 
-						GameObject front = newObject.transform.FindChild("Front").gameObject;
-						GameObject back = newObject.transform.FindChild("Back").gameObject;
-						GameObject top = newObject.transform.FindChild("Top").gameObject;
-
-                        float rand = Random.value;
-						Material matLat1, matLat2, matUp;
+						float rand = Random.value;
+						Texture texLat1, texLat2, texUp;
 						bool animLat1, animLat2, animUp;
 						if (rand <= 0.33f) {
-							matLat1 = wallMat_LatBig1;
-							matLat2 = wallMat_LatBig3;
+							texLat1 = texWallLatBig1;
+							texLat2 = texWallLatBig3;
 							animLat1 = true;
 							animLat2 = false;
 
 						} else if (rand <= 0.66f) {
-							matLat1 = wallMat_LatBig2;
-							matLat2 = wallMat_LatBig3;
+							texLat1 = texWallLatBig2;
+							texLat2 = texWallLatBig3;
 							animLat1 = false;
 							animLat2 = false;
 						} else {
-							matLat1 = wallMat_LatBig3;
-							matLat2 = wallMat_LatBig1;
+							texLat1 = texWallLatBig3;
+							texLat2 = texWallLatBig1;
 							animLat1 = false;
 							animLat2 = true;
 						}
 
 						if (rand <= 0.5f) {
-							matUp = wallMat_Up1;
+							texUp = texWallUp1;
 							animUp = true;
 						} else {
-							matUp = wallMat_Up2;
+							texUp = texWallUp2;
 							animUp = false;
 						}
 
-						animFrontWall.Add (animLat1);
-						animBackWall.Add (animLat2);
-						animUpWall.Add (animUp);
-
-						Renderer rend1 = front.GetComponent<Renderer>();
-						Renderer rend2 = back.GetComponent<Renderer>();
-						Renderer rend3 = top.GetComponent<Renderer>();
-						rend1.material = matLat1;
-						rend2.material = matLat2;
-						rend3.material = matUp;
+						WallAnimate animationScript = newObject.GetComponent<WallAnimate>();
+						animationScript.SetTextures (texUp, texLat1, texLat2, texWallLatSmall);
+						animationScript.SetAnimatedWalls (animUp, animLat1, animLat2);
+						animationScript.AnimateTexture ();
                     }
                 }
             }
