@@ -7,6 +7,9 @@ using System.Collections.Generic;
 public class LevelCreator : MonoBehaviour
 {
     public GameObject cameraObject;
+    public GameObject LightObject;
+    public GameObject plane;
+    public GameObject hole;
     public GameObject wall;
     public Texture texWallLatSmall;
     public Texture texWallLatBig1;
@@ -31,20 +34,25 @@ public class LevelCreator : MonoBehaviour
     private int[][] Map;
     private int MAP_WIDTH;
     private int MAP_HEIGHT;
+    private const int PLANE_HEIGHT = TILE_SIZE * 150;
+    private const int PLANE_SEP = 30;
 
     private static int CELL_EMPTY = 0;
     private static char WALL_V = 'V';
     private static int WALL_V_C = 1;
     private static char WALL_H = 'H';
     private static int WALL_H_C = 2;
+    private static char WALL_V_RES = 'v';
+    private static char WALL_H_RES = 'h';
+    private static int WALL_RES = 3;
     private static char GHOST_B = 'B';
-    private static int GHOST_B_C = 3;
+    private static int GHOST_B_C = 4;
     private static char GHOST_O = 'O';
-    private static int GHOST_O_C = 4;
+    private static int GHOST_O_C = 5;
     private static char GHOST_P = 'P';
-    private static int GHOST_P_C = 5;
+    private static int GHOST_P_C = 6;
     private static char GHOST_R = 'R';
-    private static int GHOST_R_C = 6;
+    private static int GHOST_R_C = 7;
     private static char PACMAN = '+';
     private static int PACMAN_C = 10;
 
@@ -121,6 +129,7 @@ public class LevelCreator : MonoBehaviour
         string fileLocation = levelPath + "level_" + level + ".txt";
         readMap(fileLocation);
         placeFloor();
+        placePlanes();
         placeObjects();
     }
 
@@ -169,6 +178,10 @@ public class LevelCreator : MonoBehaviour
                             else if (line[j] == WALL_H)
                             {
                                 MapLine[j] = WALL_H_C;
+                            }
+                            else  if (line[j] == WALL_V_RES || line[j] == WALL_H_RES)
+                            {
+                                MapLine[j] = WALL_RES;
                             }
                             else if (line[j] == GHOST_B)
                             {
@@ -237,6 +250,45 @@ public class LevelCreator : MonoBehaviour
 
         newFloor.SetActive(true);
     }
+
+    void placePlanes()
+     {
+
+        Vector4 xSca = new Vector4(MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
+ 
+         Vector4 xPos = new Vector4(MAP_WIDTH * TILE_SIZE / 2, MAP_WIDTH * TILE_SIZE + PLANE_SEP, MAP_WIDTH * TILE_SIZE / 2, 0 - PLANE_SEP);
+         Vector4 zPos = new Vector4(0 - PLANE_SEP, MAP_HEIGHT * TILE_SIZE / 2, MAP_HEIGHT * TILE_SIZE + PLANE_SEP, MAP_HEIGHT * TILE_SIZE / 2);
+ 
+         Vector4 xRot = new Vector4(90, 90, 90, 90);
+         Vector4 yRot = new Vector4(0, 270, 180, 90);
+ 
+         for (int i = 0; i< 4; ++i)
+         {
+             Vector3 planePosition = new Vector3(xPos[i], -PLANE_HEIGHT / 4, zPos[i]);
+             Vector3 planeRotation = new Vector3(xRot[i], yRot[i], 0.0f);
+             Vector3 planeScale = new Vector3(xSca[i] + PLANE_SEP * TILE_SIZE, 1, PLANE_HEIGHT);
+ 
+             GameObject newPlane = Instantiate(plane, planePosition, Quaternion.Euler(planeRotation)) as GameObject;
+             newPlane.transform.localScale = planeScale;
+ 
+             Renderer renderer = newPlane.GetComponent<Renderer>();
+             renderer.material.mainTextureScale = new Vector2(xSca[i] / TILE_SIZE / 32, PLANE_HEIGHT / TILE_SIZE / 28);
+ 
+             newPlane.SetActive(true);
+         }
+ 
+         Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_WIDTH * TILE_SIZE / 2);
+         Vector3 holeRotation = new Vector3(0, 0, 0);
+         Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
+ 
+         holePosition.x -= WALL_SCALE.x;
+        holePosition.z += WALL_SCALE.x;
+ 
+         GameObject newHole = Instantiate(hole, holePosition, Quaternion.Euler(holeRotation)) as GameObject;
+         newHole.transform.localScale = holeScale;
+ 
+         newHole.SetActive(true);
+     }
 
     private void placeObjects()
     {
@@ -377,6 +429,7 @@ public class LevelCreator : MonoBehaviour
 
                         cellPosition.y -= 4 * TILE_SIZE;
                     }
+                    else if (cell == WALL_RES) continue;
                     else
                     {
                         Debug.LogError("Creating a non empty cell");
@@ -415,6 +468,8 @@ public class LevelCreator : MonoBehaviour
                         FollowPacman cameraScript = cameraObject.GetComponent<Camera>().GetComponent<FollowPacman>();
                         cameraScript.SetPacman(newObject);
                         cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
+
+                        LightObject.GetComponent<Light>().transform.position = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 30, MAP_HEIGHT * TILE_SIZE / 2);
                     }
                     else if (cell == WALL_H_C || cell == WALL_V_C)
                     {
