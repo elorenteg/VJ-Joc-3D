@@ -133,23 +133,22 @@ public class PacmanMove : MonoBehaviour
     {
         if (collision.gameObject.tag == "ghost")
         {
-            Debug.Log("Collision - GHOST :D");
+            Debug.Log("PacMan has collisioned with a GHOST");
             GhostMove ghostScript = collision.gameObject.GetComponent<GhostMove>();
             ghostScript.SetDead();
         }
 
         if (collision.gameObject.tag == "coin")
         {
-            Debug.Log("Collision - COIN :D");
+            Debug.Log("PacMan has eaten a COIN");
             Destroy(collision.gameObject);
 
-            //TODO Hardcoded
-            levelManager.increaseScore(1);
+            levelManager.coinEaten();
         }
 
         if (collision.gameObject.tag == "bonus")
         {
-            Debug.Log("Collision - BONUS :D");
+            Debug.Log("PacMan has eaten a BONUS");
             Destroy(collision.gameObject);
         }
     }

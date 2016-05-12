@@ -7,13 +7,13 @@ using System.Collections.Generic;
 public class LevelCreator : MonoBehaviour
 {
     public GameObject cameraObject;
-	public GameObject wall;
-	public Texture texWallLatSmall;
-	public Texture texWallLatBig1;
-	public Texture texWallLatBig2;
-	public Texture texWallLatBig3;
-	public Texture texWallUp1;
-	public Texture texWallUp2;
+    public GameObject wall;
+    public Texture texWallLatSmall;
+    public Texture texWallLatBig1;
+    public Texture texWallLatBig2;
+    public Texture texWallLatBig3;
+    public Texture texWallUp1;
+    public Texture texWallUp2;
     public GameObject floor;
     public Texture floorTexture;
     public GameObject pacman;
@@ -24,10 +24,8 @@ public class LevelCreator : MonoBehaviour
     public Texture redGhostTexture;
     public GameObject coin;
     public GameObject bonus;
-    public string actualLevel;
 
-    private static string appPath = "..\\VJ-Joc-3D";
-    private string fileName = appPath + ".\\Assets\\Maps\\";
+    private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
     private const int TILE_SIZE = 2;
     private int[][] Map;
@@ -60,10 +58,9 @@ public class LevelCreator : MonoBehaviour
     private float COIN_Y_POS = 10.0f;
     private float BONUS_Y_POS = 13.0f;
 
-
     private float FLOOR_HEIGHT = 1.0f;
     private const float WALL_HEIGHT = 7.5f;
-    private Vector3 WALL_SCALE = new Vector3(4*TILE_SIZE, WALL_HEIGHT, 2*TILE_SIZE);
+    private Vector3 WALL_SCALE = new Vector3(4 * TILE_SIZE, WALL_HEIGHT, 2 * TILE_SIZE);
     private int WALL_V_ANGLE = -90;
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
@@ -83,47 +80,49 @@ public class LevelCreator : MonoBehaviour
     private Vector3 BONUS_SCALE = new Vector3(8.0f, 8.0f, 8.0f);
     private Vector2 BONUS_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
-	private List<GameObject> walls;
-	private List<bool> animUpWall;
-	private List<bool> animFrontWall;
-	private List<bool> animBackWall;
+    private List<GameObject> walls;
+    private List<bool> animUpWall;
+    private List<bool> animFrontWall;
+    private List<bool> animBackWall;
 
-	private int timeState;
-	private int MAX_TIME_STATE;
+    private int timeState;
+    private int MAX_TIME_STATE;
 
     void Start()
     {
-        fileName += "level_" + actualLevel + ".txt";
-	
-		walls = new List<GameObject>();
-		animUpWall = new List<bool>();
-		animFrontWall = new List<bool>();
-		animBackWall = new List<bool>();
+        walls = new List<GameObject>();
+        animUpWall = new List<bool>();
+        animFrontWall = new List<bool>();
+        animBackWall = new List<bool>();
 
-		timeState = 0;
-		MAX_TIME_STATE = 20;
-
-        readMap();
-        placeFloor();
-        placeObjects();
+        timeState = 0;
+        MAX_TIME_STATE = 20;
     }
 
     void Update()
     {
-		if (timeState == MAX_TIME_STATE)
-		{
-			timeState = 0;
+        if (timeState == MAX_TIME_STATE)
+        {
+            timeState = 0;
 
-			for (int i = 0; i < walls.Count; ++i) {
-				walls[i].GetComponent<WallAnimate>().AnimateTexture ();
-			}
-		}
+            for (int i = 0; i < walls.Count; ++i)
+            {
+                walls[i].GetComponent<WallAnimate>().AnimateTexture();
+            }
+        }
 
-		++timeState;
-
+        ++timeState;
     }
 
-    bool readMap()
+    public void loadLevel(int level)
+    {
+        string fileLocation = levelPath + "level_" + level + ".txt";
+        readMap(fileLocation);
+        placeFloor();
+        placeObjects();
+    }
+
+    private bool readMap(string fileName)
     {
         try
         {
@@ -135,7 +134,6 @@ public class LevelCreator : MonoBehaviour
 
                 Map = new int[MAP_HEIGHT][];
 
-                // While there's lines left in the text file, do this:
                 int i = MAP_HEIGHT - 1;
                 do
                 {
@@ -205,9 +203,9 @@ public class LevelCreator : MonoBehaviour
         }
     }
 
-    void placeFloor()
+    private void placeFloor()
     {
-        Vector3 floorPosition = new Vector3(MAP_HEIGHT*TILE_SIZE/2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 floorPosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
         Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, FLOOR_HEIGHT, MAP_HEIGHT * TILE_SIZE);
 
@@ -224,7 +222,7 @@ public class LevelCreator : MonoBehaviour
         newFloor.SetActive(true);
     }
 
-    void placeObjects()
+    private void placeObjects()
     {
         for (int i = 0; i < MAP_HEIGHT; ++i)
         {
@@ -243,7 +241,7 @@ public class LevelCreator : MonoBehaviour
                     if (cell == WALL_V_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT/2, i * TILE_SIZE);
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, i * TILE_SIZE);
                         cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
@@ -256,7 +254,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == WALL_H_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT/2, i * TILE_SIZE);
+                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, i * TILE_SIZE);
                         cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
@@ -332,7 +330,7 @@ public class LevelCreator : MonoBehaviour
                         cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
 
                         // El mapa es de numTiles pares y asi colocamos al Pacman entre medio de dos tiles
-                        if (j < MAP_WIDTH/2) cellPosition.x += TILE_SIZE / 2;
+                        if (j < MAP_WIDTH / 2) cellPosition.x += TILE_SIZE / 2;
                         else cellPosition.x -= TILE_SIZE / 2;
                     }
                     else if (cell == COIN_C)
@@ -380,7 +378,7 @@ public class LevelCreator : MonoBehaviour
                     newObject.transform.localScale = cellScale;
 
                     newObject.SetActive(true);
-                    
+
                     int angle = -90;
                     if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 90;
 
@@ -404,47 +402,54 @@ public class LevelCreator : MonoBehaviour
                     }
                     else if (cell == WALL_H_C || cell == WALL_V_C)
                     {
-                        if (cell == WALL_V_C) {
+                        if (cell == WALL_V_C)
+                        {
                             Vector3 center = newObject.transform.position;
                             //center -= new Vector3(WALL_SCALE.x / (5f * TILE_SIZE), 0, WALL_SCALE.z / 2);
                             newObject.transform.RotateAround(center, transform.up, WALL_V_ANGLE);
-						}
+                        }
 
-						walls.Add (newObject);
+                        walls.Add(newObject);
 
-						float rand = Random.value;
-						Texture texLat1, texLat2, texUp;
-						bool animLat1, animLat2, animUp;
-						if (rand <= 0.33f) {
-							texLat1 = texWallLatBig1;
-							texLat2 = texWallLatBig3;
-							animLat1 = true;
-							animLat2 = false;
+                        float rand = Random.value;
+                        Texture texLat1, texLat2, texUp;
+                        bool animLat1, animLat2, animUp;
+                        if (rand <= 0.33f)
+                        {
+                            texLat1 = texWallLatBig1;
+                            texLat2 = texWallLatBig3;
+                            animLat1 = true;
+                            animLat2 = false;
 
-						} else if (rand <= 0.66f) {
-							texLat1 = texWallLatBig2;
-							texLat2 = texWallLatBig3;
-							animLat1 = false;
-							animLat2 = false;
-						} else {
-							texLat1 = texWallLatBig3;
-							texLat2 = texWallLatBig1;
-							animLat1 = false;
-							animLat2 = true;
-						}
+                        }
+                        else if (rand <= 0.66f)
+                        {
+                            texLat1 = texWallLatBig2;
+                            texLat2 = texWallLatBig3;
+                            animLat1 = false;
+                            animLat2 = false;
+                        }
+                        else {
+                            texLat1 = texWallLatBig3;
+                            texLat2 = texWallLatBig1;
+                            animLat1 = false;
+                            animLat2 = true;
+                        }
 
-						if (rand <= 0.5f) {
-							texUp = texWallUp1;
-							animUp = true;
-						} else {
-							texUp = texWallUp2;
-							animUp = false;
-						}
+                        if (rand <= 0.5f)
+                        {
+                            texUp = texWallUp1;
+                            animUp = true;
+                        }
+                        else {
+                            texUp = texWallUp2;
+                            animUp = false;
+                        }
 
-						WallAnimate animationScript = newObject.GetComponent<WallAnimate>();
-						animationScript.SetTextures (texUp, texLat1, texLat2, texWallLatSmall);
-						animationScript.SetAnimatedWalls (animUp, animLat1, animLat2);
-						animationScript.AnimateTexture ();
+                        WallAnimate animationScript = newObject.GetComponent<WallAnimate>();
+                        animationScript.SetTextures(texUp, texLat1, texLat2, texWallLatSmall);
+                        animationScript.SetAnimatedWalls(animUp, animLat1, animLat2);
+                        animationScript.AnimateTexture();
                     }
                 }
             }
