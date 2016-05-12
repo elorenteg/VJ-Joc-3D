@@ -196,7 +196,6 @@ MonoBehaviour:
   redGhostTexture: {fileID: 2800000, guid: f9353223c2dd82341a65af1612be92cf, type: 3}
   coin: {fileID: 138094, guid: 263508c16139fd041bbba38d50640697, type: 2}
   bonus: {fileID: 104492, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
-  actualLevel: 1
 --- !u!4 &1160761899
 Transform:
   m_ObjectHideFlags: 0
