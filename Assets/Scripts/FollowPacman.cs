@@ -14,7 +14,7 @@ public class FollowPacman : MonoBehaviour
     public void SetPacman(GameObject player)
     {
         pacman = player;
-
+        
         Update();
 
         transform.rotation = Quaternion.Euler(50, 0, 0);
@@ -30,6 +30,7 @@ public class FollowPacman : MonoBehaviour
 
     private void Update()
     {
+
         if (pacman != null)
         {
             Vector3 pacmanPosition = pacman.GetComponentInChildren<SkinnedMeshRenderer>().bounds.center;
