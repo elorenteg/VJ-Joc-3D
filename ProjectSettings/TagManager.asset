@@ -8,6 +8,8 @@ TagManager:
   - ghost
   - coin
   - bonus
+  - wall
+  - floor
   layers:
   - Default
   - TransparentFX

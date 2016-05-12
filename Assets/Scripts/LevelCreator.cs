@@ -116,10 +116,26 @@ public class LevelCreator : MonoBehaviour
 
     public void loadLevel(int level)
     {
+        DeleteAll();
+
         string fileLocation = levelPath + "level_" + level + ".txt";
         readMap(fileLocation);
         placeFloor();
         placeObjects();
+    }
+
+    public void DeleteAll()
+    {
+        string[] destroyTags = {"pacman", "ghost", "coin", "bonus", "wall", "floor"};
+
+        for (int i = 0; i < destroyTags.Length; ++i)
+        {
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(destroyTags[i]);
+            for (int j = 0; j < gameObjects.Length; j++)
+            {
+                Destroy(gameObjects[j]);
+            }
+        }
     }
 
     private bool readMap(string fileName)
