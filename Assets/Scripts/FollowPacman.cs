@@ -22,7 +22,7 @@ public class FollowPacman : MonoBehaviour
 
     public void SetInitPosition(int h, int w)
     {
-        Vector3 cameraPosition = new Vector3(h/2, 30, w/2);
+        Vector3 cameraPosition = new Vector3(h/2, 100, w/2);
 
         transform.position = cameraPosition;
         //transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
@@ -34,7 +34,7 @@ public class FollowPacman : MonoBehaviour
         if (pacman != null)
         {
             Vector3 pacmanPosition = pacman.GetComponentInChildren<SkinnedMeshRenderer>().bounds.center;
-            Vector3 cameraPosition = new Vector3(0, 30, -30);
+            Vector3 cameraPosition = new Vector3(0, 35, -30);
             transform.position = Vector3.Lerp(transform.position, pacmanPosition + cameraPosition, Time.deltaTime * smooth);
         }
     }
