@@ -98,11 +98,6 @@ public class LevelCreator : MonoBehaviour
 
     void Start()
     {
-        walls = new List<GameObject>();
-        animUpWall = new List<bool>();
-        animFrontWall = new List<bool>();
-        animBackWall = new List<bool>();
-
         timeState = 0;
         MAX_TIME_STATE = 20;
     }
@@ -135,6 +130,11 @@ public class LevelCreator : MonoBehaviour
 
     public void DeleteAll()
     {
+        walls = new List<GameObject>();
+        animUpWall = new List<bool>();
+        animFrontWall = new List<bool>();
+        animBackWall = new List<bool>();
+
         string[] destroyTags = {"pacman", "ghost", "coin", "bonus", "wall", "floor"};
 
         for (int i = 0; i < destroyTags.Length; ++i)
