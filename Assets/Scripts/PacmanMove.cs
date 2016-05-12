@@ -17,6 +17,11 @@ public class PacmanMove : MonoBehaviour
 
     private LevelManager levelManager;
 
+    private const int LEFT = 0;
+    private const int RIGHT = 1;
+    private const int UP = 2;
+    private const int DOWN = 3;
+
     // Use this for initialization
     void Start()
     {
@@ -35,80 +40,12 @@ public class PacmanMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool move = false;
-        float fixedAngle = 0.0f;
-
-        float prevAngle = transform.rotation.eulerAngles.y;
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            if ((prevAngle > 0.0f && prevAngle < 180.0f && Mathf.Abs(prevAngle - 0) > ERROR) ||
-                (prevAngle > 180.0f && prevAngle < 360.0f && Mathf.Abs(prevAngle - 360) > ERROR))
-            {
-
-                if (prevAngle < 180.0f)
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
-                else
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
-            }
-            else {
-                move = true;
-                fixedAngle = 0.0f;
-            }
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            if (Mathf.Abs(prevAngle - 180) > ERROR)
-            {
-                if (prevAngle < 180.0f)
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
-                else
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
-            }
-            else
-            {
-                move = true;
-                fixedAngle = 180.0f;
-            }
-        }
-        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            if (Mathf.Abs(prevAngle - 90) > ERROR)
-            {
-                if (prevAngle > 90.0f && prevAngle < 270.0f)
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
-                else
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
-            }
-            else
-            {
-                move = true;
-                fixedAngle = 90.0f;
-            }
-        }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            if (Mathf.Abs(prevAngle - 270) > ERROR)
-            {
-                if (prevAngle > 90.0f && prevAngle < 270.0f)
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), turnSpeed * Time.deltaTime);
-                else
-                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), turnSpeed * Time.deltaTime);
-            }
-            else
-            {
-                move = true;
-                fixedAngle = 270.0f;
-            }
-        }
-
+        bool move = rotate();
         if (move)
         {
             animationScript.PlaySound(animationScript.stateMove());
             animationScript.Animate(animationScript.stateMove());
-
-            Vector3 euler = transform.eulerAngles;
-            euler.y = fixedAngle;
-            transform.eulerAngles = euler;
+            
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
         }
 
@@ -127,6 +64,85 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
                                       | RigidbodyConstraints.FreezeRotationY
                                       | RigidbodyConstraints.FreezeRotationZ;
+    }
+
+    bool rotate()
+    {
+        bool rotateLeft = true;
+
+        bool fixAngle = false;
+        float fixedAngle = 0.0f;
+        float incAngle = turnSpeed * Time.deltaTime;
+        
+        float prevAngle = transform.rotation.eulerAngles.y;
+        float leftAngle = (prevAngle - incAngle) % 360;
+        float rightAngle = (prevAngle + incAngle) % 360;
+
+        bool rotate = false;
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            rotate = true;
+            if (prevAngle > 180.0f) rotateLeft = false;
+
+            if ((rotateLeft && leftAngle < 360.0f && leftAngle > 180.0f) || (!rotateLeft && rightAngle > 0.0f && rightAngle < 180.0f))
+            {
+                fixAngle = true;
+                fixedAngle = 0.0f;
+            }
+        }
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            rotate = true;
+            if (prevAngle < 180.0f) rotateLeft = false;
+            
+            if ((rotateLeft && leftAngle < 180.0f && leftAngle > 0.0f) || (!rotateLeft && rightAngle > 180.0f && rightAngle < 360.0f))
+            {
+                fixAngle = true;
+                fixedAngle = 180.0f;
+            }
+        }
+        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            rotate = true;
+            if (prevAngle > 270.0f || prevAngle < 90.0f) rotateLeft = false;
+            
+            if ((rotateLeft && (leftAngle < 90.0f || leftAngle > 270.0f)) || (!rotateLeft && rightAngle > 90.0f && rightAngle < 270.0f))
+            {
+                fixAngle = true;
+                fixedAngle = 90.0f;
+            }
+        }
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            rotate = true;
+            if (prevAngle > 90.0f && prevAngle < 270.0f) rotateLeft = false;
+            
+            if ((rotateLeft && leftAngle < 270.0f && leftAngle > 90.0f) || (!rotateLeft && (rightAngle > 270.0f || rightAngle < 90.0f)))
+            {
+                fixAngle = true;
+                fixedAngle = 270.0f;
+            }
+        }
+
+        if (rotate)
+        {
+            if (fixAngle) fixEulerAngle(fixedAngle);
+            else if (rotateLeft)
+                transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), incAngle);
+            else
+                transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), incAngle);
+
+            return fixAngle;
+        }
+
+        return false;
+    }
+
+    void fixEulerAngle(float fixedAngle)
+    {
+        Vector3 euler = transform.eulerAngles;
+        euler.y = fixedAngle;
+        transform.eulerAngles = euler;
     }
 
     void OnCollisionEnter(Collision collision)

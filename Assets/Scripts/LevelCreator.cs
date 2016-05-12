@@ -34,7 +34,7 @@ public class LevelCreator : MonoBehaviour
     private int[][] Map;
     private int MAP_WIDTH;
     private int MAP_HEIGHT;
-    private const int PLANE_HEIGHT = TILE_SIZE * 150;
+    private const int PLANE_HEIGHT = TILE_SIZE * 70;
     private const int PLANE_SEP = 30;
 
     private static int CELL_EMPTY = 0;
@@ -264,7 +264,7 @@ public class LevelCreator : MonoBehaviour
  
          for (int i = 0; i< 4; ++i)
          {
-             Vector3 planePosition = new Vector3(xPos[i], -PLANE_HEIGHT / 4, zPos[i]);
+             Vector3 planePosition = new Vector3(xPos[i], -PLANE_HEIGHT / 3, zPos[i]);
              Vector3 planeRotation = new Vector3(xRot[i], yRot[i], 0.0f);
              Vector3 planeScale = new Vector3(xSca[i] + PLANE_SEP * TILE_SIZE, 1, PLANE_HEIGHT);
  
