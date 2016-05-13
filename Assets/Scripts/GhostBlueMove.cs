@@ -3,8 +3,17 @@ using System.Collections;
 
 public class GhostBlueMove : GhostMove
 {
-	public void onMove()
+
+    public GhostBlueMove()
     {
-        Debug.Log("Moving BLUE_GHOST");
+
     }
+
+    public void onMove()
+    {
+        Debug.Log("Moving BLUE_GHOST" + this.getBaseGhostSpeed());
+
+        transform.Translate(Vector3.left * this.getBaseGhostSpeed() * Time.deltaTime);
+    }
+
 }

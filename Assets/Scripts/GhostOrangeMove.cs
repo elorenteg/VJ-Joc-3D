@@ -3,8 +3,14 @@ using System.Collections;
 
 public class GhostOrangeMove : GhostMove
 {
+
+    public GhostOrangeMove()
+    {
+
+    }
+
     public void onMove()
     {
-        Debug.Log("Moving ORANGE_GHOST");
+
     }
 }

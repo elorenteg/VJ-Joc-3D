@@ -4,17 +4,16 @@ using System.Collections;
 
 public class GhostMove : MonoBehaviour
 {
-    public float moveSpeed;
-    public float turnSpeed;
+    protected static float GHOST_SPEED = 10;
+    protected static float GHOST_ROTATE_SPEED = 100;
+
+    private static int MAX_TIME_STATE = 15;
 
     private float GHOST_Y_POS = 18.5f;
 
-    private bool isDead;
-
     private int state;
     private int timeState;
-    private int MAX_TIME_STATE;
-
+    private bool isDead;
 
     private GhostAnimate animationScript;
 
@@ -24,7 +23,6 @@ public class GhostMove : MonoBehaviour
         isDead = false;
         state = 0;
         timeState = 0;
-        MAX_TIME_STATE = 15;
         
         animationScript = GetComponent<GhostAnimate>();
         //animationScript.SetTextures(animationScript.stateMove(), state);
@@ -61,5 +59,10 @@ public class GhostMove : MonoBehaviour
 
         // Mover a base
         // isDead = false;
+    }
+
+    protected float getBaseGhostSpeed()
+    {
+        return GHOST_SPEED;
     }
 }
