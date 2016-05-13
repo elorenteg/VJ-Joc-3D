@@ -37,6 +37,11 @@ public class LevelCreator : MonoBehaviour
     private const int PLANE_HEIGHT = TILE_SIZE * 70;
     private const int PLANE_SEP = 30;
 
+    public static string TAG_GHOST_BLUE = "ghost_blue";
+    public static string TAG_GHOST_ORANGE = "ghost_orange";
+    public static string TAG_GHOST_PINK = "ghost_pink";
+    public static string TAG_GHOST_RED = "ghost_red";
+
     private static int CELL_EMPTY = 0;
     private static char WALL_V = 'V';
     private static int WALL_V_C = 1;
@@ -135,7 +140,8 @@ public class LevelCreator : MonoBehaviour
         animFrontWall = new List<bool>();
         animBackWall = new List<bool>();
 
-        string[] destroyTags = {"pacman", "ghost", "coin", "bonus", "wall", "floor"};
+        string[] destroyTags = { "pacman", "ghost", "coin", "bonus", "wall", "floor",
+            TAG_GHOST_BLUE, TAG_GHOST_ORANGE, TAG_GHOST_PINK, TAG_GHOST_RED};
 
         for (int i = 0; i < destroyTags.Length; ++i)
         {
@@ -179,7 +185,7 @@ public class LevelCreator : MonoBehaviour
                             {
                                 MapLine[j] = WALL_H_C;
                             }
-                            else  if (line[j] == WALL_V_RES || line[j] == WALL_H_RES)
+                            else if (line[j] == WALL_V_RES || line[j] == WALL_H_RES)
                             {
                                 MapLine[j] = WALL_RES;
                             }
@@ -252,43 +258,43 @@ public class LevelCreator : MonoBehaviour
     }
 
     void placePlanes()
-     {
+    {
 
         Vector4 xSca = new Vector4(MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
- 
-         Vector4 xPos = new Vector4(MAP_WIDTH * TILE_SIZE / 2, MAP_WIDTH * TILE_SIZE + PLANE_SEP, MAP_WIDTH * TILE_SIZE / 2, 0 - PLANE_SEP);
-         Vector4 zPos = new Vector4(0 - PLANE_SEP, MAP_HEIGHT * TILE_SIZE / 2, MAP_HEIGHT * TILE_SIZE + PLANE_SEP, MAP_HEIGHT * TILE_SIZE / 2);
- 
-         Vector4 xRot = new Vector4(90, 90, 90, 90);
-         Vector4 yRot = new Vector4(0, 270, 180, 90);
- 
-         for (int i = 0; i< 4; ++i)
-         {
-             Vector3 planePosition = new Vector3(xPos[i], -PLANE_HEIGHT / 3, zPos[i]);
-             Vector3 planeRotation = new Vector3(xRot[i], yRot[i], 0.0f);
-             Vector3 planeScale = new Vector3(xSca[i] + PLANE_SEP * TILE_SIZE, 1, PLANE_HEIGHT);
- 
-             GameObject newPlane = Instantiate(plane, planePosition, Quaternion.Euler(planeRotation)) as GameObject;
-             newPlane.transform.localScale = planeScale;
- 
-             Renderer renderer = newPlane.GetComponent<Renderer>();
-             renderer.material.mainTextureScale = new Vector2(xSca[i] / TILE_SIZE / 32, PLANE_HEIGHT / TILE_SIZE / 28);
- 
-             newPlane.SetActive(true);
-         }
- 
-         Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_WIDTH * TILE_SIZE / 2);
-         Vector3 holeRotation = new Vector3(0, 0, 0);
-         Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
- 
-         holePosition.x -= WALL_SCALE.x;
+
+        Vector4 xPos = new Vector4(MAP_WIDTH * TILE_SIZE / 2, MAP_WIDTH * TILE_SIZE + PLANE_SEP, MAP_WIDTH * TILE_SIZE / 2, 0 - PLANE_SEP);
+        Vector4 zPos = new Vector4(0 - PLANE_SEP, MAP_HEIGHT * TILE_SIZE / 2, MAP_HEIGHT * TILE_SIZE + PLANE_SEP, MAP_HEIGHT * TILE_SIZE / 2);
+
+        Vector4 xRot = new Vector4(90, 90, 90, 90);
+        Vector4 yRot = new Vector4(0, 270, 180, 90);
+
+        for (int i = 0; i < 4; ++i)
+        {
+            Vector3 planePosition = new Vector3(xPos[i], -PLANE_HEIGHT / 3, zPos[i]);
+            Vector3 planeRotation = new Vector3(xRot[i], yRot[i], 0.0f);
+            Vector3 planeScale = new Vector3(xSca[i] + PLANE_SEP * TILE_SIZE, 1, PLANE_HEIGHT);
+
+            GameObject newPlane = Instantiate(plane, planePosition, Quaternion.Euler(planeRotation)) as GameObject;
+            newPlane.transform.localScale = planeScale;
+
+            Renderer renderer = newPlane.GetComponent<Renderer>();
+            renderer.material.mainTextureScale = new Vector2(xSca[i] / TILE_SIZE / 32, PLANE_HEIGHT / TILE_SIZE / 28);
+
+            newPlane.SetActive(true);
+        }
+
+        Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 holeRotation = new Vector3(0, 0, 0);
+        Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
+
+        holePosition.x -= WALL_SCALE.x;
         holePosition.z += WALL_SCALE.x;
- 
-         GameObject newHole = Instantiate(hole, holePosition, Quaternion.Euler(holeRotation)) as GameObject;
-         newHole.transform.localScale = holeScale;
- 
-         newHole.SetActive(true);
-     }
+
+        GameObject newHole = Instantiate(hole, holePosition, Quaternion.Euler(holeRotation)) as GameObject;
+        newHole.transform.localScale = holeScale;
+
+        newHole.SetActive(true);
+    }
 
     private void placeObjects()
     {
@@ -462,6 +468,27 @@ public class LevelCreator : MonoBehaviour
                         GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
                         animationScript.SetBodyTexture(texture);
                         animationScript.Start();
+
+                        if (cell == GHOST_B_C)
+                        {
+                            newObject.AddComponent<GhostBlueMove>();
+                            newObject.tag = TAG_GHOST_BLUE;
+                        }
+                        else if (cell == GHOST_O_C)
+                        {
+                            newObject.AddComponent<GhostOrangeMove>();
+                            newObject.tag = TAG_GHOST_ORANGE;
+                        }
+                        else if (cell == GHOST_P_C)
+                        {
+                            newObject.AddComponent<GhostPinkMove>();
+                            newObject.tag = TAG_GHOST_PINK;
+                        }
+                        else if (cell == GHOST_R_C)
+                        {
+                            newObject.AddComponent<GhostRedMove>();
+                            newObject.tag = TAG_GHOST_RED;
+                        }
                     }
                     else if (cell == PACMAN_C)
                     {

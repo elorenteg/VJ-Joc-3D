@@ -22,12 +22,17 @@ public class LevelManager : MonoBehaviour
     private LevelCreator levelCreator;
     private DataManager dataManager;
 
+    private GhostBlueMove ghostBlueMove;
+    private GhostOrangeMove ghostOrangeMove;
+    private GhostPinkMove ghostPinkMove;
+    private GhostRedMove ghostRedMove;
+
     void Start()
     {
         GameObject gameManager = GameObject.Find("GameManager");
         levelCreator = gameManager.GetComponent<LevelCreator>();
         dataManager = gameManager.GetComponent<DataManager>();
-
+       
         currentHighScore = dataManager.readMaxScore();
 
         startGame();
@@ -45,12 +50,33 @@ public class LevelManager : MonoBehaviour
     void loadLevel(int level)
     {
         levelCreator.loadLevel(level);
+
+        GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_BLUE);
+        ghostBlueMove = gameObjectGhost.GetComponent<GhostBlueMove>();
+
+        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_ORANGE);
+        ghostOrangeMove = gameObjectGhost.GetComponent<GhostOrangeMove>();
+
+        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_PINK);
+        ghostPinkMove = gameObjectGhost.GetComponent<GhostPinkMove>();
+
+        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_RED);
+        ghostRedMove = gameObjectGhost.GetComponent<GhostRedMove>();
+
         remainingCoins = COINS_NUMBER[level - 1];
     }
 
     void Update()
     {
-        
+        updateIA();
+    }
+
+    private void updateIA()
+    {
+        ghostBlueMove.onMove();
+        ghostOrangeMove.onMove();
+        ghostPinkMove.onMove();
+        ghostRedMove.onMove();
     }
 
     public void coinEaten()
