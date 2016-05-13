@@ -50,7 +50,7 @@ public class PacmanMove : MonoBehaviour
         {
             animationScript.PlaySound(animationScript.stateMove());
             animationScript.Animate(animationScript.stateMove());
-            
+
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
         }
 
@@ -66,9 +66,9 @@ public class PacmanMove : MonoBehaviour
 
         ++timeState;
 
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
-                                      | RigidbodyConstraints.FreezeRotationY
-                                      | RigidbodyConstraints.FreezeRotationZ;
+        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
+        //                              | RigidbodyConstraints.FreezeRotationY
+        //                              | RigidbodyConstraints.FreezeRotationZ;
     }
 
     bool rotate()
@@ -92,7 +92,7 @@ public class PacmanMove : MonoBehaviour
         bool rotate = false;
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            if (prevAngle > 180.0f) rotateLeft = false;
+            if (prevAngle >= 180.0f) rotateLeft = false;
 
             if ((rotateLeft && leftAngle < 360.0f && leftAngle > 180.0f) || (!rotateLeft && rightAngle > 0.0f && rightAngle < 180.0f))
             {
@@ -100,7 +100,12 @@ public class PacmanMove : MonoBehaviour
                 fixedAngle = 0.0f;
             }
 
-            if (prevAngle == 0.0f) canMove = true;
+            if (prevAngle <= 0.0f + ERROR) {
+                canMove = true;
+                rotate = true;
+                fixAngle = true;
+                fixedAngle = 0.0f;
+            }
             else rotate = true;
         }
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
@@ -166,44 +171,26 @@ public class PacmanMove : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-       //if (collision.collider.GetType() == typeof(SphereCollider)) {
-            if (collision.gameObject.tag == "ghost")
-            {
-                Debug.Log("PacMan has collisioned with a GHOST");
-                GhostMove ghostScript = collision.gameObject.GetComponent<GhostMove>();
-                ghostScript.SetDead();
-            }
-            if (collision.gameObject.tag == "bonus")
-            {
-                Debug.Log("PacMan has eaten a BONUS");
-                Destroy(collision.gameObject);
-            }
-        //}
-        /*
-        else if (collision.collider.GetType() == typeof(CapsuleCollider)) {
-            if (collision.gameObject.tag == "coin")
-            {
-                Debug.Log("PacMan has eaten a COIN");
-                Destroy(collision.gameObject);
-
-                levelManager.coinEaten();
-            }
+        if (collision.gameObject.tag == "ghost")
+        {
+            Debug.Log("PacMan has collisioned with a GHOST");
+            GhostMove ghostScript = collision.gameObject.GetComponent<GhostMove>();
+            ghostScript.SetDead();
         }
-        */
+        if (collision.gameObject.tag == "bonus")
+        {
+            Debug.Log("PacMan has eaten a BONUS");
+            Destroy(collision.gameObject);
+        }
     }
 
     void OnTriggerStay(Collider collider)
     {
-        Debug.Log(collider.GetType());
-
         if (collider.gameObject.tag == "coin")
         {
             Debug.Log("COIN!!");
             Vector3 centerPacman = skinnedMeshRenderer.bounds.center;
             Vector3 centerCoin = collider.gameObject.transform.position;
-
-            Debug.Log(centerPacman);
-            Debug.Log(centerCoin);
 
             //centerPacman.x += PACMAN_OFFSET_X * TILE_SIZE;
             //centerPacman.z += PACMAN_OFFSET_Z * TILE_SIZE;
@@ -211,12 +198,15 @@ public class PacmanMove : MonoBehaviour
             //centerCoin.x += COIN_OFFSET * TILE_SIZE;
             //centerCoin.z += COIN_OFFSET * TILE_SIZE;
 
+            Debug.Log(centerPacman);
+            Debug.Log(centerCoin);
+
             float dist = Mathf.Sqrt(Mathf.Pow(2, centerPacman.x - centerCoin.x) + Mathf.Pow(2, centerPacman.y - centerCoin.y));
             Debug.Log(dist);
-            if (dist < 0.8f)
+            if (dist < 0.9f)
             {
                 Debug.Log("PacMan has eaten a COIN");
-                Destroy(collider.gameObject);
+                //Destroy(collider.gameObject);
             }
         }
     }
