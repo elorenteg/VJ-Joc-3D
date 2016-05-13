@@ -27,6 +27,9 @@ public class PacmanMove : MonoBehaviour
     private float PACMAN_OFFSET_Z = -6.2f;
     private float COIN_OFFSET = 0.55f;
 
+    public float pullRadius = 5;
+    public float pullForce = 4;
+
     // Use this for initialization
     void Start()
     {
@@ -65,10 +68,6 @@ public class PacmanMove : MonoBehaviour
         }
 
         ++timeState;
-
-        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
-        //                              | RigidbodyConstraints.FreezeRotationY
-        //                              | RigidbodyConstraints.FreezeRotationZ;
     }
 
     bool rotate()
@@ -82,11 +81,6 @@ public class PacmanMove : MonoBehaviour
         float prevAngle = transform.rotation.eulerAngles.y;
         float leftAngle = (prevAngle - incAngle) % 360;
         float rightAngle = (prevAngle + incAngle) % 360;
-
-        //leftAngle = prevAngle - incAngle;
-        //rightAngle = prevAngle + incAngle;
-        //if (leftAngle < 0.0f) leftAngle = 360.0f - leftAngle;
-        //if (rightAngle >= 360.0f) rightAngle = rightAngle - 360.0f;
 
         bool canMove = false;
         bool rotate = false;
@@ -182,13 +176,27 @@ public class PacmanMove : MonoBehaviour
             Debug.Log("PacMan has eaten a BONUS");
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.tag == "coin")
+        {
+            Debug.Log("PacMan has eaten a COIN");
+            collision.collider.enabled = false;
+            GetComponent<Rigidbody>().freezeRotation = true;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+            ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
+            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center);
+            //Vector3 translate = skinnedMeshRenderer.bounds.center - collision.collider.transform.position;
+            //collision.collider.transform.Translate(translate);
+            //Destroy(collision.gameObject);
+        }
     }
 
     void OnTriggerStay(Collider collider)
     {
+        /*
         if (collider.gameObject.tag == "coin")
         {
-            Debug.Log("COIN!!");
+            //Debug.Log("COIN!!");
             Vector3 centerPacman = skinnedMeshRenderer.bounds.center;
             Vector3 centerCoin = collider.gameObject.transform.position;
 
@@ -198,17 +206,23 @@ public class PacmanMove : MonoBehaviour
             //centerCoin.x += COIN_OFFSET * TILE_SIZE;
             //centerCoin.z += COIN_OFFSET * TILE_SIZE;
 
-            Debug.Log(centerPacman);
-            Debug.Log(centerCoin);
+            //Debug.Log(centerPacman);
+            //Debug.Log(centerCoin);
 
-            float dist = Mathf.Sqrt(Mathf.Pow(2, centerPacman.x - centerCoin.x) + Mathf.Pow(2, centerPacman.y - centerCoin.y));
-            Debug.Log(dist);
+            float dist = distance(centerPacman, centerCoin);
+            //Debug.Log(dist);
             if (dist < 0.9f)
             {
                 Debug.Log("PacMan has eaten a COIN");
                 //Destroy(collider.gameObject);
             }
         }
+        */
+    }
+
+    private float distance(Vector3 p1, Vector3 p2)
+    {
+        return Mathf.Sqrt(Mathf.Pow(2, p1.x - p2.x) + Mathf.Pow(2, p1.y - p2.y));
     }
 }
 
