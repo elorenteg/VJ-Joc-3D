@@ -114,34 +114,46 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             ghostBlueVisible = !ghostBlueVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_BLUE);
+            gameObjectGhost.SetActive(ghostBlueVisible);
         }
 
-        if (Input.GetKey(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             ghostOrangeVisible = !ghostOrangeVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_ORANGE);
+            gameObjectGhost.SetActive(ghostOrangeVisible);
         }
 
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             ghostPinkVisible = !ghostPinkVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_PINK);
+            gameObjectGhost.SetActive(ghostPinkVisible);
         }
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             ghostRedVisible = !ghostRedVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_RED);
+            gameObjectGhost.SetActive(ghostRedVisible);
         }
         updateIA();
     }
 
     private void updateIA()
     {
-        ghostBlueMove.onMove();
-        ghostOrangeMove.onMove();
-        ghostPinkMove.onMove();
-        ghostRedMove.onMove();
+        if (ghostBlueVisible) ghostBlueMove.onMove();
+        if (ghostOrangeVisible) ghostOrangeMove.onMove();
+        if (ghostPinkVisible) ghostPinkMove.onMove();
+        if (ghostRedVisible) ghostRedMove.onMove();
     }
 
     public void coinEaten()
