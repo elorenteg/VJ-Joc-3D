@@ -4,16 +4,11 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour
 {
-    private static string texturesPath = "Textures\\";
 
     private static int TOTAL_LEVEL = 2;
     private static int INITIAL_LEVEL = 1;
 
     private static int INITIAL_LIFES = 3;
-    private static string LEVEL_LABEL = "LEVEL";
-    private static string SCORE_LABEL = "SCORE";
-    private static string MAX_SCORE_LABEL = "HIGHSCORE";
-    private static string LIFES_LABEL = "LIFES";
     private int currentLevel;
     private int currentScore;
     private int currentHighScore;
@@ -23,11 +18,6 @@ public class LevelManager : MonoBehaviour
     private static int[] COINS_NUMBER = { 1, 4 };
 
     private static int COIN_SCORE = 1;
-
-    private GUIStyle normalFont;
-    private Texture2D backgroundLevelTexture;
-    private Texture2D backgroundScoreTexture;
-    private Texture2D backgroundLifesTexture;
 
     private LevelCreator levelCreator;
     private DataManager dataManager;
@@ -39,22 +29,17 @@ public class LevelManager : MonoBehaviour
     private bool coinsVisible;
     private bool bonusVisible;
 
+    private GhostBlueMove ghostBlueMove;
+    private GhostOrangeMove ghostOrangeMove;
+    private GhostPinkMove ghostPinkMove;
+    private GhostRedMove ghostRedMove;
+
     void Start()
     {
         GameObject gameManager = GameObject.Find("GameManager");
         levelCreator = gameManager.GetComponent<LevelCreator>();
         dataManager = gameManager.GetComponent<DataManager>();
-
-        normalFont = new GUIStyle();
-        normalFont.font = (Font)Resources.Load("Fonts/lilliput steps", typeof(Font));
-        normalFont.fontSize = 28;
-        normalFont.alignment = TextAnchor.UpperRight;
-        normalFont.normal.textColor = Color.green;
-
-        backgroundScoreTexture = Resources.Load(texturesPath + "score_tube") as Texture2D;
-        backgroundLevelTexture = backgroundScoreTexture;
-        backgroundLifesTexture = backgroundScoreTexture;
-
+       
         currentHighScore = dataManager.readMaxScore();
 
         startGame();
@@ -72,6 +57,19 @@ public class LevelManager : MonoBehaviour
     void loadLevel(int level)
     {
         levelCreator.loadLevel(level);
+
+        GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_BLUE);
+        ghostBlueMove = gameObjectGhost.GetComponent<GhostBlueMove>();
+
+        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_ORANGE);
+        ghostOrangeMove = gameObjectGhost.GetComponent<GhostOrangeMove>();
+
+        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_PINK);
+        ghostPinkMove = gameObjectGhost.GetComponent<GhostPinkMove>();
+
+        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_RED);
+        ghostRedMove = gameObjectGhost.GetComponent<GhostRedMove>();
+
         remainingCoins = COINS_NUMBER[level - 1];
 
         ghostBlueVisible = true;
@@ -135,45 +133,15 @@ public class LevelManager : MonoBehaviour
         {
             ghostRedVisible = !ghostRedVisible;
         }
+        updateIA();
     }
 
-    void OnGUI()
+    private void updateIA()
     {
-        // Score bg
-        GUI.DrawTexture(new Rect(5, 5, 135, 50), backgroundScoreTexture);
-
-        // Score label
-        GUI.Label(new Rect(-80, 50, 200, 20), SCORE_LABEL, normalFont);
-
-        // Score value
-        GUI.Label(new Rect(-95, 11, 200, 20), currentScore.ToString(), normalFont);
-
-        // Max. Score bg
-        GUI.DrawTexture(new Rect(Screen.width - 185, 5, 180, 50), backgroundScoreTexture);
-
-        // Max. Score label
-        GUI.Label(new Rect(Screen.width - 205, 50, 200, 20), MAX_SCORE_LABEL, normalFont);
-
-        // Max. Score value
-        GUI.Label(new Rect(Screen.width - 235, 11, 200, 20), currentHighScore.ToString(), normalFont);
-
-        // Life bg
-        GUI.DrawTexture(new Rect(5, Screen.height - 55, 135, 50), backgroundLifesTexture);
-
-        // Life label
-        GUI.Label(new Rect(-80, Screen.height - 90, 200, 20), LIFES_LABEL, normalFont);
-
-        // Life value
-        GUI.Label(new Rect(-95, Screen.height - 50, 200, 20), currentLifes.ToString(), normalFont);
-
-        // Level bg
-        GUI.DrawTexture(new Rect(Screen.width - 140, Screen.height - 55, 135, 50), backgroundLevelTexture);
-
-        // Level label
-        GUI.Label(new Rect(Screen.width - 215, Screen.height - 90, 200, 20), LEVEL_LABEL, normalFont);
-
-        // Level value
-        GUI.Label(new Rect(Screen.width - 235, Screen.height - 50, 200, 20), currentLevel.ToString(), normalFont);
+        ghostBlueMove.onMove();
+        ghostOrangeMove.onMove();
+        ghostPinkMove.onMove();
+        ghostRedMove.onMove();
     }
 
     public void coinEaten()
@@ -200,6 +168,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void initializeScore()
+    {
+        currentScore = 0;
+    }
+
+    public int getScore()
+    {
+        return currentScore;
+    }
+
     private void increaseScore(int quantity)
     {
         currentScore += quantity;
@@ -210,14 +188,14 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public int getScore()
+    public void initializeLifes()
     {
-        return currentScore;
+        currentLifes = INITIAL_LIFES;
     }
 
-    public void initializeScore()
+    public int getLifes()
     {
-        currentScore = 0;
+        return currentLifes;
     }
 
     public void increaseLife()
@@ -238,14 +216,14 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public int getLifes()
+    public int getLevel()
     {
-        return currentLifes;
+        return currentLevel;
     }
 
-    public void initializeLifes()
+    public int getHighScore()
     {
-        currentLifes = INITIAL_LIFES;
+        return currentHighScore;
     }
 
     public void bonusEaten()

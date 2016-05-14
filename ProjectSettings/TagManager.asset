@@ -10,6 +10,10 @@ TagManager:
   - bonus
   - wall
   - floor
+  - ghost_blue
+  - ghost_orange
+  - ghost_pink
+  - ghost_red
   layers:
   - Default
   - TransparentFX

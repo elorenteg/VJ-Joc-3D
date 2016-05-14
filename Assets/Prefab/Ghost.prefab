@@ -303,7 +303,6 @@ GameObject:
   - 135: {fileID: 13578520}
   - 111: {fileID: 11151206}
   - 82: {fileID: 8293144}
-  - 114: {fileID: 11472942}
   - 114: {fileID: 11495164}
   m_Layer: 0
   m_Name: Ghost
@@ -798,20 +797,6 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &11472942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791975d793e23b94a80326a046f7f684, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 10
-  turnSpeed: 100
-  varDead: 1
 --- !u!114 &11495164
 MonoBehaviour:
   m_ObjectHideFlags: 1
