@@ -165,6 +165,10 @@ public class PacmanMove : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        GetComponent<Rigidbody>().freezeRotation = true;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
         if (collision.gameObject.tag == "ghost")
         {
             Debug.Log("PacMan has collisioned with a GHOST");
@@ -175,22 +179,23 @@ public class PacmanMove : MonoBehaviour
         {
             Debug.Log("PacMan has eaten a BONUS");
             Destroy(collision.gameObject);
+            collision.collider.enabled = false;
+
+            ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
+            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+
+            levelManager.bonusEaten();
         }
         if (collision.gameObject.tag == "coin")
         {
             Debug.Log("PacMan has eaten a COIN");
             collision.collider.enabled = false;
-            GetComponent<Rigidbody>().freezeRotation = true;
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
 
             ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
-            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center);
-        }
-    }
+            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
 
-    private float distance(Vector3 p1, Vector3 p2)
-    {
-        return Mathf.Sqrt(Mathf.Pow(2, p1.x - p2.x) + Mathf.Pow(2, p1.y - p2.y));
+            levelManager.coinEaten();
+        }
     }
 }
 

@@ -32,6 +32,13 @@ public class LevelManager : MonoBehaviour
     private LevelCreator levelCreator;
     private DataManager dataManager;
 
+    private bool ghostBlueVisible;
+    private bool ghostOrangeVisible;
+    private bool ghostPinkVisible;
+    private bool ghostRedVisible;
+    private bool coinsVisible;
+    private bool bonusVisible;
+
     void Start()
     {
         GameObject gameManager = GameObject.Find("GameManager");
@@ -66,6 +73,13 @@ public class LevelManager : MonoBehaviour
     {
         levelCreator.loadLevel(level);
         remainingCoins = COINS_NUMBER[level - 1];
+
+        ghostBlueVisible = true;
+        ghostOrangeVisible = true;
+        ghostPinkVisible = true;
+        ghostRedVisible = true;
+        coinsVisible = true;
+        bonusVisible = true;
     }
 
     void Update()
@@ -73,6 +87,53 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) == true)
         {
             Application.Quit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (currentLevel != 1)
+            {
+                currentLevel = 1;
+                loadLevel(1);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (currentLevel != 2)
+            {
+                currentLevel = 2;
+                loadLevel(2);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (currentLevel != 3)
+            {
+                currentLevel = 3;
+                loadLevel(3);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.B))
+        {
+            ghostBlueVisible = !ghostBlueVisible;
+        }
+
+        if (Input.GetKey(KeyCode.O))
+        {
+            ghostOrangeVisible = !ghostOrangeVisible;
+        }
+
+        if (Input.GetKey(KeyCode.P))
+        {
+            ghostPinkVisible = !ghostPinkVisible;
+        }
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            ghostRedVisible = !ghostRedVisible;
         }
     }
 
@@ -187,5 +248,27 @@ public class LevelManager : MonoBehaviour
         currentLifes = INITIAL_LIFES;
     }
 
+    public void bonusEaten()
+    {
+        // TODO Se deja asi por si se quiere implementar un multiplicador
+        int multiplier = 1;
+        increaseScore(COIN_SCORE * multiplier);
+        --remainingCoins;
+        Debug.Log("Remaining coins: " + remainingCoins);
 
+        if (remainingCoins == 0)
+        {
+            // Fin del juego
+            if (currentLevel == TOTAL_LEVEL)
+            {
+
+            }
+            else
+            {
+                //TODO Imagen final de nivel
+                ++currentLevel;
+                loadLevel(currentLevel);
+            }
+        }
+    }
 }

@@ -15,11 +15,11 @@ public class ObjectAttraction : MonoBehaviour {
 
     }
 
-    public void SetStateAttraction(Vector3 fiPos)
+    public void SetStateAttraction(Vector3 fiPos, float y)
     {
         stateAttract = true;
         postPos = fiPos;
-        postPos.y = 10.0f;
+        postPos.y = y;
         
         duration = (postPos - transform.position).magnitude / moveSpeed;
         startTime = Time.time;
