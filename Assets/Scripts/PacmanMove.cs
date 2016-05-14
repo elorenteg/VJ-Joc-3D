@@ -48,15 +48,19 @@ public class PacmanMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool pacmanCanMove = rotate();
-        if (pacmanCanMove)
+        bool pacmanCanMove = false;
+
+        if (!levelManager.getGamePaused())
         {
-            animationScript.PlaySound(animationScript.stateMove());
-            animationScript.Animate(animationScript.stateMove());
+            pacmanCanMove = rotate();
+            if (pacmanCanMove)
+            {
+                animationScript.PlaySound(animationScript.stateMove());
+                animationScript.Animate(animationScript.stateMove());
 
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            }
         }
-
 
         if (timeState == MAX_TIME_STATE)
         {
@@ -189,6 +193,8 @@ public class PacmanMove : MonoBehaviour
             //Vector3 translate = skinnedMeshRenderer.bounds.center - collision.collider.transform.position;
             //collision.collider.transform.Translate(translate);
             //Destroy(collision.gameObject);
+
+            levelManager.coinEaten();
         }
     }
 

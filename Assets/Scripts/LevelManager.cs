@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
     private static int TOTAL_LEVEL = 2;
     private static int INITIAL_LEVEL = 1;
     private static int INITIAL_LIFES = 3;
+    private static int[] COINS_NUMBER = { 1, 4 };
+    private static int COIN_SCORE = 1;
 
     private int currentLevel;
     private int currentScore;
@@ -15,13 +17,9 @@ public class LevelManager : MonoBehaviour
     private int currentLifes;
     private int remainingCoins;
 
-    private static int[] COINS_NUMBER = { 1, 4 };
-
-    private static int COIN_SCORE = 1;
-
     private LevelCreator levelCreator;
     private DataManager dataManager;
-
+    private GameGUI gameGUI;
     private PacmanMove pacmanMove;
 
     private GhostBlueMove ghostBlueMove;
@@ -29,13 +27,17 @@ public class LevelManager : MonoBehaviour
     private GhostPinkMove ghostPinkMove;
     private GhostRedMove ghostRedMove;
 
+    private bool gamePaused;
+
     void Start()
     {
         GameObject gameManager = GameObject.Find("GameManager");
         levelCreator = gameManager.GetComponent<LevelCreator>();
         dataManager = gameManager.GetComponent<DataManager>();
+        gameGUI = gameManager.GetComponent<GameGUI>();
 
         currentHighScore = dataManager.readMaxScore();
+        gamePaused = false;
 
         startGame();
     }
@@ -73,7 +75,12 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        updateIA();
+        //updateIA();
+        
+        if (gamePaused && Input.GetKey(KeyCode.Return))
+        {
+            endMessage();
+        }
     }
 
     private void updateIA()
@@ -102,6 +109,8 @@ public class LevelManager : MonoBehaviour
             else
             {
                 //TODO Imagen final de nivel
+                startMessage(GameGUI.TITLE_END_OF_LEVEL_TEXT, GameGUI.MESSAGE_END_OF_LEVEL_TEXT);
+
                 ++currentLevel;
                 loadLevel(currentLevel);
             }
@@ -169,5 +178,27 @@ public class LevelManager : MonoBehaviour
     public Vector3 getPacmanPosition()
     {
         return new Vector3(50.0f, 21.0f, 32.0f);
+    }
+
+    private void startMessage(string title, string message)
+    {
+        gameGUI.addMessageToQueue(title, message);
+        gamePaused = true;
+    }
+
+    private void endMessage()
+    {
+        gameGUI.removeMessage();
+        gamePaused = false;
+    }
+
+    public void setGamePaused(bool paused)
+    {
+        this.gamePaused = paused;
+    }
+
+    public bool getGamePaused()
+    {
+        return gamePaused;
     }
 }
