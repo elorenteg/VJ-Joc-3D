@@ -7,6 +7,7 @@ public class ObjectAttraction : MonoBehaviour {
     private Vector3 postPos;
 
     private float startTime, duration;
+    private int frame;
     public float moveSpeed = 5;
     
     public void Start()
@@ -18,9 +19,11 @@ public class ObjectAttraction : MonoBehaviour {
     {
         stateAttract = true;
         postPos = fiPos;
+        postPos.y = 10.0f;
         
         duration = (postPos - transform.position).magnitude / moveSpeed;
         startTime = Time.time;
+        frame = 0;
     }
     
     void Update () {
@@ -29,7 +32,10 @@ public class ObjectAttraction : MonoBehaviour {
             float time = Time.time - startTime; // time since start
             transform.position = Vector3.Lerp(transform.position, postPos, time / duration);
 
-            if (time/duration > 0.9f) Destroy(this);
+            frame += 1;
+
+            Debug.Log(frame);
+            if (frame == 4) Destroy(this.gameObject);
         }
     }
 }

@@ -185,39 +185,7 @@ public class PacmanMove : MonoBehaviour
 
             ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
             attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center);
-            //Vector3 translate = skinnedMeshRenderer.bounds.center - collision.collider.transform.position;
-            //collision.collider.transform.Translate(translate);
-            //Destroy(collision.gameObject);
         }
-    }
-
-    void OnTriggerStay(Collider collider)
-    {
-        /*
-        if (collider.gameObject.tag == "coin")
-        {
-            //Debug.Log("COIN!!");
-            Vector3 centerPacman = skinnedMeshRenderer.bounds.center;
-            Vector3 centerCoin = collider.gameObject.transform.position;
-
-            //centerPacman.x += PACMAN_OFFSET_X * TILE_SIZE;
-            //centerPacman.z += PACMAN_OFFSET_Z * TILE_SIZE;
-
-            //centerCoin.x += COIN_OFFSET * TILE_SIZE;
-            //centerCoin.z += COIN_OFFSET * TILE_SIZE;
-
-            //Debug.Log(centerPacman);
-            //Debug.Log(centerCoin);
-
-            float dist = distance(centerPacman, centerCoin);
-            //Debug.Log(dist);
-            if (dist < 0.9f)
-            {
-                Debug.Log("PacMan has eaten a COIN");
-                //Destroy(collider.gameObject);
-            }
-        }
-        */
     }
 
     private float distance(Vector3 p1, Vector3 p2)
