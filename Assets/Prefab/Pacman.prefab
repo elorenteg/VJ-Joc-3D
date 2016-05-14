@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 20
-  turnSpeed: 200
+  turnSpeed: 300
   pullRadius: 2
   pullForce: 1
 --- !u!114 &11456052

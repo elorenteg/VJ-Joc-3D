@@ -22,6 +22,13 @@ public class LevelManager : MonoBehaviour
     private GameGUI gameGUI;
     private PacmanMove pacmanMove;
 
+    private bool ghostBlueVisible;
+    private bool ghostOrangeVisible;
+    private bool ghostPinkVisible;
+    private bool ghostRedVisible;
+    private bool coinsVisible;
+    private bool bonusVisible;
+
     private GhostBlueMove ghostBlueMove;
     private GhostOrangeMove ghostOrangeMove;
     private GhostPinkMove ghostPinkMove;
@@ -71,6 +78,13 @@ public class LevelManager : MonoBehaviour
         pacmanMove = gameObjectPacman.GetComponent<PacmanMove>();
 
         remainingCoins = COINS_NUMBER[level - 1];
+
+        ghostBlueVisible = true;
+        ghostOrangeVisible = true;
+        ghostPinkVisible = true;
+        ghostRedVisible = true;
+        coinsVisible = true;
+        bonusVisible = true;
     }
 
     void Update()
@@ -81,14 +95,78 @@ public class LevelManager : MonoBehaviour
         {
             endMessage();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) == true)
+        {
+            Application.Quit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (currentLevel != 1)
+            {
+                currentLevel = 1;
+                loadLevel(1);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (currentLevel != 2)
+            {
+                currentLevel = 2;
+                loadLevel(2);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (currentLevel != 3)
+            {
+                currentLevel = 3;
+                loadLevel(3);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ghostBlueVisible = !ghostBlueVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_BLUE);
+            gameObjectGhost.SetActive(ghostBlueVisible);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            ghostOrangeVisible = !ghostOrangeVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_ORANGE);
+            gameObjectGhost.SetActive(ghostOrangeVisible);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ghostPinkVisible = !ghostPinkVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_PINK);
+            gameObjectGhost.SetActive(ghostPinkVisible);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ghostRedVisible = !ghostRedVisible;
+
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_RED);
+            gameObjectGhost.SetActive(ghostRedVisible);
+        }
     }
 
     private void updateIA()
     {
-        ghostBlueMove.onMove();
-        ghostOrangeMove.onMove();
-        ghostPinkMove.onMove();
-        ghostRedMove.onMove();
+        if (ghostBlueVisible) ghostBlueMove.onMove();
+        if (ghostOrangeVisible) ghostOrangeMove.onMove();
+        if (ghostPinkVisible) ghostPinkMove.onMove();
+        if (ghostRedVisible) ghostRedMove.onMove();
     }
 
     public void coinEaten()
@@ -200,5 +278,29 @@ public class LevelManager : MonoBehaviour
     public bool getGamePaused()
     {
         return gamePaused;
+    }
+
+    public void bonusEaten()
+    {
+        // TODO Se deja asi por si se quiere implementar un multiplicador
+        int multiplier = 1;
+        increaseScore(COIN_SCORE * multiplier);
+        --remainingCoins;
+        Debug.Log("Remaining coins: " + remainingCoins);
+
+        if (remainingCoins == 0)
+        {
+            // Fin del juego
+            if (currentLevel == TOTAL_LEVEL)
+            {
+
+            }
+            else
+            {
+                //TODO Imagen final de nivel
+                ++currentLevel;
+                loadLevel(currentLevel);
+            }
+        }
     }
 }

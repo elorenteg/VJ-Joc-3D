@@ -13,7 +13,8 @@ public class GhostBlueMove : GhostMove
     {
         Debug.Log("Moving BLUE_GHOST" + this.getBaseGhostSpeed());
 
-        transform.Translate(levelManager.getPacmanPosition().normalized * this.getBaseGhostSpeed() * Time.deltaTime);
+        //transform.Translate(levelManager.getPacmanPosition().normalized * this.getBaseGhostSpeed() * Time.deltaTime);
+        //transform.Translate(Vector3.left * this.getBaseGhostSpeed() * Time.deltaTime);
     }
 
 }

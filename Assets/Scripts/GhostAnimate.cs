@@ -30,6 +30,11 @@ public class GhostAnimate : MonoBehaviour
     public Texture haloCenterDeadTex;
     public Texture haloEndDeadTex;
 
+    public Texture bodyBonusTex;
+    public Texture eyesBonusTex;
+    public Texture haloCenterBonusTex;
+    public Texture haloEndBonusTex;
+
     private const int LEFT = 0;
     private const int RIGHT = 1;
 
