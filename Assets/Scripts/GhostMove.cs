@@ -17,6 +17,8 @@ public class GhostMove : MonoBehaviour
 
     private GhostAnimate animationScript;
 
+    protected LevelManager levelManager;
+
     // Use this for initialization
     public void Start ()
     {
@@ -26,6 +28,9 @@ public class GhostMove : MonoBehaviour
         
         animationScript = GetComponent<GhostAnimate>();
         //animationScript.SetTextures(animationScript.stateMove(), state);
+
+        GameObject gameManager = GameObject.Find("GameManager");
+        levelManager = gameManager.GetComponent<LevelManager>();
     }
 
     // Update is called once per frame

@@ -77,7 +77,7 @@ public class PacmanMove : MonoBehaviour
         bool fixAngle = false;
         float fixedAngle = 0.0f;
         float incAngle = turnSpeed * Time.deltaTime;
-        
+
         float prevAngle = transform.rotation.eulerAngles.y;
         float leftAngle = (prevAngle - incAngle) % 360;
         float rightAngle = (prevAngle + incAngle) % 360;
@@ -94,7 +94,8 @@ public class PacmanMove : MonoBehaviour
                 fixedAngle = 0.0f;
             }
 
-            if (prevAngle <= 0.0f + ERROR) {
+            if (prevAngle <= 0.0f + ERROR)
+            {
                 canMove = true;
                 rotate = true;
                 fixAngle = true;
@@ -105,7 +106,7 @@ public class PacmanMove : MonoBehaviour
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             if (prevAngle < 180.0f) rotateLeft = false;
-            
+
             if ((rotateLeft && leftAngle < 180.0f && leftAngle > 0.0f) || (!rotateLeft && rightAngle > 180.0f && rightAngle < 360.0f))
             {
                 fixAngle = true;
@@ -118,7 +119,7 @@ public class PacmanMove : MonoBehaviour
         else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             if (prevAngle > 270.0f || prevAngle < 90.0f) rotateLeft = false;
-            
+
             if ((rotateLeft && (leftAngle < 90.0f || leftAngle > 270.0f)) || (!rotateLeft && rightAngle > 90.0f && rightAngle < 270.0f))
             {
                 fixAngle = true;
@@ -131,7 +132,7 @@ public class PacmanMove : MonoBehaviour
         else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             if (prevAngle > 90.0f && prevAngle < 270.0f) rotateLeft = false;
-            
+
             if ((rotateLeft && leftAngle < 270.0f && leftAngle > 90.0f) || (!rotateLeft && (rightAngle > 270.0f || rightAngle < 90.0f)))
             {
                 fixAngle = true;

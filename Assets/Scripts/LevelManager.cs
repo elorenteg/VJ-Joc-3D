@@ -7,8 +7,8 @@ public class LevelManager : MonoBehaviour
 
     private static int TOTAL_LEVEL = 2;
     private static int INITIAL_LEVEL = 1;
-
     private static int INITIAL_LIFES = 3;
+
     private int currentLevel;
     private int currentScore;
     private int currentHighScore;
@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour
     private LevelCreator levelCreator;
     private DataManager dataManager;
 
+    private PacmanMove pacmanMove;
+
     private GhostBlueMove ghostBlueMove;
     private GhostOrangeMove ghostOrangeMove;
     private GhostPinkMove ghostPinkMove;
@@ -32,7 +34,7 @@ public class LevelManager : MonoBehaviour
         GameObject gameManager = GameObject.Find("GameManager");
         levelCreator = gameManager.GetComponent<LevelCreator>();
         dataManager = gameManager.GetComponent<DataManager>();
-       
+
         currentHighScore = dataManager.readMaxScore();
 
         startGame();
@@ -62,6 +64,9 @@ public class LevelManager : MonoBehaviour
 
         gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_RED);
         ghostRedMove = gameObjectGhost.GetComponent<GhostRedMove>();
+
+        GameObject gameObjectPacman = GameObject.FindGameObjectWithTag("pacman");
+        pacmanMove = gameObjectPacman.GetComponent<PacmanMove>();
 
         remainingCoins = COINS_NUMBER[level - 1];
     }
@@ -159,5 +164,10 @@ public class LevelManager : MonoBehaviour
     public int getHighScore()
     {
         return currentHighScore;
+    }
+
+    public Vector3 getPacmanPosition()
+    {
+        return new Vector3(50.0f, 21.0f, 32.0f);
     }
 }
