@@ -100,12 +100,6 @@ public class GhostMove : MonoBehaviour
         return new Vector3(tx * Globals.TILE_SIZE, transform.position.y, tz * Globals.TILE_SIZE);
     }
 
-    public static void positionToTiles(Vector3 pos, out int tx, out int tz)
-    {
-        tx = (int) pos.x - Globals.TILE_SIZE;
-        tz = (int) pos.z - Globals.TILE_SIZE;
-    }
-
     protected bool isValid(int[][] Map, int tx, int tz)
     {
         for (int i = tx - 0; i <= tx + 0; ++i)
@@ -127,7 +121,7 @@ public class GhostMove : MonoBehaviour
         return true;
     }
 
-    protected bool rotate(int dir)
+    protected bool doRotation(int dir)
     {
         float angleRotation = 180.0f;
         switch (dir)
