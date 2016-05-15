@@ -1,0 +1,126 @@
+fileFormatVersion: 2
+guid: 7f245928d770424459c7babfd48fcb4d
+timeCreated: 1463312820
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ArmatureEnemy_04
+    100002: //RootNode
+    100004: EnemyMeshLP_04
+    100006: Eye_L
+    100008: Eye_R
+    100010: Eyes_Ctrl
+    100012: Key
+    100014: mouth_down
+    100016: mouth_up
+    100018: OpenMouth_Ctrl
+    100020: Root
+    100022: Root_Loc
+    100024: Shape_Root_002
+    100026: Shape_RootLoc_002
+    100028: Stretch
+    100030: Stretch_Ctrl
+    100032: Stretch_down
+    100034: Stretch_up
+    100036: WheelsCenter
+    100038: WheelsCTRL
+    100040: WheelsFront
+    100042: WheelsRear
+    400000: ArmatureEnemy_04
+    400002: //RootNode
+    400004: EnemyMeshLP_04
+    400006: Eye_L
+    400008: Eye_R
+    400010: Eyes_Ctrl
+    400012: Key
+    400014: mouth_down
+    400016: mouth_up
+    400018: OpenMouth_Ctrl
+    400020: Root
+    400022: Root_Loc
+    400024: Shape_Root_002
+    400026: Shape_RootLoc_002
+    400028: Stretch
+    400030: Stretch_Ctrl
+    400032: Stretch_down
+    400034: Stretch_up
+    400036: WheelsCenter
+    400038: WheelsCTRL
+    400040: WheelsFront
+    400042: WheelsRear
+    2300000: Shape_Root_002
+    2300002: Shape_RootLoc_002
+    3300000: Shape_Root_002
+    3300002: Shape_RootLoc_002
+    4300000: EnemyMeshLP_04
+    4300002: Shape_Root_002
+    4300004: Shape_RootLoc_002
+    7400000: Default Take
+    7400002: ArmatActionEnemy_001
+    9500000: //RootNode
+    13700000: EnemyMeshLP_04
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

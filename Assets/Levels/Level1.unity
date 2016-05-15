@@ -190,7 +190,7 @@ MonoBehaviour:
   floor: {fileID: 125800, guid: e318b761685e5de4ca4d8746dccfbdbc, type: 2}
   floorTexture: {fileID: 2800000, guid: 28184d57e2ff1d7419a87b36dfb0b512, type: 3}
   pacman: {fileID: 152278, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
-  ghost: {fileID: 189578, guid: bf3e73a3a171af3478e770f5c554f545, type: 2}
+  ghost: {fileID: 132232, guid: d225824d8a88dca4b82d9803b9e97cb2, type: 2}
   blueGhostTexture: {fileID: 2800000, guid: 850539ca6b982ca479554a449f0a619e, type: 3}
   orangeGhostTexture: {fileID: 2800000, guid: 323b751142965b643af49fec923ec35e, type: 3}
   pinkGhostTexture: {fileID: 2800000, guid: f5ecada3f1c30f14c8be2bc5148f0119, type: 3}

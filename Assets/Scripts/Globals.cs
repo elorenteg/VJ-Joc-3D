@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class Utilities {
+public static class Globals {
 
     public static int TILE_SIZE = 2;
     public static int MAP_WIDTH;

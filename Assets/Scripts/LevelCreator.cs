@@ -66,7 +66,7 @@ public class LevelCreator : MonoBehaviour
     private static char BONUS = '*';
     private static int BONUS_C = 21;
 
-    private float GHOST_Y_POS = 18.5f;
+    private float GHOST_Y_POS = 6.0f;
     private float PACMAN_Y_POS = 18.0f;
     private float COIN_Y_POS = 10.0f;
     private float BONUS_Y_POS = 13.0f;
@@ -229,7 +229,7 @@ public class LevelCreator : MonoBehaviour
 
                 theReader.Close();
 
-                Utilities.SetMapSizes(MAP_WIDTH, MAP_WIDTH);
+                Globals.SetMapSizes(MAP_WIDTH, MAP_WIDTH);
 
                 return true;
             }
@@ -318,7 +318,6 @@ public class LevelCreator : MonoBehaviour
                     Vector3 cellScale;
                     Texture texture;
                     Vector2 textureScale;
-                    Quaternion cellQuaternion;
 
                     if (cell == WALL_V_C)
                     {
@@ -327,8 +326,6 @@ public class LevelCreator : MonoBehaviour
                         cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
-
-                        cellQuaternion = Quaternion.AngleAxis(90.0f, Vector3.up);
 
                         cellPosition.x += WALL_SCALE.z / 2;
                         cellPosition.z += WALL_SCALE.x / 2;
@@ -341,8 +338,6 @@ public class LevelCreator : MonoBehaviour
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
 
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
-
                         cellPosition.x += WALL_SCALE.x / 2;
                         cellPosition.z += WALL_SCALE.z / 2;
                     }
@@ -354,10 +349,8 @@ public class LevelCreator : MonoBehaviour
                         texture = blueGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
-
-                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
-                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
+                        cellPosition.x += TILE_SIZE / 2;
+                        cellPosition.z += TILE_SIZE / 2;
                     }
                     else if (cell == GHOST_O_C)
                     {
@@ -367,10 +360,8 @@ public class LevelCreator : MonoBehaviour
                         texture = orangeGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
-
-                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
-                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
+                        cellPosition.x += TILE_SIZE / 2;
+                        cellPosition.z += TILE_SIZE / 2;
                     }
                     else if (cell == GHOST_P_C)
                     {
@@ -380,10 +371,8 @@ public class LevelCreator : MonoBehaviour
                         texture = pinkGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
-
-                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
-                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
+                        cellPosition.x += TILE_SIZE / 2;
+                        cellPosition.z += TILE_SIZE / 2;
                     }
                     else if (cell == GHOST_R_C)
                     {
@@ -393,10 +382,8 @@ public class LevelCreator : MonoBehaviour
                         texture = redGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
-
-                        cellPosition.x += GHOST_OFFSET_X * TILE_SIZE;
-                        cellPosition.z += GHOST_OFFSET_Z * TILE_SIZE;
+                        cellPosition.x += TILE_SIZE / 2;
+                        cellPosition.z += TILE_SIZE / 2;
                     }
                     else if (cell == PACMAN_C)
                     {
@@ -405,8 +392,6 @@ public class LevelCreator : MonoBehaviour
                         cellScale = new Vector3(PACMAN_SCALE.x, PACMAN_SCALE.y, PACMAN_SCALE.z);
                         texture = null;
                         textureScale = new Vector2(PACMAN_TEXTURE_SCALE.x, PACMAN_TEXTURE_SCALE.y);
-
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
                         cellPosition.x += PACMAN_OFFSET_X * TILE_SIZE;
                         cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
@@ -423,8 +408,6 @@ public class LevelCreator : MonoBehaviour
                         texture = null;
                         textureScale = new Vector2(COIN_TEXTURE_SCALE.x, COIN_TEXTURE_SCALE.y);
 
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
-
                         cellPosition.x += COIN_OFFSET * TILE_SIZE;
                         cellPosition.z += COIN_OFFSET * TILE_SIZE;
                     }
@@ -435,8 +418,6 @@ public class LevelCreator : MonoBehaviour
                         cellScale = new Vector3(BONUS_SCALE.x, BONUS_SCALE.y, BONUS_SCALE.z);
                         texture = null;
                         textureScale = new Vector2(BONUS_TEXTURE_SCALE.x, BONUS_TEXTURE_SCALE.y);
-
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.up);
 
                         cellPosition.x -= 0.2f * TILE_SIZE;
                         cellPosition.z += 0.5f * TILE_SIZE;
@@ -452,8 +433,6 @@ public class LevelCreator : MonoBehaviour
                         cellScale = Vector3.zero;
                         texture = null;
                         textureScale = Vector2.zero;
-
-                        cellQuaternion = Quaternion.AngleAxis(0.0f, Vector3.zero);
                     }
 
                     GameObject newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
@@ -462,8 +441,9 @@ public class LevelCreator : MonoBehaviour
 
                     newObject.SetActive(true);
 
-                    int angle = -90;
-                    if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 90;
+                    int angle = 180;
+                    if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 0;
+                    else if (cell == PACMAN_C) angle = -90;
 
                     if (cell == PACMAN_C || cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
                     {
@@ -488,7 +468,8 @@ public class LevelCreator : MonoBehaviour
                             newObject.tag = TAG_GHOST_ORANGE;
 
                             GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
-                            moveScript.SetInitTiles(j, i);
+                            moveScript.SetInitTiles(i, j);
+                            moveScript.SetDirection(Map);
                         }
                         else if (cell == GHOST_P_C)
                         {

@@ -5,7 +5,7 @@ using System.Collections;
 public class GhostMove : MonoBehaviour
 {
     protected static float GHOST_SPEED = 20;
-    protected static float GHOST_ROTATE_SPEED = 100;
+    protected static float GHOST_ROTATE_SPEED = 2.5f;
 
     private static int MAX_TIME_STATE = 15;
 
@@ -17,8 +17,6 @@ public class GhostMove : MonoBehaviour
 
     protected int tile_x, tile_z;
     protected int new_tx, new_tz;
-    private Vector3 newPosition;
-    //protected int 
 
     private GhostAnimate animationScript;
 
@@ -78,8 +76,8 @@ public class GhostMove : MonoBehaviour
 
     public void SetInitTiles(int tx, int tz)
     {
-        tile_x = new_tx = tx;
-        tile_z = new_tz = tz;
+        tile_x = tx;
+        tile_z = tz;
     }
 
     protected int GetTileX()
@@ -94,14 +92,14 @@ public class GhostMove : MonoBehaviour
 
     protected Vector3 GetPosition(int tx, int tz)
     {
-        return new Vector3((tx + Utilities.GHOST_OFFSET_X) * Utilities.TILE_SIZE, transform.position.y, 
-            (tz + Utilities.GHOST_OFFSET_Z) * Utilities.TILE_SIZE);
+        return new Vector3((tx + Globals.GHOST_OFFSET_X) * Globals.TILE_SIZE, transform.position.y, 
+            (tz + Globals.GHOST_OFFSET_Z) * Globals.TILE_SIZE);
     }
 
     public static void positionToTiles(Vector3 pos, out int tx, out int tz)
     {
-        tx = (int) (pos.x - Utilities.GHOST_OFFSET_X * Utilities.TILE_SIZE) / Utilities.TILE_SIZE;
-        tz = (int) (pos.z - Utilities.GHOST_OFFSET_Z * Utilities.TILE_SIZE) / Utilities.TILE_SIZE;
+        tx = (int) (pos.x - Globals.GHOST_OFFSET_X * Globals.TILE_SIZE) / Globals.TILE_SIZE;
+        tz = (int) (pos.z - Globals.GHOST_OFFSET_Z * Globals.TILE_SIZE) / Globals.TILE_SIZE;
     }
 
     protected bool isValid(int[][] Map, int tx, int tz)
@@ -110,7 +108,7 @@ public class GhostMove : MonoBehaviour
         {
             for (int j = tz - 0; j <= tz + 0; ++j)
             {
-                if (i < 0 || j < 0 || i == Utilities.MAP_HEIGHT || j == Utilities.MAP_WIDTH)
+                if (i < 0 || j < 0 || i == Globals.MAP_HEIGHT || j == Globals.MAP_WIDTH)
                 {
                     Debug.Log("Size");
                     return false;
