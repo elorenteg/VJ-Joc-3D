@@ -7,6 +7,11 @@ public class GhostMove : MonoBehaviour
     protected static float GHOST_SPEED = 20;
     protected static float GHOST_ROTATE_SPEED = 2.5f;
 
+    protected static float UP_ANGLE = 90.0f;
+    protected static float DOWN_ANGLE = 270.0f;
+    protected static float LEFT_ANGLE = 0.0f;
+    protected static float RIGHT_ANGLE = 180.0f;
+
     public static int MAX_FRAMES_STATE = 15;
     private int textureState;
     private int frameState;
@@ -14,8 +19,8 @@ public class GhostMove : MonoBehaviour
     private bool isDead;
     private bool canBeKilled;
 
-    protected int tile_x, tile_z;
-    protected int new_tx, new_tz;
+    protected int tileX, tileZ;
+    protected int newTileX, newTileZ;
 
     private GhostAnimate animationScript;
 
@@ -86,8 +91,8 @@ public class GhostMove : MonoBehaviour
 
     public void SetInitTiles(int tx, int tz)
     {
-        tile_x = tx;
-        tile_z = tz;
+        tileX = tx;
+        tileZ = tz;
     }
 
     protected Vector3 GetPosition(int tx, int tz)
@@ -112,7 +117,7 @@ public class GhostMove : MonoBehaviour
                     Debug.Log("Size");
                     return false;
                 }
-                if (Map[i][j] > 0 && Map[i][j] <= 3)
+                if (LevelCreator.isWall(i, j))
                 {
                     Debug.Log("Value -- " + "( " + i + "," + j + ") " + Map[i][j]);
                     return false;
@@ -120,5 +125,42 @@ public class GhostMove : MonoBehaviour
             }
         }
         return true;
+    }
+
+    protected bool rotate(int dir)
+    {
+        float angleRotation = 180.0f;
+        switch (dir)
+        {
+            case Globals.UP:
+                angleRotation = UP_ANGLE;
+                break;
+            case Globals.RIGHT:
+                angleRotation = RIGHT_ANGLE;
+                break;
+            case Globals.DOWN:
+                angleRotation = DOWN_ANGLE;
+                break;
+            case Globals.LEFT:
+                angleRotation = LEFT_ANGLE;
+                break;
+
+        }
+
+        float diff = transform.rotation.eulerAngles.y - angleRotation;
+        if (Mathf.Abs(diff) <= 2.0f)
+        {
+            Vector3 eulerAngles = transform.eulerAngles;
+            eulerAngles.y = angleRotation;
+            transform.eulerAngles = eulerAngles;
+
+            return true;
+        }
+        else {
+            Quaternion newRotation = Quaternion.AngleAxis(angleRotation, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * GHOST_ROTATE_SPEED);
+
+            return false;
+        }
     }
 }
