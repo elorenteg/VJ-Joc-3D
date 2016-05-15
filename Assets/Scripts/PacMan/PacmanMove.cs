@@ -37,18 +37,31 @@ public class PacmanMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool pacmanCanMove = false;
+        int keyPressed = -1;
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) keyPressed = Globals.LEFT;
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) keyPressed = Globals.RIGHT;
+        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) keyPressed = Globals.UP;
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) keyPressed = Globals.DOWN;
 
-        if (!levelManager.getGamePaused())
+        if (keyPressed != -1)
         {
-            pacmanCanMove = rotate();
-            if (pacmanCanMove)
+            if (!levelManager.getGamePaused())
             {
-                animationScript.PlaySound(animationScript.stateMove());
-                animationScript.Animate(animationScript.stateMove());
+                bool pacmanCanMove = doRotation(keyPressed);
+                if (pacmanCanMove)
+                {
+                    animationScript.PlaySound(animationScript.stateMove());
+                    animationScript.Animate(animationScript.stateMove());
 
-                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                    transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                }
             }
+
+
+
+            int tx, tz;
+            LevelCreator.positionToTiles(skinnedMeshRenderer.bounds.center, out tx, out tz);
+            Debug.Log("Calculated (" + tx + "," + tz + ")");
         }
 
         if (frameState == MAX_FRAMES_STATE)
@@ -62,7 +75,7 @@ public class PacmanMove : MonoBehaviour
         ++frameState;
     }
 
-    bool rotate()
+    public bool doRotation(int dir)
     {
         bool rotateLeft = true;
 
@@ -76,7 +89,7 @@ public class PacmanMove : MonoBehaviour
 
         bool canMove = false;
         bool rotate = false;
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if (dir == Globals.LEFT)
         {
             if (prevAngle >= 180.0f) rotateLeft = false;
 
@@ -95,7 +108,7 @@ public class PacmanMove : MonoBehaviour
             }
             else rotate = true;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        else if (dir == Globals.RIGHT)
         {
             if (prevAngle < 180.0f) rotateLeft = false;
 
@@ -108,7 +121,7 @@ public class PacmanMove : MonoBehaviour
             if (prevAngle == 180.0f) canMove = true;
             else rotate = true;
         }
-        else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        else if (dir == Globals.UP)
         {
             if (prevAngle > 270.0f || prevAngle < 90.0f) rotateLeft = false;
 
@@ -121,7 +134,7 @@ public class PacmanMove : MonoBehaviour
             if (prevAngle == 90.0f) canMove = true;
             else rotate = true;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        else if (dir == Globals.DOWN)
         {
             if (prevAngle > 90.0f && prevAngle < 270.0f) rotateLeft = false;
 
@@ -138,10 +151,14 @@ public class PacmanMove : MonoBehaviour
         if (rotate)
         {
             if (fixAngle) fixEulerAngle(fixedAngle);
-            else if (rotateLeft)
-                transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), incAngle);
-            else
-                transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), incAngle);
+            else {
+                SkinnedMeshRenderer skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+
+                if (rotateLeft)
+                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), incAngle);
+                else
+                    transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), incAngle);
+            }
 
             return fixAngle;
         }
@@ -149,7 +166,7 @@ public class PacmanMove : MonoBehaviour
         return canMove;
     }
 
-    void fixEulerAngle(float fixedAngle)
+    private void fixEulerAngle(float fixedAngle)
     {
         Vector3 euler = transform.eulerAngles;
         euler.y = fixedAngle;

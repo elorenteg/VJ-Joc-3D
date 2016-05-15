@@ -244,6 +244,12 @@ public class LevelCreator : MonoBehaviour
         return (Map[tx][tz] != WALL_H_C && Map[tx][tz] != WALL_V_C && Map[tx][tz] != WALL_RES);
     }
 
+    public static void positionToTiles(Vector3 pos, out int tx, out int tz)
+    {
+        tx = (int) pos.x / Globals.TILE_SIZE;
+        tz = (int) pos.z / Globals.TILE_SIZE;
+    }
+
     private void placeFloor()
     {
         Vector3 floorPosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
@@ -304,11 +310,11 @@ public class LevelCreator : MonoBehaviour
 
     private void placeObjects()
     {
-        for (int i = 0; i < MAP_HEIGHT; ++i)
+        for (int tz = 0; tz < MAP_HEIGHT; ++tz)
         {
-            for (int j = 0; j < MAP_WIDTH; ++j)
+            for (int tx = 0; tx < MAP_WIDTH; ++tx)
             {
-                int cell = Map[i][j];
+                int cell = Map[tz][tx];
                 if (cell != CELL_EMPTY)
                 {
                     GameObject element;
@@ -320,7 +326,7 @@ public class LevelCreator : MonoBehaviour
                     if (cell == WALL_V_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, tz * TILE_SIZE);
                         cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
@@ -331,7 +337,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == WALL_H_C)
                     {
                         element = wall;
-                        cellPosition = new Vector3(j * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, tz * TILE_SIZE);
                         cellScale = WALL_SCALE;
                         texture = null;
                         textureScale = new Vector2(0.5f, 1.0f);
@@ -342,7 +348,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == GHOST_B_C)
                     {
                         element = ghost;
-                        cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
                         texture = blueGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
@@ -353,7 +359,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == GHOST_O_C)
                     {
                         element = ghost;
-                        cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
                         texture = orangeGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
@@ -364,7 +370,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == GHOST_P_C)
                     {
                         element = ghost;
-                        cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
                         texture = pinkGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
@@ -375,7 +381,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == GHOST_R_C)
                     {
                         element = ghost;
-                        cellPosition = new Vector3(j * TILE_SIZE, GHOST_Y_POS, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
                         cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
                         texture = redGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
@@ -386,7 +392,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == PACMAN_C)
                     {
                         element = pacman;
-                        cellPosition = new Vector3(j * TILE_SIZE, PACMAN_Y_POS, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, PACMAN_Y_POS, tz * TILE_SIZE);
                         cellScale = new Vector3(PACMAN_SCALE.x, PACMAN_SCALE.y, PACMAN_SCALE.z);
                         texture = null;
                         textureScale = new Vector2(PACMAN_TEXTURE_SCALE.x, PACMAN_TEXTURE_SCALE.y);
@@ -395,13 +401,13 @@ public class LevelCreator : MonoBehaviour
                         cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
 
                         // El mapa es de numTiles pares y asi colocamos al Pacman entre medio de dos tiles
-                        if (j < MAP_WIDTH / 2) cellPosition.x += TILE_SIZE / 2;
+                        if (tx < MAP_WIDTH / 2) cellPosition.x += TILE_SIZE / 2;
                         else cellPosition.x -= TILE_SIZE / 2;
                     }
                     else if (cell == COIN_C)
                     {
                         element = coin;
-                        cellPosition = new Vector3(j * TILE_SIZE, COIN_Y_POS, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, COIN_Y_POS, tz * TILE_SIZE);
                         cellScale = new Vector3(COIN_SCALE.x, COIN_SCALE.y, COIN_SCALE.z);
                         texture = null;
                         textureScale = new Vector2(COIN_TEXTURE_SCALE.x, COIN_TEXTURE_SCALE.y);
@@ -412,7 +418,7 @@ public class LevelCreator : MonoBehaviour
                     else if (cell == BONUS_C)
                     {
                         element = bonus;
-                        cellPosition = new Vector3(j * TILE_SIZE, BONUS_Y_POS, i * TILE_SIZE);
+                        cellPosition = new Vector3(tx * TILE_SIZE, BONUS_Y_POS, tz * TILE_SIZE);
                         cellScale = new Vector3(BONUS_SCALE.x, BONUS_SCALE.y, BONUS_SCALE.z);
                         texture = null;
                         textureScale = new Vector2(BONUS_TEXTURE_SCALE.x, BONUS_TEXTURE_SCALE.y);
@@ -466,7 +472,7 @@ public class LevelCreator : MonoBehaviour
                             newObject.tag = Globals.TAG_GHOST_ORANGE;
 
                             GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
-                            moveScript.SetInitTiles(i, j);
+                            moveScript.SetInitTiles(tx, tz);
                             moveScript.SetDirection(Map);
                         }
                         else if (cell == GHOST_P_C)

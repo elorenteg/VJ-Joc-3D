@@ -29,11 +29,18 @@ public class GhostOrangeMove : GhostMove
 
     public void onMove(int[][] Map)
     {
-        Debug.Log("Moving Orange_GHOST" + " " + this.getBaseGhostSpeed());
+        //Debug.Log("Moving Orange_GHOST" + " " + this.getBaseGhostSpeed());
 
-        bool ghostCanMove = rotate(directions[currentDir]);
+        bool ghostCanMove = doRotation(directions[currentDir]);
 
-        if (ghostCanMove) currentDir = (currentDir + 1) % directions.Length;
+        if (ghostCanMove)
+        {
+            currentDir = (currentDir + 1) % directions.Length;
+        }
+
+        int tx, tz;
+        LevelCreator.positionToTiles(transform.position, out tx, out tz);
+        Debug.Log("ME (" + tileX + "," + tileZ + ")" + " - " + Map[tileX][tileZ] + " -- Calculated (" + tx + "," + tz + ")");
 
         /*
         bool canMove = Globals.rotate(this.gameObject, getBaseGhostRotateSpeed(), directions[currentDir]);
