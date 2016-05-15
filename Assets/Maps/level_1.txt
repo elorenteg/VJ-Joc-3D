@@ -17,7 +17,7 @@ Hhhh  .  Hhhh  .  HhhhHhhhHhhhHhhh  .  Hhhh  .  Hhhh
   vv     hhhh                          hhhh     vv  
   vv  .  hhhh  .                    .  hhhh  .  vv  
   vv     hhhh                          hhhh     vv  
-  Vv  .  Hhhh  . . . . .    . . . . .  Hhhh  .  Vv   
+  Vv  .  Hhhh  * . . . .    . . . . .  Hhhh  .  Vv   
 hhhh     hhhh                          hhhh     hhhh
 Hhhh  .  Hhhh  .                    .  Hhhh  .  Hhhh
 vv                                                vv

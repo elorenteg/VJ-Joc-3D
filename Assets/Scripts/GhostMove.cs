@@ -14,20 +14,22 @@ public class GhostMove : MonoBehaviour
     private int state;
     private int timeState;
     private bool isDead;
+    private bool canBeKilled;
 
     private GhostAnimate animationScript;
 
     protected LevelManager levelManager;
 
     // Use this for initialization
-    public void Start ()
+    public void Start()
     {
         isDead = false;
+        canBeKilled = false;
         state = 0;
         timeState = 0;
-        
+
         animationScript = GetComponent<GhostAnimate>();
-        //animationScript.SetTextures(animationScript.stateMove(), state);
+        animationScript.SetTextures(animationScript.stateMove(), state);
 
         GameObject gameManager = GameObject.Find("GameManager");
         levelManager = gameManager.GetComponent<LevelManager>();
@@ -42,8 +44,9 @@ public class GhostMove : MonoBehaviour
             state = state + 1;
             if (state == 2) state = 0;
 
-            if (!isDead) animationScript.SetTextures(animationScript.stateMove(), state);
-            else animationScript.SetTextures(animationScript.stateDead(), state);
+            if (isDead) animationScript.SetTextures(animationScript.stateDead(), state);
+            else if (canBeKilled) animationScript.SetTextures(animationScript.stateKilleable(), state);
+            else animationScript.SetTextures(animationScript.stateMove(), state); 
         }
 
         ++timeState;
@@ -57,10 +60,23 @@ public class GhostMove : MonoBehaviour
                                       | RigidbodyConstraints.FreezeRotationZ;
     }
 
-    public void SetDead()
+    public void SetKilleable(bool killeable)
     {
-        isDead = true;
-        animationScript.SetTextures(animationScript.stateDead(), state);
+        canBeKilled = killeable;
+
+        if (canBeKilled)
+            animationScript.SetTextures(animationScript.stateKilleable(), state);
+
+        // Mover alejandose
+        // canBeKilled = false;
+    }
+
+    public void SetDead(bool dead)
+    {
+        isDead = dead;
+
+        if (isDead)
+            animationScript.SetTextures(animationScript.stateDead(), state);
 
         // Mover a base
         // isDead = false;

@@ -4,7 +4,8 @@ using System.Collections;
 public class GhostAnimate : MonoBehaviour
 {
     public const int MOVE = 0;
-    public const int DIE = 1;
+    public const int KILLEABLE = 1;
+    public const int DIE = 2;
 
     private AudioSource audioSource;
     public AudioClip moveSound;
@@ -25,15 +26,15 @@ public class GhostAnimate : MonoBehaviour
     public Texture haloCenterNormalTex;
     public Texture haloEndNormalTex;
 
+    public Texture bodyKilleableTex;
+    public Texture eyesKilleableTex;
+    public Texture haloCenterKilleableTex;
+    public Texture haloEndKilleableTex;
+
     public Texture bodyDeadTex;
     public Texture eyesDeadTex;
     public Texture haloCenterDeadTex;
     public Texture haloEndDeadTex;
-
-    public Texture bodyBonusTex;
-    public Texture eyesBonusTex;
-    public Texture haloCenterBonusTex;
-    public Texture haloEndBonusTex;
 
     private const int LEFT = 0;
     private const int RIGHT = 1;
@@ -51,6 +52,11 @@ public class GhostAnimate : MonoBehaviour
     public int stateMove()
     {
         return MOVE;
+    }
+
+    public int stateKilleable()
+    {
+        return KILLEABLE;
     }
 
     public int stateDead()
@@ -76,6 +82,19 @@ public class GhostAnimate : MonoBehaviour
 
                 skinnedMeshRenderer.materials[BODY].mainTextureScale = new Vector2(1.0f, 1.0f);
                 skinnedMeshRenderer.materials[BODY].mainTextureOffset = new Vector2(0.0f, 0.0f);
+                break;
+            case KILLEABLE:
+                SetupMaterialWithBlendMode(skinnedMeshRenderer.materials[BODY], CUTOUT);
+                skinnedMeshRenderer.materials[BODY].mainTexture = bodyKilleableTex;
+                skinnedMeshRenderer.materials[EYES].mainTexture = eyesKilleableTex;
+                skinnedMeshRenderer.materials[HALO_CEN].mainTexture = haloCenterKilleableTex;
+                skinnedMeshRenderer.materials[HALO_END].mainTexture = haloEndKilleableTex;
+
+                skinnedMeshRenderer.materials[BODY].mainTextureScale = new Vector2(1.0f, 1.0f);
+                if (state == 0)
+                    skinnedMeshRenderer.materials[BODY].mainTextureOffset = new Vector2(0.0f, 0.0f);
+                else
+                    skinnedMeshRenderer.materials[BODY].mainTextureOffset = new Vector2(0.5f, 0.0f);
                 break;
             case DIE:
                 SetupMaterialWithBlendMode(skinnedMeshRenderer.materials[BODY], TRANSPARENT);
@@ -107,11 +126,14 @@ public class GhostAnimate : MonoBehaviour
         skinnedMeshRenderer.materials[HALO_END].mainTextureOffset = offset;
     }
 
-    public void Animate(int anim) {
+    public void Animate(int anim)
+    {
         switch (anim)
         {
             case MOVE:
                 ghostAnimation.Play("Move", PlayMode.StopAll);
+                break;
+            case KILLEABLE:
                 break;
             case DIE:
                 ghostAnimation.Play("Die", PlayMode.StopAll);
@@ -119,10 +141,13 @@ public class GhostAnimate : MonoBehaviour
         }
     }
 
-    public void PlaySound(int sound) {
-        switch(sound)
+    public void PlaySound(int sound)
+    {
+        switch (sound)
         {
             case MOVE:
+                break;
+            case KILLEABLE:
                 break;
             case DIE:
                 break;

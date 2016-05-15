@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     private static int TOTAL_LEVEL = 2;
     private static int INITIAL_LEVEL = 1;
     private static int INITIAL_LIFES = 3;
-    private static int[] COINS_NUMBER = { 1, 4 };
+    private static int[] COINS_NUMBER = { 30, 4 };
     private static int COIN_SCORE = 1;
 
     private int currentLevel;
@@ -36,6 +36,10 @@ public class LevelManager : MonoBehaviour
 
     private bool gamePaused;
 
+    private static int TIME_BONUS_PACMAN_KILLS_GHOST = 10; //10 seconds
+    private bool bonusPacmanKillsGhost;
+    private float bonusPacmanKillsGhostRemaining;
+
     void Start()
     {
         GameObject gameManager = GameObject.Find("GameManager");
@@ -45,6 +49,8 @@ public class LevelManager : MonoBehaviour
 
         currentHighScore = dataManager.readMaxScore();
         gamePaused = false;
+        bonusPacmanKillsGhost = false;
+        bonusPacmanKillsGhostRemaining = 0.0f;
 
         startGame();
     }
@@ -90,7 +96,8 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         //updateIA();
-        
+        updateTimeBonus();
+
         if (gamePaused && Input.GetKey(KeyCode.Return))
         {
             endMessage();
@@ -169,13 +176,36 @@ public class LevelManager : MonoBehaviour
         if (ghostRedVisible) ghostRedMove.onMove();
     }
 
+    private void updateTimeBonus()
+    {
+        if (bonusPacmanKillsGhost)
+        {
+            if (bonusPacmanKillsGhostRemaining > 0)
+            {
+                if (bonusPacmanKillsGhostRemaining > 2)
+                {
+
+                }
+
+                bonusPacmanKillsGhostRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                ghostBlueMove.SetKilleable(false);
+                ghostOrangeMove.SetKilleable(false);
+                ghostPinkMove.SetKilleable(false);
+                ghostRedMove.SetKilleable(false);
+                bonusPacmanKillsGhost = false;
+            }
+        }
+    }
+
     public void coinEaten()
     {
         // TODO Se deja asi por si se quiere implementar un multiplicador
         int multiplier = 1;
         increaseScore(COIN_SCORE * multiplier);
         --remainingCoins;
-        Debug.Log("Remaining coins: " + remainingCoins);
 
         if (remainingCoins == 0)
         {
@@ -282,25 +312,41 @@ public class LevelManager : MonoBehaviour
 
     public void bonusEaten()
     {
-        // TODO Se deja asi por si se quiere implementar un multiplicador
-        int multiplier = 1;
-        increaseScore(COIN_SCORE * multiplier);
-        --remainingCoins;
-        Debug.Log("Remaining coins: " + remainingCoins);
+        bonusPacmanKillsGhost = true;
+        setGhostsKilleables();
+    }
 
-        if (remainingCoins == 0)
+    public bool isBonusPacmanKillsGhost()
+    {
+        return bonusPacmanKillsGhost;
+    }
+
+    public void setGhostsKilleables()
+    {
+        bonusPacmanKillsGhostRemaining = TIME_BONUS_PACMAN_KILLS_GHOST;
+        ghostBlueMove.SetKilleable(true);
+        ghostOrangeMove.SetKilleable(true);
+        ghostPinkMove.SetKilleable(true);
+        ghostRedMove.SetKilleable(true);
+    }
+
+    public void ghostEaten(string ghostTag)
+    {
+        if (ghostTag == LevelCreator.TAG_GHOST_BLUE)
         {
-            // Fin del juego
-            if (currentLevel == TOTAL_LEVEL)
-            {
-
-            }
-            else
-            {
-                //TODO Imagen final de nivel
-                ++currentLevel;
-                loadLevel(currentLevel);
-            }
+            ghostBlueMove.SetDead(true);
+        }
+        else if (ghostTag == LevelCreator.TAG_GHOST_ORANGE)
+        {
+            ghostOrangeMove.SetDead(true);
+        }
+        else if (ghostTag == LevelCreator.TAG_GHOST_PINK)
+        {
+            ghostPinkMove.SetDead(true);
+        }
+        else if (ghostTag == LevelCreator.TAG_GHOST_RED)
+        {
+            ghostRedMove.SetDead(true);
         }
     }
 }

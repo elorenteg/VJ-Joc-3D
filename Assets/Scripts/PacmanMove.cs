@@ -174,45 +174,31 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        if (collision.gameObject.tag == "ghost")
+        if (collision.gameObject.tag == "ghost" ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_BLUE ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_ORANGE ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_PINK ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_RED)
         {
-            Debug.Log("PacMan has collisioned with a GHOST");
-            GhostMove ghostScript = collision.gameObject.GetComponent<GhostMove>();
-            ghostScript.SetDead();
-        }
-        if (collision.gameObject.tag == "bonus")
-        {
-            Debug.Log("PacMan has eaten a BONUS");
-            Destroy(collision.gameObject);
-            collision.collider.enabled = false;
+            Debug.Log("PacMan has collisioned with " + collision.gameObject.tag);
 
-            ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
-            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
-
-            levelManager.bonusEaten();
-        }
-        if (collision.gameObject.tag == "coin")
-        {
-            Debug.Log("PacMan has eaten a COIN");
-            collision.collider.enabled = false;
-
-            ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
-
-            //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center);
-            //Vector3 translate = skinnedMeshRenderer.bounds.center - collision.collider.transform.position;
-            //collision.collider.transform.Translate(translate);
-            //Destroy(collision.gameObject);
-
-            levelManager.coinEaten();
+            if (levelManager.isBonusPacmanKillsGhost())
+            {
+                levelManager.ghostEaten(collision.gameObject.tag);
+            }
+            else
+            {
+                // Pacman should be killed
+            }
         }
     }
 
     void OnTriggerStay(Collider collider)
     {
-        
+
         if (collider.gameObject.tag == "coin")
         {
-            //Debug.Log("COIN!");
+            Debug.Log("PacMan has eaten a COIN");
             Vector3 centerPacman = skinnedMeshRenderer.bounds.center;
             Vector3 centerCoin = collider.gameObject.transform.position;
 
@@ -223,9 +209,19 @@ public class PacmanMove : MonoBehaviour
             //centerCoin.z += COIN_OFFSET * TILE_SIZE;
             //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
 
+            Destroy(collider.gameObject);
             levelManager.coinEaten();
         }
-        
+        else if (collider.gameObject.tag == "bonus")
+        {
+            Debug.Log("PacMan has eaten a BONUS");
+
+            ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
+            //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+
+            Destroy(collider.gameObject);
+            levelManager.bonusEaten();
+        }
     }
 }
 
