@@ -162,7 +162,7 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        if (collision.gameObject.tag == "ghost" ||
+        if (collision.gameObject.tag == Globals.TAG_GHOST ||
             collision.gameObject.tag == Globals.TAG_GHOST_BLUE ||
             collision.gameObject.tag == Globals.TAG_GHOST_ORANGE ||
             collision.gameObject.tag == Globals.TAG_GHOST_PINK ||
@@ -182,7 +182,7 @@ public class PacmanMove : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.tag == "coin")
+        if (collider.gameObject.tag == Globals.TAG_COIN)
         {
             Debug.Log("PacMan has eaten a COIN");
             collider.enabled = false;
@@ -191,7 +191,7 @@ public class PacmanMove : MonoBehaviour
             attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
             levelManager.coinEaten();
         }
-        else if (collider.gameObject.tag == "bonus")
+        else if (collider.gameObject.tag == Globals.TAG_BONUS)
         {
             Debug.Log("PacMan has eaten a BONUS");
 

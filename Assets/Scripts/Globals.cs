@@ -7,6 +7,12 @@ public static class Globals {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
 
+    public static string TAG_PACMAN = "pacman";
+    public static string TAG_GHOST = "ghost";
+    public static string TAG_COIN = "coin";
+    public static string TAG_BONUS = "bonus";
+    public static string TAG_WALL = "wall";
+    public static string TAG_FLOOR = "floor";
     public static string TAG_GHOST_BLUE = "ghost_blue";
     public static string TAG_GHOST_ORANGE = "ghost_orange";
     public static string TAG_GHOST_PINK = "ghost_pink";

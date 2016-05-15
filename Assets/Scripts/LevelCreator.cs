@@ -133,7 +133,7 @@ public class LevelCreator : MonoBehaviour
         animFrontWall = new List<bool>();
         animBackWall = new List<bool>();
 
-        string[] destroyTags = { "pacman", "coin", "bonus", "wall", "floor",
+        string[] destroyTags = { Globals.TAG_PACMAN, Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR,
             Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED};
 
         for (int i = 0; i < destroyTags.Length; ++i)

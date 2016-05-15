@@ -78,7 +78,7 @@ public class LevelManager : MonoBehaviour
         gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
         ghostRedMove = gameObjectGhost.GetComponent<GhostRedMove>();
 
-        GameObject gameObjectPacman = GameObject.FindGameObjectWithTag("pacman");
+        GameObject gameObjectPacman = GameObject.FindGameObjectWithTag(Globals.TAG_PACMAN);
         pacmanMove = gameObjectPacman.GetComponent<PacmanMove>();
 
         remainingCoins = COINS_NUMBER[level - 1];
