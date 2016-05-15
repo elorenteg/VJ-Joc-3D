@@ -208,11 +208,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 484790}
-  - 54: {fileID: 5403550}
-  - 114: {fileID: 11480370}
-  - 82: {fileID: 8296416}
-  - 111: {fileID: 11189646}
-  - 135: {fileID: 13599060}
+  - 54: {fileID: 5422240}
+  - 135: {fileID: 13527762}
+  - 111: {fileID: 11122242}
+  - 82: {fileID: 8215940}
+  - 114: {fileID: 11460764}
   m_Layer: 0
   m_Name: Ghost_2
   m_TagString: Untagged
@@ -592,7 +592,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 132232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 58.297867, y: 10.600807, z: 137.10379}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 459692}
@@ -691,7 +691,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119622}
   m_Mesh: {fileID: 4300002, guid: 7f245928d770424459c7babfd48fcb4d, type: 3}
---- !u!54 &5403550
+--- !u!54 &5422240
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -706,7 +706,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!82 &8296416
+--- !u!82 &8215940
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -780,7 +780,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!111 &11189646
+--- !u!111 &11122242
 Animation:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -796,7 +796,7 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &11480370
+--- !u!114 &11460764
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -812,26 +812,27 @@ MonoBehaviour:
   eyesNormalTex: {fileID: 2800000, guid: a2a79cd72e0afb340b7ea731234040f2, type: 3}
   haloCenterNormalTex: {fileID: 2800000, guid: dd6d05f91c42cf1409ad123ecad5992e, type: 3}
   haloEndNormalTex: {fileID: 2800000, guid: 16dd104d7ce9bce4893004c22632679a, type: 3}
+  bodyKilleableTex: {fileID: 2800000, guid: b92eb356bbb7d84428a4b3be2a7ef184, type: 3}
+  eyesKilleableTex: {fileID: 2800000, guid: be26627c58159ec4dae515377c5d864f, type: 3}
+  haloCenterKilleableTex: {fileID: 2800000, guid: 672d2c5769c40d84a97dc269af1e2828,
+    type: 3}
+  haloEndKilleableTex: {fileID: 2800000, guid: f3c5a43812c23664f97720a641e43ae6, type: 3}
   bodyDeadTex: {fileID: 2800000, guid: 77ffb8c0957a8d74d9ec8a6329c1cc60, type: 3}
   eyesDeadTex: {fileID: 2800000, guid: 3ed28a74e4c35d04f95d4bef51c819a1, type: 3}
   haloCenterDeadTex: {fileID: 2800000, guid: 5025ab28745683244a17904106e4cb20, type: 3}
   haloEndDeadTex: {fileID: 2800000, guid: 3df3e98f4f6ff824491b8a3aa6368bb1, type: 3}
-  bodyBonusTex: {fileID: 0}
-  eyesBonusTex: {fileID: 0}
-  haloCenterBonusTex: {fileID: 0}
-  haloEndBonusTex: {fileID: 0}
---- !u!135 &13599060
+--- !u!135 &13527762
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 132232}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -4.5, y: -2.44, z: 3.7}
 --- !u!137 &13750460
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -842,10 +843,10 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 42f83719bcd53d14593e8f53cfa0b24d, type: 2}
-  - {fileID: 2100000, guid: ca6a1b0e1ed458640b72cd749b9ebbc4, type: 2}
-  - {fileID: 2100000, guid: eb4b15dc9bf3db14d84f73ca98b7b3e3, type: 2}
-  - {fileID: 2100000, guid: 7415d6dfb5534e249b858738e69ba5d1, type: 2}
+  - {fileID: 2100000, guid: 0cbe814bf09c3c94d90a254350458b8f, type: 2}
+  - {fileID: 2100000, guid: 3f44da750ec109c43bfa05fa46092cea, type: 2}
+  - {fileID: 2100000, guid: 185ef194273365c4e8c7716cd0f55ff8, type: 2}
+  - {fileID: 2100000, guid: 783872f628c61984e996effb1b8cddb4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1

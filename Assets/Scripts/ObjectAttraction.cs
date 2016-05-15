@@ -34,7 +34,7 @@ public class ObjectAttraction : MonoBehaviour {
 
             frame += 1;
 
-            Debug.Log(frame);
+            //Debug.Log(frame);
             if (frame == 4) Destroy(this.gameObject);
         }
     }

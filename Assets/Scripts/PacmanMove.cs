@@ -8,9 +8,9 @@ public class PacmanMove : MonoBehaviour
 
     private const float ERROR = 1.5f;
 
-    private int state;
-    private int timeState;
-    private int MAX_TIME_STATE;
+    public static int MAX_FRAMES_STATE = 15;
+    private int textureState;
+    private int frameState;
 
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private PacmanAnimate animationScript;
@@ -28,9 +28,8 @@ public class PacmanMove : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        state = 0;
-        timeState = 0;
-        MAX_TIME_STATE = 15;
+        textureState = 0;
+        frameState = 0;
 
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         animationScript = GetComponent<PacmanAnimate>();
@@ -57,16 +56,15 @@ public class PacmanMove : MonoBehaviour
             }
         }
 
-        if (timeState == MAX_TIME_STATE)
+        if (frameState == MAX_FRAMES_STATE)
         {
-            timeState = 0;
-            state = state + 1;
-            if (state == 2) state = 0;
+            frameState = 0;
+            textureState = (textureState + 1) % 2;
 
-            animationScript.SetTextures(state);
+            animationScript.SetTextures(textureState);
         }
 
-        ++timeState;
+        ++frameState;
     }
 
     bool rotate()

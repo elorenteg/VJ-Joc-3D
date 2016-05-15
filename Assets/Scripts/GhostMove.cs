@@ -7,12 +7,10 @@ public class GhostMove : MonoBehaviour
     protected static float GHOST_SPEED = 20;
     protected static float GHOST_ROTATE_SPEED = 2.5f;
 
-    private static int MAX_TIME_STATE = 15;
+    public static int MAX_FRAMES_STATE = 15;
+    private int textureState;
+    private int frameState;
 
-    private float GHOST_Y_POS = 18.5f;
-
-    private int state;
-    private int timeState;
     private bool isDead;
     private bool canBeKilled;
 
@@ -28,11 +26,11 @@ public class GhostMove : MonoBehaviour
     {
         isDead = false;
         canBeKilled = false;
-        state = 0;
-        timeState = 0;
+        textureState = 0;
+        frameState = 0;
 
         animationScript = GetComponent<GhostAnimate>();
-        animationScript.SetTextures(animationScript.stateMove(), state);
+        animationScript.SetTextures(animationScript.stateMove(), textureState);
 
         GameObject gameManager = GameObject.Find("GameManager");
         levelManager = gameManager.GetComponent<LevelManager>();
@@ -41,26 +39,17 @@ public class GhostMove : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (timeState == MAX_TIME_STATE)
+        if (frameState == MAX_FRAMES_STATE)
         {
-            timeState = 0;
-            state = state + 1;
-            if (state == 2) state = 0;
+            frameState = 0;
+            textureState = (textureState + 1) % 2;
 
-            if (isDead) animationScript.SetTextures(animationScript.stateDead(), state);
-            else if (canBeKilled) animationScript.SetTextures(animationScript.stateKilleable(), state);
-            else animationScript.SetTextures(animationScript.stateMove(), state); 
+            if (isDead) animationScript.SetTextures(animationScript.stateDead(), textureState);
+            else if (canBeKilled) animationScript.SetTextures(animationScript.stateKilleable(), textureState);
+            else animationScript.SetTextures(animationScript.stateMove(), textureState); 
         }
 
-        ++timeState;
-
-        Vector3 pos = transform.position;
-        pos.y = GHOST_Y_POS;
-        transform.position = pos;
-
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX
-                                      | RigidbodyConstraints.FreezeRotationY
-                                      | RigidbodyConstraints.FreezeRotationZ;
+        ++frameState;
     }
 
     public void SetKilleable(bool killeable)
@@ -68,7 +57,7 @@ public class GhostMove : MonoBehaviour
         canBeKilled = killeable;
 
         if (canBeKilled)
-            animationScript.SetTextures(animationScript.stateKilleable(), state);
+            animationScript.SetTextures(animationScript.stateKilleable(), textureState);
 
         // Mover alejandose
         // canBeKilled = false;
@@ -79,7 +68,7 @@ public class GhostMove : MonoBehaviour
         isDead = dead;
 
         if (isDead)
-            animationScript.SetTextures(animationScript.stateDead(), state);
+            animationScript.SetTextures(animationScript.stateDead(), textureState);
 
         // Mover a base
         // isDead = false;
@@ -99,16 +88,6 @@ public class GhostMove : MonoBehaviour
     {
         tile_x = tx;
         tile_z = tz;
-    }
-
-    protected int GetTileX()
-    {
-        return tile_x;
-    }
-
-    protected int GetTileZ()
-    {
-        return tile_z;
     }
 
     protected Vector3 GetPosition(int tx, int tz)

@@ -822,10 +822,6 @@ MonoBehaviour:
   eyesDeadTex: {fileID: 2800000, guid: 3ed28a74e4c35d04f95d4bef51c819a1, type: 3}
   haloCenterDeadTex: {fileID: 2800000, guid: 5025ab28745683244a17904106e4cb20, type: 3}
   haloEndDeadTex: {fileID: 2800000, guid: 3df3e98f4f6ff824491b8a3aa6368bb1, type: 3}
-  bodyBonusTex: {fileID: 0}
-  eyesBonusTex: {fileID: 0}
-  haloCenterBonusTex: {fileID: 0}
-  haloEndBonusTex: {fileID: 0}
 --- !u!135 &13525884
 SphereCollider:
   m_ObjectHideFlags: 1

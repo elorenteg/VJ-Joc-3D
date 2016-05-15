@@ -90,7 +90,7 @@ public class GhostAnimate : MonoBehaviour
                 skinnedMeshRenderer.materials[HALO_CEN].mainTexture = haloCenterKilleableTex;
                 skinnedMeshRenderer.materials[HALO_END].mainTexture = haloEndKilleableTex;
 
-                skinnedMeshRenderer.materials[BODY].mainTextureScale = new Vector2(1.0f, 1.0f);
+                skinnedMeshRenderer.materials[BODY].mainTextureScale = new Vector2(0.5f, 1.0f);
                 if (state == 0)
                     skinnedMeshRenderer.materials[BODY].mainTextureOffset = new Vector2(0.0f, 0.0f);
                 else
