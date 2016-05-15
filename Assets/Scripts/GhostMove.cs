@@ -92,14 +92,13 @@ public class GhostMove : MonoBehaviour
 
     protected Vector3 GetPosition(int tx, int tz)
     {
-        return new Vector3((tx + Globals.GHOST_OFFSET_X) * Globals.TILE_SIZE, transform.position.y, 
-            (tz + Globals.GHOST_OFFSET_Z) * Globals.TILE_SIZE);
+        return new Vector3(tx * Globals.TILE_SIZE, transform.position.y, tz * Globals.TILE_SIZE);
     }
 
     public static void positionToTiles(Vector3 pos, out int tx, out int tz)
     {
-        tx = (int) (pos.x - Globals.GHOST_OFFSET_X * Globals.TILE_SIZE) / Globals.TILE_SIZE;
-        tz = (int) (pos.z - Globals.GHOST_OFFSET_Z * Globals.TILE_SIZE) / Globals.TILE_SIZE;
+        tx = (int) pos.x - Globals.TILE_SIZE;
+        tz = (int) pos.z - Globals.TILE_SIZE;
     }
 
     protected bool isValid(int[][] Map, int tx, int tz)

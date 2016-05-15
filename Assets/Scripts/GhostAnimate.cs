@@ -3,9 +3,9 @@ using System.Collections;
 
 public class GhostAnimate : MonoBehaviour
 {
-    public const int MOVE = 0;
-    public const int KILLEABLE = 1;
-    public const int DIE = 2;
+    private const int MOVE = 0;
+    private const int KILLEABLE = 1;
+    private const int DIE = 2;
 
     private AudioSource audioSource;
     public AudioClip moveSound;

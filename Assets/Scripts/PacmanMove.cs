@@ -17,11 +17,6 @@ public class PacmanMove : MonoBehaviour
 
     private LevelManager levelManager;
 
-    private int TILE_SIZE = 2;
-    private float PACMAN_OFFSET_X = 0.38f;
-    private float PACMAN_OFFSET_Z = -6.2f;
-    private float COIN_OFFSET = 0.55f;
-
     public float pullRadius = 5;
     public float pullForce = 4;
 
@@ -168,10 +163,10 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         if (collision.gameObject.tag == "ghost" ||
-            collision.gameObject.tag == LevelCreator.TAG_GHOST_BLUE ||
-            collision.gameObject.tag == LevelCreator.TAG_GHOST_ORANGE ||
-            collision.gameObject.tag == LevelCreator.TAG_GHOST_PINK ||
-            collision.gameObject.tag == LevelCreator.TAG_GHOST_RED)
+            collision.gameObject.tag == Globals.TAG_GHOST_BLUE ||
+            collision.gameObject.tag == Globals.TAG_GHOST_ORANGE ||
+            collision.gameObject.tag == Globals.TAG_GHOST_PINK ||
+            collision.gameObject.tag == Globals.TAG_GHOST_RED)
         {
             Debug.Log("PacMan has collisioned with " + collision.gameObject.tag);
 

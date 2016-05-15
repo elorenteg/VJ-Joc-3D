@@ -26,8 +26,6 @@ public class LevelManager : MonoBehaviour
     private bool ghostOrangeVisible;
     private bool ghostPinkVisible;
     private bool ghostRedVisible;
-    private bool coinsVisible;
-    private bool bonusVisible;
 
     private GhostBlueMove ghostBlueMove;
     private GhostOrangeMove ghostOrangeMove;
@@ -68,16 +66,16 @@ public class LevelManager : MonoBehaviour
     {
         levelCreator.loadLevel(level);
 
-        GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_BLUE);
+        GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_BLUE);
         ghostBlueMove = gameObjectGhost.GetComponent<GhostBlueMove>();
 
-        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_ORANGE);
+        gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_ORANGE);
         ghostOrangeMove = gameObjectGhost.GetComponent<GhostOrangeMove>();
 
-        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_PINK);
+        gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_PINK);
         ghostPinkMove = gameObjectGhost.GetComponent<GhostPinkMove>();
 
-        gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_RED);
+        gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
         ghostRedMove = gameObjectGhost.GetComponent<GhostRedMove>();
 
         GameObject gameObjectPacman = GameObject.FindGameObjectWithTag("pacman");
@@ -89,8 +87,6 @@ public class LevelManager : MonoBehaviour
         ghostOrangeVisible = true;
         ghostPinkVisible = true;
         ghostRedVisible = true;
-        coinsVisible = true;
-        bonusVisible = true;
     }
 
     void Update()
@@ -139,7 +135,7 @@ public class LevelManager : MonoBehaviour
         {
             ghostBlueVisible = !ghostBlueVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_BLUE);
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_BLUE);
             gameObjectGhost.SetActive(ghostBlueVisible);
         }
 
@@ -147,7 +143,7 @@ public class LevelManager : MonoBehaviour
         {
             ghostOrangeVisible = !ghostOrangeVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_ORANGE);
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_ORANGE);
             gameObjectGhost.SetActive(ghostOrangeVisible);
         }
 
@@ -155,7 +151,7 @@ public class LevelManager : MonoBehaviour
         {
             ghostPinkVisible = !ghostPinkVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_PINK);
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_PINK);
             gameObjectGhost.SetActive(ghostPinkVisible);
         }
 
@@ -163,7 +159,7 @@ public class LevelManager : MonoBehaviour
         {
             ghostRedVisible = !ghostRedVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(LevelCreator.TAG_GHOST_RED);
+            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
             gameObjectGhost.SetActive(ghostRedVisible);
         }
     }
@@ -332,19 +328,19 @@ public class LevelManager : MonoBehaviour
 
     public void ghostEaten(string ghostTag)
     {
-        if (ghostTag == LevelCreator.TAG_GHOST_BLUE)
+        if (ghostTag == Globals.TAG_GHOST_BLUE)
         {
             ghostBlueMove.SetDead(true);
         }
-        else if (ghostTag == LevelCreator.TAG_GHOST_ORANGE)
+        else if (ghostTag == Globals.TAG_GHOST_ORANGE)
         {
             ghostOrangeMove.SetDead(true);
         }
-        else if (ghostTag == LevelCreator.TAG_GHOST_PINK)
+        else if (ghostTag == Globals.TAG_GHOST_PINK)
         {
             ghostPinkMove.SetDead(true);
         }
-        else if (ghostTag == LevelCreator.TAG_GHOST_RED)
+        else if (ghostTag == Globals.TAG_GHOST_RED)
         {
             ghostRedMove.SetDead(true);
         }
