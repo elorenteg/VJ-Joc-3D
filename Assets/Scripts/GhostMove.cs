@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GhostMove : MonoBehaviour
 {
-    protected static float GHOST_SPEED = 10;
+    protected static float GHOST_SPEED = 20;
     protected static float GHOST_ROTATE_SPEED = 100;
 
     private static int MAX_TIME_STATE = 15;
@@ -14,6 +14,11 @@ public class GhostMove : MonoBehaviour
     private int state;
     private int timeState;
     private bool isDead;
+
+    protected int tile_x, tile_z;
+    protected int new_tx, new_tz;
+    private Vector3 newPosition;
+    //protected int 
 
     private GhostAnimate animationScript;
 
@@ -64,5 +69,59 @@ public class GhostMove : MonoBehaviour
     protected float getBaseGhostSpeed()
     {
         return GHOST_SPEED;
+    }
+
+    protected float getBaseGhostRotateSpeed()
+    {
+        return GHOST_ROTATE_SPEED;
+    }
+
+    public void SetInitTiles(int tx, int tz)
+    {
+        tile_x = new_tx = tx;
+        tile_z = new_tz = tz;
+    }
+
+    protected int GetTileX()
+    {
+        return tile_x;
+    }
+
+    protected int GetTileZ()
+    {
+        return tile_z;
+    }
+
+    protected Vector3 GetPosition(int tx, int tz)
+    {
+        return new Vector3((tx + Utilities.GHOST_OFFSET_X) * Utilities.TILE_SIZE, transform.position.y, 
+            (tz + Utilities.GHOST_OFFSET_Z) * Utilities.TILE_SIZE);
+    }
+
+    public static void positionToTiles(Vector3 pos, out int tx, out int tz)
+    {
+        tx = (int) (pos.x - Utilities.GHOST_OFFSET_X * Utilities.TILE_SIZE) / Utilities.TILE_SIZE;
+        tz = (int) (pos.z - Utilities.GHOST_OFFSET_Z * Utilities.TILE_SIZE) / Utilities.TILE_SIZE;
+    }
+
+    protected bool isValid(int[][] Map, int tx, int tz)
+    {
+        for (int i = tx - 0; i <= tx + 0; ++i)
+        {
+            for (int j = tz - 0; j <= tz + 0; ++j)
+            {
+                if (i < 0 || j < 0 || i == Utilities.MAP_HEIGHT || j == Utilities.MAP_WIDTH)
+                {
+                    Debug.Log("Size");
+                    return false;
+                }
+                if (Map[i][j] > 0 && Map[i][j] <= 3)
+                {
+                    Debug.Log("Value -- " + "( " + i + "," + j + ") " + Map[i][j]);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

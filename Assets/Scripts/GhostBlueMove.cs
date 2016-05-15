@@ -11,7 +11,7 @@ public class GhostBlueMove : GhostMove
 
     public void onMove()
     {
-        Debug.Log("Moving BLUE_GHOST" + this.getBaseGhostSpeed());
+        //Debug.Log("Moving BLUE_GHOST" + this.getBaseGhostSpeed());
 
         //transform.Translate(Vector3.left * this.getBaseGhostSpeed() * Time.deltaTime);
     }

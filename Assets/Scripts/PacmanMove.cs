@@ -17,11 +17,6 @@ public class PacmanMove : MonoBehaviour
 
     private LevelManager levelManager;
 
-    private const int LEFT = 0;
-    private const int RIGHT = 1;
-    private const int UP = 2;
-    private const int DOWN = 3;
-
     private int TILE_SIZE = 2;
     private float PACMAN_OFFSET_X = 0.38f;
     private float PACMAN_OFFSET_Z = -6.2f;
@@ -186,12 +181,14 @@ public class PacmanMove : MonoBehaviour
 
             levelManager.bonusEaten();
         }
-        if (collision.gameObject.tag == "coin")
+    }
+    void OnTriggerEnter(Collider collider) {
+        if (collider.gameObject.tag == "coin")
         {
             Debug.Log("PacMan has eaten a COIN");
-            collision.collider.enabled = false;
+            collider.enabled = false;
 
-            ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
+            ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
             attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
 
             levelManager.coinEaten();

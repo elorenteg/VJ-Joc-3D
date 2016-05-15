@@ -30,11 +30,11 @@ public class LevelCreator : MonoBehaviour
 
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
-    private const int TILE_SIZE = 2;
+    private static int TILE_SIZE = 2;
     private int[][] Map;
-    private int MAP_WIDTH;
-    private int MAP_HEIGHT;
-    private const int PLANE_HEIGHT = TILE_SIZE * 70;
+    private static int MAP_WIDTH;
+    private static int MAP_HEIGHT;
+    private const int PLANE_HEIGHT = 140;
     private const int PLANE_SEP = 30;
 
     public static string TAG_GHOST_BLUE = "ghost_blue";
@@ -228,6 +228,9 @@ public class LevelCreator : MonoBehaviour
                 } while (line != null);
 
                 theReader.Close();
+
+                Utilities.SetMapSizes(MAP_WIDTH, MAP_WIDTH);
+
                 return true;
             }
         }
@@ -236,6 +239,11 @@ public class LevelCreator : MonoBehaviour
             Debug.Log(e.Message);
             return false;
         }
+    }
+
+    public int[][] GetMap()
+    {
+        return Map;
     }
 
     private void placeFloor()
@@ -478,6 +486,9 @@ public class LevelCreator : MonoBehaviour
                         {
                             newObject.AddComponent<GhostOrangeMove>();
                             newObject.tag = TAG_GHOST_ORANGE;
+
+                            GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
+                            moveScript.SetInitTiles(j, i);
                         }
                         else if (cell == GHOST_P_C)
                         {
