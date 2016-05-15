@@ -37,34 +37,29 @@ public class LevelCreator : MonoBehaviour
     private const int PLANE_HEIGHT = 140;
     private const int PLANE_SEP = 30;
 
-    public static string TAG_GHOST_BLUE = "ghost_blue";
-    public static string TAG_GHOST_ORANGE = "ghost_orange";
-    public static string TAG_GHOST_PINK = "ghost_pink";
-    public static string TAG_GHOST_RED = "ghost_red";
-
-    private static int CELL_EMPTY = 0;
+    public static int CELL_EMPTY = 0;
     private static char WALL_V = 'V';
-    private static int WALL_V_C = 1;
+    public static int WALL_V_C = 1;
     private static char WALL_H = 'H';
-    private static int WALL_H_C = 2;
+    public static int WALL_H_C = 2;
     private static char WALL_V_RES = 'v';
     private static char WALL_H_RES = 'h';
-    private static int WALL_RES = 3;
+    public static int WALL_RES = 3;
     private static char GHOST_B = 'B';
-    private static int GHOST_B_C = 4;
+    public static int GHOST_B_C = 4;
     private static char GHOST_O = 'O';
-    private static int GHOST_O_C = 5;
+    public static int GHOST_O_C = 5;
     private static char GHOST_P = 'P';
-    private static int GHOST_P_C = 6;
+    public static int GHOST_P_C = 6;
     private static char GHOST_R = 'R';
-    private static int GHOST_R_C = 7;
+    public static int GHOST_R_C = 7;
     private static char PACMAN = '+';
-    private static int PACMAN_C = 10;
+    public static int PACMAN_C = 10;
 
     private static char COIN = '.';
-    private static int COIN_C = 20;
+    public static int COIN_C = 20;
     private static char BONUS = '*';
-    private static int BONUS_C = 21;
+    public static int BONUS_C = 21;
 
     private float GHOST_Y_POS = 6.0f;
     private float PACMAN_Y_POS = 18.0f;
@@ -78,8 +73,6 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
-    private float GHOST_OFFSET_X = 11.6f;
-    private float GHOST_OFFSET_Z = 13.9f;
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -141,7 +134,7 @@ public class LevelCreator : MonoBehaviour
         animBackWall = new List<bool>();
 
         string[] destroyTags = { "pacman", "coin", "bonus", "wall", "floor",
-            TAG_GHOST_BLUE, TAG_GHOST_ORANGE, TAG_GHOST_PINK, TAG_GHOST_RED};
+            Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED};
 
         for (int i = 0; i < destroyTags.Length; ++i)
         {
@@ -460,12 +453,12 @@ public class LevelCreator : MonoBehaviour
                         if (cell == GHOST_B_C)
                         {
                             newObject.AddComponent<GhostBlueMove>();
-                            newObject.tag = TAG_GHOST_BLUE;
+                            newObject.tag = Globals.TAG_GHOST_BLUE;
                         }
                         else if (cell == GHOST_O_C)
                         {
                             newObject.AddComponent<GhostOrangeMove>();
-                            newObject.tag = TAG_GHOST_ORANGE;
+                            newObject.tag = Globals.TAG_GHOST_ORANGE;
 
                             GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
                             moveScript.SetInitTiles(i, j);
@@ -474,12 +467,12 @@ public class LevelCreator : MonoBehaviour
                         else if (cell == GHOST_P_C)
                         {
                             newObject.AddComponent<GhostPinkMove>();
-                            newObject.tag = TAG_GHOST_PINK;
+                            newObject.tag = Globals.TAG_GHOST_PINK;
                         }
                         else if (cell == GHOST_R_C)
                         {
                             newObject.AddComponent<GhostRedMove>();
-                            newObject.tag = TAG_GHOST_RED;
+                            newObject.tag = Globals.TAG_GHOST_RED;
                         }
                     }
                     else if (cell == PACMAN_C)
