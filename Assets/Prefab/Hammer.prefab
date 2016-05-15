@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 471808}
   - 95: {fileID: 9525474}
+  - 65: {fileID: 6514422}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: bonus
@@ -154,6 +155,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139006}
   m_Mesh: {fileID: 4300000, guid: fb1ee94ddd31d5a41908b9138d6d0b62, type: 3}
+--- !u!65 &6514422
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &9525474
 Animator:
   serializedVersion: 3

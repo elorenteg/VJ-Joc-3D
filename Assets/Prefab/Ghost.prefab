@@ -813,6 +813,11 @@ MonoBehaviour:
   eyesNormalTex: {fileID: 2800000, guid: a2a79cd72e0afb340b7ea731234040f2, type: 3}
   haloCenterNormalTex: {fileID: 2800000, guid: dd6d05f91c42cf1409ad123ecad5992e, type: 3}
   haloEndNormalTex: {fileID: 2800000, guid: 16dd104d7ce9bce4893004c22632679a, type: 3}
+  bodyKilleableTex: {fileID: 2800000, guid: b92eb356bbb7d84428a4b3be2a7ef184, type: 3}
+  eyesKilleableTex: {fileID: 2800000, guid: be26627c58159ec4dae515377c5d864f, type: 3}
+  haloCenterKilleableTex: {fileID: 2800000, guid: 672d2c5769c40d84a97dc269af1e2828,
+    type: 3}
+  haloEndKilleableTex: {fileID: 2800000, guid: f3c5a43812c23664f97720a641e43ae6, type: 3}
   bodyDeadTex: {fileID: 2800000, guid: 77ffb8c0957a8d74d9ec8a6329c1cc60, type: 3}
   eyesDeadTex: {fileID: 2800000, guid: 3ed28a74e4c35d04f95d4bef51c819a1, type: 3}
   haloCenterDeadTex: {fileID: 2800000, guid: 5025ab28745683244a17904106e4cb20, type: 3}

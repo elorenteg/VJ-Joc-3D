@@ -43,15 +43,19 @@ public class PacmanMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool pacmanCanMove = rotate();
-        if (pacmanCanMove)
+        bool pacmanCanMove = false;
+
+        if (!levelManager.getGamePaused())
         {
-            animationScript.PlaySound(animationScript.stateMove());
-            animationScript.Animate(animationScript.stateMove());
+            pacmanCanMove = rotate();
+            if (pacmanCanMove)
+            {
+                animationScript.PlaySound(animationScript.stateMove());
+                animationScript.Animate(animationScript.stateMove());
 
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+            }
         }
-
 
         if (timeState == MAX_TIME_STATE)
         {
@@ -72,7 +76,7 @@ public class PacmanMove : MonoBehaviour
         bool fixAngle = false;
         float fixedAngle = 0.0f;
         float incAngle = turnSpeed * Time.deltaTime;
-        
+
         float prevAngle = transform.rotation.eulerAngles.y;
         float leftAngle = (prevAngle - incAngle) % 360;
         float rightAngle = (prevAngle + incAngle) % 360;
@@ -89,7 +93,8 @@ public class PacmanMove : MonoBehaviour
                 fixedAngle = 0.0f;
             }
 
-            if (prevAngle <= 0.0f + ERROR) {
+            if (prevAngle <= 0.0f + ERROR)
+            {
                 canMove = true;
                 rotate = true;
                 fixAngle = true;
@@ -100,7 +105,7 @@ public class PacmanMove : MonoBehaviour
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             if (prevAngle < 180.0f) rotateLeft = false;
-            
+
             if ((rotateLeft && leftAngle < 180.0f && leftAngle > 0.0f) || (!rotateLeft && rightAngle > 180.0f && rightAngle < 360.0f))
             {
                 fixAngle = true;
@@ -113,7 +118,7 @@ public class PacmanMove : MonoBehaviour
         else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             if (prevAngle > 270.0f || prevAngle < 90.0f) rotateLeft = false;
-            
+
             if ((rotateLeft && (leftAngle < 90.0f || leftAngle > 270.0f)) || (!rotateLeft && rightAngle > 90.0f && rightAngle < 270.0f))
             {
                 fixAngle = true;
@@ -126,7 +131,7 @@ public class PacmanMove : MonoBehaviour
         else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             if (prevAngle > 90.0f && prevAngle < 270.0f) rotateLeft = false;
-            
+
             if ((rotateLeft && leftAngle < 270.0f && leftAngle > 90.0f) || (!rotateLeft && (rightAngle > 270.0f || rightAngle < 90.0f)))
             {
                 fixAngle = true;
@@ -164,24 +169,25 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        if (collision.gameObject.tag == "ghost")
+        if (collision.gameObject.tag == "ghost" ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_BLUE ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_ORANGE ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_PINK ||
+            collision.gameObject.tag == LevelCreator.TAG_GHOST_RED)
         {
-            Debug.Log("PacMan has collisioned with a GHOST");
-            GhostMove ghostScript = collision.gameObject.GetComponent<GhostMove>();
-            ghostScript.SetDead();
-        }
-        if (collision.gameObject.tag == "bonus")
-        {
-            Debug.Log("PacMan has eaten a BONUS");
-            Destroy(collision.gameObject);
-            collision.collider.enabled = false;
+            Debug.Log("PacMan has collisioned with " + collision.gameObject.tag);
 
-            ObjectAttraction attractScript = collision.gameObject.GetComponent<ObjectAttraction>();
-            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
-
-            levelManager.bonusEaten();
+            if (levelManager.isBonusPacmanKillsGhost())
+            {
+                levelManager.ghostEaten(collision.gameObject.tag);
+            }
+            else
+            {
+                // Pacman should be killed
+            }
         }
     }
+
     void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.tag == "coin")
         {
@@ -190,8 +196,17 @@ public class PacmanMove : MonoBehaviour
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
             attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
-
             levelManager.coinEaten();
+        }
+        else if (collider.gameObject.tag == "bonus")
+        {
+            Debug.Log("PacMan has eaten a BONUS");
+
+            ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
+            //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+
+            Destroy(collider.gameObject);
+            levelManager.bonusEaten();
         }
     }
 }
