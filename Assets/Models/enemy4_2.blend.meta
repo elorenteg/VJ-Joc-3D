@@ -58,6 +58,8 @@ ModelImporter:
     4300004: Shape_RootLoc_002
     7400000: Default Take
     7400002: ArmatActionEnemy_001
+    7400004: Move
+    7400006: Die
     9500000: //RootNode
     13700000: EnemyMeshLP_04
   materials:
@@ -80,7 +82,295 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Default Take
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 249
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmatureEnemy_04
+        weight: 1
+      - path: ArmatureEnemy_04/Root
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Key
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCenter
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCTRL
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsFront
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsRear
+        weight: 1
+      - path: EnemyMeshLP_04
+        weight: 1
+      - path: Shape_Root_002
+        weight: 1
+      - path: Shape_RootLoc_002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArmatActionEnemy_001
+      takeName: ArmatActionEnemy_001
+      firstFrame: 0
+      lastFrame: 143
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmatureEnemy_04
+        weight: 1
+      - path: ArmatureEnemy_04/Root
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Key
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCenter
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCTRL
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsFront
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsRear
+        weight: 1
+      - path: EnemyMeshLP_04
+        weight: 1
+      - path: Shape_Root_002
+        weight: 1
+      - path: Shape_RootLoc_002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Move
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 42
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmatureEnemy_04
+        weight: 1
+      - path: ArmatureEnemy_04/Root
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Key
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCenter
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCTRL
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsFront
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsRear
+        weight: 1
+      - path: EnemyMeshLP_04
+        weight: 1
+      - path: Shape_Root_002
+        weight: 1
+      - path: Shape_RootLoc_002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Die
+      takeName: Default Take
+      firstFrame: 80
+      lastFrame: 152
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ArmatureEnemy_04
+        weight: 1
+      - path: ArmatureEnemy_04/Root
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Key
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/mouth_down/Stretch_down
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/OpenMouth_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/Eyes_Ctrl
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_L
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/Stretch_up/mouth_up/Eye_R
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCenter
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsCTRL
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsFront
+        weight: 1
+      - path: ArmatureEnemy_04/Root/Root_Loc/WheelsRear
+        weight: 1
+      - path: EnemyMeshLP_04
+        weight: 1
+      - path: Shape_Root_002
+        weight: 1
+      - path: Shape_RootLoc_002
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
