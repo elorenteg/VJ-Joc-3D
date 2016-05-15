@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FollowPacman : MonoBehaviour
+public class CameraMove : MonoBehaviour
 {
     public float smooth = 5.0f;
 

@@ -482,7 +482,7 @@ public class LevelCreator : MonoBehaviour
                     }
                     else if (cell == PACMAN_C)
                     {
-                        FollowPacman cameraScript = cameraObject.GetComponent<Camera>().GetComponent<FollowPacman>();
+                        CameraMove cameraScript = cameraObject.GetComponent<Camera>().GetComponent<CameraMove>();
                         cameraScript.SetPacman(newObject);
                         cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
 
