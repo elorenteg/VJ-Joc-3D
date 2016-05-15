@@ -82,7 +82,7 @@ public class PacmanAnimate : MonoBehaviour
 
         if (!audioSource.isPlaying)
         {
-            audioSource.volume = 0.5f;
+            audioSource.volume = 0.1f;
             audioSource.clip = moveSound;
             audioSource.Play();
         }

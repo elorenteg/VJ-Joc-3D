@@ -31,7 +31,7 @@ public class LevelCreator : MonoBehaviour
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
     private static int TILE_SIZE = 2;
-    private int[][] Map;
+    private static int[][] Map;
     private static int MAP_WIDTH;
     private static int MAP_HEIGHT;
     private const int PLANE_HEIGHT = 140;
@@ -239,6 +239,11 @@ public class LevelCreator : MonoBehaviour
         return Map;
     }
 
+    public static bool isWall(int tx, int tz)
+    {
+        return (Map[tx][tz] != WALL_H_C && Map[tx][tz] != WALL_V_C && Map[tx][tz] != WALL_RES);
+    }
+
     private void placeFloor()
     {
         Vector3 floorPosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
@@ -271,7 +276,7 @@ public class LevelCreator : MonoBehaviour
 
         for (int i = 0; i < 4; ++i)
         {
-            Vector3 planePosition = new Vector3(xPos[i], -PLANE_HEIGHT / 3, zPos[i]);
+            Vector3 planePosition = new Vector3(xPos[i], 0, zPos[i]);
             Vector3 planeRotation = new Vector3(xRot[i], yRot[i], 0.0f);
             Vector3 planeScale = new Vector3(xSca[i] + PLANE_SEP * TILE_SIZE, 1, PLANE_HEIGHT);
 
@@ -279,12 +284,12 @@ public class LevelCreator : MonoBehaviour
             newPlane.transform.localScale = planeScale;
 
             Renderer renderer = newPlane.GetComponent<Renderer>();
-            renderer.material.mainTextureScale = new Vector2(xSca[i] / TILE_SIZE / 32, PLANE_HEIGHT / TILE_SIZE / 28);
+            renderer.material.mainTextureScale = new Vector2(xSca[i] / TILE_SIZE / 32, 1.0f);
 
             newPlane.SetActive(true);
         }
 
-        Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT/2, MAP_WIDTH * TILE_SIZE / 2);
         Vector3 holeRotation = new Vector3(0, 0, 0);
         Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
 

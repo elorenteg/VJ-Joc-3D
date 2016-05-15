@@ -162,6 +162,8 @@ public class LevelManager : MonoBehaviour
             GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
             gameObjectGhost.SetActive(ghostRedVisible);
         }
+
+        updateIA();
     }
 
     private void updateIA()

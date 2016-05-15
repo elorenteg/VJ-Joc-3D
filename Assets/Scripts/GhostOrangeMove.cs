@@ -16,23 +16,24 @@ public class GhostOrangeMove : GhostMove
 
     public void SetDirection(int[][] Map)
     {
-        new_tx = tile_x;
-        new_tz = tile_z;
+        newTileX = tileX;
+        newTileZ = tileZ;
 
-        if (directions[currentDir] == Globals.UP) new_tx = new_tx + 1;
-        else if (directions[currentDir] == Globals.RIGHT) new_tz = new_tz + 1;
-        else if (directions[currentDir] == Globals.DOWN) new_tx = new_tx - 1;
-        else if (directions[currentDir] == Globals.LEFT) new_tz = new_tz - 1;
+        if (directions[currentDir] == Globals.UP) newTileX = newTileX + 1;
+        else if (directions[currentDir] == Globals.RIGHT) newTileZ = newTileZ + 1;
+        else if (directions[currentDir] == Globals.DOWN) newTileX = newTileX - 1;
+        else if (directions[currentDir] == Globals.LEFT) newTileZ = newTileZ - 1;
 
-        Debug.Log("ME (" + tile_x + "," + tile_z + ")" + " - " + Map[tile_x][tile_z] + " -- New (" + new_tx + "," + new_tz + ")");
+        Debug.Log("ME (" + tileX + "," + tileZ + ")" + " - " + Map[tileX][tileZ] + " -- New (" + newTileX + "," + newTileZ + ")");
     }
 
     public void onMove(int[][] Map)
     {
-        //Debug.Log("Moving Orange_GHOST" + " " + this.getBaseGhostSpeed());
+        Debug.Log("Moving Orange_GHOST" + " " + this.getBaseGhostSpeed());
 
-        //Quaternion newRotation = Quaternion.AngleAxis(180, Vector3.up);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * getBaseGhostRotateSpeed());
+        bool ghostCanMove = rotate(directions[currentDir]);
+
+        if (ghostCanMove) currentDir = (currentDir + 1) % directions.Length;
 
         /*
         bool canMove = Globals.rotate(this.gameObject, getBaseGhostRotateSpeed(), directions[currentDir]);
