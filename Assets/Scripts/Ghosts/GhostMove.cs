@@ -5,7 +5,7 @@ using System.Collections;
 public class GhostMove : MonoBehaviour
 {
     protected static float GHOST_SPEED = 1.0f;
-    protected static float GHOST_ROTATE_SPEED = 3.5f;
+    protected static float GHOST_ROTATE_SPEED = 5.0f;
     
     protected static float UP_ANGLE = 90.0f;
     protected static float DOWN_ANGLE = 270.0f;
@@ -253,7 +253,8 @@ public class GhostMove : MonoBehaviour
         {
             float distCovered = (Time.time - startTime) * GHOST_SPEED;
             float fracJourney = distCovered / duration;
-            transform.position = Vector3.MoveTowards(transform.position, newPosition, fracJourney);
+            transform.position = Vector3.Lerp(transform.position, newPosition, fracJourney);
+            //transform.position = Vector3.MoveTowards(transform.position, newPosition, fracJourney);
         }
         else
         {
@@ -273,10 +274,26 @@ public class GhostMove : MonoBehaviour
     {
         newTileX = tileX;
         newTileZ = tileZ;
+        
+        int numSameDir = extendDir();
 
-        if (dir == Globals.UP) newTileZ = newTileZ + 1;
-        else if (dir == Globals.RIGHT) newTileX = newTileX + 1;
-        else if (dir == Globals.DOWN) newTileZ = newTileZ - 1;
-        else if (dir == Globals.LEFT) newTileX = newTileX - 1;
+        if (dir == Globals.UP) newTileZ = newTileZ + numSameDir;
+        else if (dir == Globals.RIGHT) newTileX = newTileX + numSameDir;
+        else if (dir == Globals.DOWN) newTileZ = newTileZ - numSameDir;
+        else if (dir == Globals.LEFT) newTileX = newTileX - numSameDir;
+    }
+
+    private int extendDir()
+    {
+        int dir = currentPath[currentDir];
+        int numSameDir = 0;
+        while (currentDir < currentPath.Length && dir == currentPath[currentDir])
+        {
+            ++numSameDir;
+            ++currentDir;
+        }
+        --currentDir;
+
+        return numSameDir;
     }
 }
