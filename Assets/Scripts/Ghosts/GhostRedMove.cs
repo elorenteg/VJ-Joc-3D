@@ -7,9 +7,4 @@ public class GhostRedMove : GhostMove
     {
 
     }
-
-    public void onMove()
-    {
-
-    }
 }

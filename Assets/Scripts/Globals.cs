@@ -2,11 +2,6 @@
 using System.Collections;
 
 public static class Globals {
-
-    public static int TILE_SIZE = 2;
-    public static int MAP_WIDTH;
-    public static int MAP_HEIGHT;
-
     public static string TAG_PACMAN = "pacman";
     public static string TAG_GHOST = "ghost";
     public static string TAG_COIN = "coin";
@@ -20,12 +15,6 @@ public static class Globals {
 
     public static float PACMAN_OFFSET_X = 0.38f;
     public static float PACMAN_OFFSET_Z = -6.2f;
-
-    public static void SetMapSizes(int w, int h)
-    {
-        MAP_WIDTH = w;
-        MAP_HEIGHT = h;
-    }
 
     private const float ERROR = 1.5f;
 

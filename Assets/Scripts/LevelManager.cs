@@ -168,10 +168,10 @@ public class LevelManager : MonoBehaviour
 
     private void updateIA()
     {
-        if (ghostBlueVisible) ghostBlueMove.onMove();
+        //if (ghostBlueVisible) ghostBlueMove.onMove();
         if (ghostOrangeVisible) ghostOrangeMove.onMove(levelCreator.GetMap());
-        if (ghostPinkVisible) ghostPinkMove.onMove();
-        if (ghostRedVisible) ghostRedMove.onMove();
+        //if (ghostPinkVisible) ghostPinkMove.onMove();
+        //if (ghostRedVisible) ghostRedMove.onMove();
     }
 
     private void updateTimeBonus()

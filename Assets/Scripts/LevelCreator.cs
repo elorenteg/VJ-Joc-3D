@@ -30,10 +30,10 @@ public class LevelCreator : MonoBehaviour
 
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
-    private static int TILE_SIZE = 2;
+    public static int TILE_SIZE = 2;
     private static int[][] Map;
-    private static int MAP_WIDTH;
-    private static int MAP_HEIGHT;
+    public static int MAP_WIDTH;
+    public static int MAP_HEIGHT;
     private const int PLANE_HEIGHT = 140;
     private const int PLANE_SEP = 30;
 
@@ -60,6 +60,12 @@ public class LevelCreator : MonoBehaviour
     public static int COIN_C = 20;
     private static char BONUS = '*';
     public static int BONUS_C = 21;
+
+    private static char BASE = '#';
+    private static char DOOR = 'X';
+    private static char DOOR_RES = 'x';
+    public static int BASE_C = 30;
+    private int doorTx, doorTz, doorTx2, doorTz2;
 
     private float GHOST_Y_POS = 6.0f;
     private float PACMAN_Y_POS = 18.0f;
@@ -210,6 +216,22 @@ public class LevelCreator : MonoBehaviour
                             {
                                 MapLine[j] = BONUS_C;
                             }
+                            else if (line[j] == BASE)
+                            {
+                                MapLine[j] = BASE_C;
+                            }
+                            else if (line[j] == DOOR)
+                            {
+                                MapLine[j] = CELL_EMPTY;
+                                doorTx = j;
+                                doorTz = i;
+                            }
+                            else if(line[j] == DOOR_RES)
+                            {
+                                MapLine[j] = CELL_EMPTY;
+                                doorTx2 = j;
+                                doorTz2 = i;
+                            }
                             else
                             {
                                 MapLine[j] = CELL_EMPTY;
@@ -221,8 +243,6 @@ public class LevelCreator : MonoBehaviour
                 } while (line != null);
 
                 theReader.Close();
-
-                Globals.SetMapSizes(MAP_WIDTH, MAP_WIDTH);
 
                 return true;
             }
@@ -249,10 +269,15 @@ public class LevelCreator : MonoBehaviour
         return (Map[tz][tx] == WALL_H_C || Map[tz][tx] == WALL_V_C || Map[tz][tx] == WALL_RES);
     }
 
+    public static bool isBase(int tx, int tz)
+    {
+        return (Map[tz][tx] == BASE_C || Map[tz][tx] == GHOST_B_C || Map[tz][tx] == GHOST_O_C || Map[tz][tx] == GHOST_P_C || Map[tz][tx] == GHOST_R_C);
+    }
+
     public static void positionToTile(Vector3 pos, out int tx, out int tz)
     {
-        tx = (int)(pos.x - TILE_SIZE / 2) / Globals.TILE_SIZE;
-        tz = (int)(pos.z - TILE_SIZE / 2) / Globals.TILE_SIZE;
+        tx = (int)(pos.x - TILE_SIZE / 2) / TILE_SIZE;
+        tz = (int)(pos.z - TILE_SIZE / 2) / TILE_SIZE;
     }
 
     public static Vector3 TileToPosition(int tx, int tz, float y)
@@ -446,7 +471,7 @@ public class LevelCreator : MonoBehaviour
 
                         cellPosition.y -= 4 * TILE_SIZE;
                     }
-                    else if (cell == WALL_RES) continue;
+                    else if (cell == WALL_RES || cell == BASE_C) continue;
                     else
                     {
                         Debug.LogError("Creating a non empty cell");
@@ -491,7 +516,7 @@ public class LevelCreator : MonoBehaviour
 
                             GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
                             moveScript.SetInitTiles(tx, tz);
-                            moveScript.SetDirection(Map);
+                            moveScript.SetDoorTiles(doorTx2, doorTz2);
                         }
                         else if (cell == GHOST_P_C)
                         {
