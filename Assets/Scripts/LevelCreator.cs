@@ -71,7 +71,7 @@ public class LevelCreator : MonoBehaviour
     private Vector3 WALL_SCALE = new Vector3(4 * TILE_SIZE, WALL_HEIGHT, 2 * TILE_SIZE);
     private int WALL_V_ANGLE = -90;
 
-    private Vector3 GHOST_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
+    private Vector3 GHOST_SCALE = new Vector3(5.0f, 5.0f, 5.0f);
     private Vector2 GHOST_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
@@ -239,15 +239,33 @@ public class LevelCreator : MonoBehaviour
         return Map;
     }
 
-    public static bool isWall(int tx, int tz)
+    public static bool isValidTile(int tx, int tz)
     {
-        return (Map[tx][tz] != WALL_H_C && Map[tx][tz] != WALL_V_C && Map[tx][tz] != WALL_RES);
+        return (tx >= 0 && tz >= 0 && tx < MAP_WIDTH && tz < MAP_HEIGHT);
     }
 
-    public static void positionToTiles(Vector3 pos, out int tx, out int tz)
+    public static bool isWall(int tx, int tz)
     {
-        tx = (int) pos.x / Globals.TILE_SIZE;
-        tz = (int) pos.z / Globals.TILE_SIZE;
+        return (Map[tz][tx] == WALL_H_C || Map[tz][tx] == WALL_V_C || Map[tz][tx] == WALL_RES);
+    }
+
+    public static void positionToTile(Vector3 pos, out int tx, out int tz)
+    {
+        tx = (int)(pos.x - TILE_SIZE / 2) / Globals.TILE_SIZE;
+        tz = (int)(pos.z - TILE_SIZE / 2) / Globals.TILE_SIZE;
+    }
+
+    public static Vector3 TileToPosition(int tx, int tz, float y)
+    {
+        Vector3 pos;
+        pos.y = y;
+        pos.x = tx * TILE_SIZE;
+        pos.z = tz * TILE_SIZE;
+
+        pos.x += TILE_SIZE / 2;
+        pos.z += TILE_SIZE / 2;
+
+        return pos;
     }
 
     private void placeFloor()

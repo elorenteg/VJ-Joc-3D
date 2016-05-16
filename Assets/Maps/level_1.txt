@@ -25,10 +25,10 @@ vv             .  vvhhhh    hhhhvv  .             vv
 vv . . . . . .    vvHhhh    Hhhhvv    . . . . . . vv
 Vv             .  vv            vv  .             Vv
 vv                Vv            Vv                vv
-vv             .  vv  B      O  vv  .             vv
+vv             .  vv         O  vv  .             vv
 vv                vv            vv                vv
 Vv             .  vv            vv  .             Vv
-vv                Vv  P      R  Vv                vv
+vv                Vv            Vv                vv
 vv             .  vv            vv  .             vv
 vv                vv            vv                vv
 Vv        hhhh .  vvhhhhhhhhhhhhvv  . hhhh        Vv
@@ -54,7 +54,7 @@ vv         hhhhhhhhhhhh      hhhhhhhhhhhh         vv
 Vv         HhhhHhhhHhhh      HhhhHhhhHhhh         Vv
 vv                                                vv
 vv                                                vv
-vv                                                vv
+vv       B      P       R                         vv
 Vv                                                Vv
 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhh

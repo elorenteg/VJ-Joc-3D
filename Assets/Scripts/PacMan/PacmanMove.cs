@@ -60,7 +60,7 @@ public class PacmanMove : MonoBehaviour
 
 
             int tx, tz;
-            LevelCreator.positionToTiles(skinnedMeshRenderer.bounds.center, out tx, out tz);
+            LevelCreator.positionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
             Debug.Log("Calculated (" + tx + "," + tz + ")");
         }
 

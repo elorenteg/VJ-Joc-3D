@@ -5,13 +5,15 @@ public class GhostOrangeMove : GhostMove
 {
     private float startTime, duration;
     private static int[] directions = { Globals.UP, Globals.RIGHT, Globals.DOWN, Globals.LEFT };
+    private static int[] directionsGoingOutBase = { Globals.LEFT, Globals.LEFT, Globals.UP, Globals.UP };
     private int currentDir;
-    private float incMove;
+    private bool isMoving;
+    private Vector3 newPosition;
 
     public GhostOrangeMove()
     {
         currentDir = 0;
-        incMove = 0.0f;
+        isMoving = false;
     }
 
     public void SetDirection(int[][] Map)
@@ -19,28 +21,60 @@ public class GhostOrangeMove : GhostMove
         newTileX = tileX;
         newTileZ = tileZ;
 
-        if (directions[currentDir] == Globals.UP) newTileX = newTileX + 1;
-        else if (directions[currentDir] == Globals.RIGHT) newTileZ = newTileZ + 1;
-        else if (directions[currentDir] == Globals.DOWN) newTileX = newTileX - 1;
-        else if (directions[currentDir] == Globals.LEFT) newTileZ = newTileZ - 1;
+        if (directions[currentDir] == Globals.UP) newTileZ = newTileZ + 1;
+        else if (directions[currentDir] == Globals.RIGHT) newTileX = newTileX + 1;
+        else if (directions[currentDir] == Globals.DOWN) newTileZ = newTileZ - 1;
+        else if (directions[currentDir] == Globals.LEFT) newTileX = newTileX - 1;
 
-        Debug.Log("ME (" + tileX + "," + tileZ + ")" + " - " + Map[tileX][tileZ] + " -- New (" + newTileX + "," + newTileZ + ")");
+        //Debug.Log("ME (" + tileX + "," + tileZ + ")" + " - " + Map[tileZ][tileX] + " -- New (" + newTileX + "," + newTileZ + ")");
     }
 
     public void onMove(int[][] Map)
     {
         //Debug.Log("Moving Orange_GHOST" + " " + this.getBaseGhostSpeed());
 
-        bool ghostCanMove = doRotation(directions[currentDir]);
-
-        if (ghostCanMove)
+        if (isMoving && transform.position == newPosition)
         {
-            currentDir = (currentDir + 1) % directions.Length;
+            isMoving = false;
+            tileX = newTileX;
+            tileZ = newTileZ;
+            SetDirection(Map);
         }
 
-        int tx, tz;
-        LevelCreator.positionToTiles(transform.position, out tx, out tz);
-        Debug.Log("ME (" + tileX + "," + tileZ + ")" + " - " + Map[tileX][tileZ] + " -- Calculated (" + tx + "," + tz + ")");
+        if (isMoving)
+        {
+            float distCovered = (Time.time - startTime) * GHOST_SPEED;
+            float fracJourney = distCovered / duration;
+            transform.position = Vector3.MoveTowards(transform.position, newPosition, fracJourney);
+        }
+        else
+        {
+            bool ghostCanMove = doRotation(directions[currentDir]);
+
+            if (ghostCanMove)
+            {
+                if (LevelCreator.isValidTile(newTileX, newTileZ) && isValid(Map, newTileX, newTileZ))
+                {
+                    Debug.Log("Calculating duration");
+
+                    newPosition = LevelCreator.TileToPosition(newTileX, newTileZ, transform.position.y);
+                    startTime = Time.time;
+                    duration = Vector3.Distance(transform.position, newPosition);
+                    isMoving = true;
+                }
+                else
+                {
+                    Debug.Log("Calculating direction");
+                    currentDir = (currentDir + 1) % directions.Length;
+                    SetDirection(Map);
+                }
+            }
+            else Debug.Log("Cant move");
+        }
+
+        //int tx, tz;
+        //LevelCreator.positionToTiles(transform.position, out tx, out tz);
+        //Debug.Log("ME (" + tileX + "," + tileZ + ")" + " - " + Map[tileZ][tileX] + " -- Calculated (" + tx + "," + tz + ")");
 
         /*
         bool canMove = Globals.rotate(this.gameObject, getBaseGhostRotateSpeed(), directions[currentDir]);
