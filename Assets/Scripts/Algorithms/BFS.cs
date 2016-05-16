@@ -46,7 +46,7 @@ public class BFS : MonoBehaviour
                 int f = p.f + Y[i];
                 int c = p.c + X[i];
 
-                if (LevelCreator.isValidTile(c, f) && !LevelCreator.isWall(c, f) && !vis[f,c])
+                if (LevelCreator.isValidTile(c, f) && GhostMove.isValid(Map, c, f) && !vis[f,c])
                 {
                     dist[f, c] = dist[p.f, p.c] + 1;
                     vis[f, c] = true;
@@ -126,12 +126,14 @@ public class BFS : MonoBehaviour
             }
         }
 
+        /*
         Debug.Log("PATH");
 
         for (int i = 0; i < path.Length; ++i)
         {
             Debug.Log(path[i].f + " " + path[i].c);
         }
+        */
 
         int[] directions = new int[numMoves];
         for (int k = 0; k < numMoves; ++k)
@@ -140,13 +142,17 @@ public class BFS : MonoBehaviour
             Position destin = path[k + 1];
             directions[k] = direction(source.f, source.c, destin.f, destin.c);
         }
-
-        Debug.Log("PATH");
-
+        
+        /*
+        Debug.Log("DIRS ----------------- ");
         for (int i = 0; i < directions.Length; ++i)
         {
-            Debug.Log(directions[i]);
+            if (directions[i] == Globals.LEFT) Debug.Log("LEFT");
+            if (directions[i] == Globals.RIGHT) Debug.Log("RIGHT");
+            if (directions[i] == Globals.UP) Debug.Log("UP");
+            if (directions[i] == Globals.DOWN) Debug.Log("DOWN");
         }
+        */
 
         return directions;
     }
