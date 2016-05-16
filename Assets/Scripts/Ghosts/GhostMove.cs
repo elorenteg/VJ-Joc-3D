@@ -36,6 +36,8 @@ public class GhostMove : MonoBehaviour
 
     protected LevelManager levelManager;
 
+    private bool first = true;
+
     // Use this for initialization
     public void Start()
     {
@@ -44,7 +46,7 @@ public class GhostMove : MonoBehaviour
         textureState = 0;
         frameState = 0;
 
-        ghostState = CHASING_PACMAN;
+        ghostState = LEAVING_BASE;
 
         animationScript = GetComponent<GhostAnimate>();
         animationScript.SetTextures(animationScript.stateMove(), textureState);
@@ -109,7 +111,7 @@ public class GhostMove : MonoBehaviour
 
     protected Vector3 GetPosition(int tx, int tz)
     {
-        return new Vector3(tx * Globals.TILE_SIZE, transform.position.y, tz * Globals.TILE_SIZE);
+        return new Vector3(tx * LevelCreator.TILE_SIZE, transform.position.y, tz * LevelCreator.TILE_SIZE);
     }
 
     protected bool isValid(int[][] Map, int tx, int tz)
@@ -186,11 +188,17 @@ public class GhostMove : MonoBehaviour
     {
         if (ghostState == WANDERING_BASE)
         {
-
+            wanderingBase(Map);
         }
         else if (ghostState == LEAVING_BASE)
         {
+            leavingBase(Map);
 
+            if (first)
+            {
+                int[] path = BFS.calculatePath(Map, tileX, tileZ, tileX, tileZ + 5);
+                first = false;
+            }
         }
         else if (ghostState == CHASING_PACMAN)
         {
@@ -202,6 +210,16 @@ public class GhostMove : MonoBehaviour
         }
         else if (ghostState == RETURNING_BASE) { }
         else Debug.Log("State error");
+    }
+
+    public virtual void wanderingBase(int[][] Map)
+    {
+        Debug.Log("Wandering father");
+    }
+
+    public virtual void leavingBase(int[][] Map)
+    {
+        //Debug.Log("Leaving father");
     }
 
     public virtual void chasingPacman(int[][] Map)

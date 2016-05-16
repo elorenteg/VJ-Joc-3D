@@ -30,10 +30,10 @@ public class LevelCreator : MonoBehaviour
 
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
-    private static int TILE_SIZE = 2;
+    public static int TILE_SIZE = 2;
     private static int[][] Map;
-    private static int MAP_WIDTH;
-    private static int MAP_HEIGHT;
+    public static int MAP_WIDTH;
+    public static int MAP_HEIGHT;
     private const int PLANE_HEIGHT = 140;
     private const int PLANE_SEP = 30;
 
@@ -222,8 +222,6 @@ public class LevelCreator : MonoBehaviour
 
                 theReader.Close();
 
-                Globals.SetMapSizes(MAP_WIDTH, MAP_WIDTH);
-
                 return true;
             }
         }
@@ -251,8 +249,8 @@ public class LevelCreator : MonoBehaviour
 
     public static void positionToTile(Vector3 pos, out int tx, out int tz)
     {
-        tx = (int)(pos.x - TILE_SIZE / 2) / Globals.TILE_SIZE;
-        tz = (int)(pos.z - TILE_SIZE / 2) / Globals.TILE_SIZE;
+        tx = (int)(pos.x - TILE_SIZE / 2) / TILE_SIZE;
+        tz = (int)(pos.z - TILE_SIZE / 2) / TILE_SIZE;
     }
 
     public static Vector3 TileToPosition(int tx, int tz, float y)
