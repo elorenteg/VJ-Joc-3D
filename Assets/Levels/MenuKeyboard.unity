@@ -112,10 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4926f4f0f53e0be45abafa624bb4b109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  separatorTexture: {fileID: 2800000, guid: 18639c33c7cc7324b896731fd632234e, type: 3}
-  selectTexture: {fileID: 2800000, guid: 51b9f3f58baae284293284b9dc2cbf77, type: 3}
-  backgroundTexture: {fileID: 2800000, guid: b165269637bcf414a8e68322fe659dfd, type: 3}
+  selectTexture: {fileID: 2800000, guid: d5d97cb649b14c4409b4b29d7338cdb4, type: 3}
+  backgroundTexture: {fileID: 2800000, guid: 3d98c9e7d3860f14dbd06270905aa416, type: 3}
   logoTexture: {fileID: 2800000, guid: 2225be396262c294f8b13646ea7568e2, type: 3}
+  logoBioTexture: {fileID: 2800000, guid: b5124e99fd0c60e4e946db1db26536b9, type: 3}
   moveSound: {fileID: 8300000, guid: 4c31041d292de9848bf52ea361e967c9, type: 3}
 --- !u!4 &75551848
 Transform:
