@@ -12,7 +12,7 @@ public class BFS : MonoBehaviour
         public int c;
     };
 
-    public static int[] calculatePath(int[][] Map, int sTx, int sTz, int dTx, int dTz)
+    public static int[] calculatePath(int[][] Map, int sTx, int sTz, int dTx, int dTz, bool baseIsValid)
     {
         int si = sTz;
         int sj = sTx;
@@ -46,7 +46,7 @@ public class BFS : MonoBehaviour
                 int f = p.f + Y[i];
                 int c = p.c + X[i];
 
-                if (LevelCreator.isValidTile(c, f) && GhostMove.isValid(Map, c, f) && !vis[f,c])
+                if (LevelCreator.isValidTile(c, f) && GhostMove.isValid(Map, c, f, baseIsValid) && !vis[f,c])
                 {
                     dist[f, c] = dist[p.f, p.c] + 1;
                     vis[f, c] = true;
@@ -95,9 +95,9 @@ public class BFS : MonoBehaviour
 
     private static int[] recoverPath(int[,] dist, int si, int sj, int di, int dj)
     {
-        Debug.Log("Source: " + si + " " + sj);
-        Debug.Log("Destin: " + di + " " + dj);
-        Debug.Log("DIST: " + dist[di, dj]);
+        //Debug.Log("Source: " + si + " " + sj);
+        //Debug.Log("Destin: " + di + " " + dj);
+        //Debug.Log("DIST: " + dist[di, dj]);
 
         int numMoves = dist[di, dj];
         Position[] path = new Position[numMoves + 1];

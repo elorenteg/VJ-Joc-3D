@@ -19,9 +19,10 @@ public class GhostMove : MonoBehaviour
     private bool isDead;
     private bool canBeKilled;
 
-    private int[] currentPath;
+    protected int[] currentPath;
     private int currentDir;
     private bool currentDirCalculated;
+    private int doorTx, doorTz;
 
     protected int ghostState;
     protected const int WANDERING_BASE = 0;
@@ -114,28 +115,26 @@ public class GhostMove : MonoBehaviour
         tileZ = tz;
     }
 
+    public void SetDoorTiles(int tx, int tz)
+    {
+        doorTx = tx;
+        doorTz = tz;
+    }
+
     protected Vector3 GetPosition(int tx, int tz)
     {
         return new Vector3(tx * LevelCreator.TILE_SIZE, transform.position.y, tz * LevelCreator.TILE_SIZE);
     }
 
-    public static bool isValid(int[][] Map, int tx, int tz)
+    public static bool isValid(int[][] Map, int tx, int tz, bool baseIsValid)
     {
         for (int i = tx - 1; i <= tx + 1; ++i)
         {
             for (int j = tz - 1; j <= tz + 1; ++j)
             {
-                if (!LevelCreator.isValidTile(i, j))
-                {
-                    //Debug.Log("Size");
-                    return false;
-                }
-                else if (LevelCreator.isWall(i, j))
-                {
-                    //Debug.Log("Is a Wall");
-                    //Debug.Log("IS A WALL -- " + "(" + i + "," + j + ") " + Map[j][i]);
-                    return false;
-                }
+                if (!LevelCreator.isValidTile(i, j)) return false;
+                else if (LevelCreator.isWall(i, j)) return false;
+                else if (!baseIsValid && LevelCreator.isBase(i, j)) return false;
             }
         }
         return true;
@@ -170,8 +169,6 @@ public class GhostMove : MonoBehaviour
         float diff = eulerAngle - comparisonAngle;
         if (Mathf.Abs(diff) <= 2.0f)
         {
-            //Debug.Log("Fixing angle");
-
             Vector3 eulerAngles = transform.eulerAngles;
             eulerAngles.y = angleRotation;
             transform.eulerAngles = eulerAngles;
@@ -180,8 +177,6 @@ public class GhostMove : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Rotating");
-
             Quaternion newRotation = Quaternion.AngleAxis(angleRotation, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * GHOST_ROTATE_SPEED);
 
@@ -191,45 +186,47 @@ public class GhostMove : MonoBehaviour
 
     public void onMove(int[][] Map)
     {
-        if (ghostState == WANDERING_BASE)
-        {
-            wanderingBase(Map);
-        }
+        if (ghostState == WANDERING_BASE) { }
         else if (ghostState == LEAVING_BASE)
         {
             if (!currentDirCalculated)
             {
-                newTileX = tileX;
-                newTileZ = tileZ + 6;
-                currentPath = BFS.calculatePath(Map, tileX, tileZ, newTileX, newTileZ);
+                bool isBaseValid = true;
+                currentPath = BFS.calculatePath(Map, tileX, tileZ, doorTx, doorTz, isBaseValid);
                 currentDirCalculated = true;
+                currentDir = 0;
 
                 isMoving = false;
                 SetDirection(currentPath[currentDir]);
-
-                Debug.Log(tileX + " " + tileZ);
             }
 
-            leavingBase();
+            followPath();
         }
         else if (ghostState == CHASING_PACMAN)
         {
-            chasingPacman(Map);
-        }
-        else if (ghostState == EVADING_PACMAN)
-        {
+            if (!currentDirCalculated)
+            {
+                chasingPacman(Map);
+                currentDirCalculated = true;
+                currentDir = 0;
 
+                isMoving = false;
+                SetDirection(currentPath[currentDir]);
+            }
+
+            followPath();
         }
+        else if (ghostState == EVADING_PACMAN) { }
         else if (ghostState == RETURNING_BASE) { }
         else Debug.Log("State error");
     }
 
-    public virtual void wanderingBase(int[][] Map)
+    public virtual void chasingPacman(int[][] Map)
     {
-        //Debug.Log("Wandering father");
+
     }
 
-    public virtual void leavingBase()
+    public virtual void followPath()
     {
         if (isMoving && transform.position == newPosition)
         {
@@ -238,9 +235,17 @@ public class GhostMove : MonoBehaviour
             tileZ = newTileZ;
             ++currentDir;
 
-            Debug.Log(tileX + " " + tileZ);
-
-            if (currentDir == currentPath.Length) ghostState = WANDERING_BASE;
+            if (currentDir == currentPath.Length)
+            {
+                if (ghostState == LEAVING_BASE)
+                {
+                    ghostState = CHASING_PACMAN;
+                    currentDirCalculated = false;
+                }
+                else currentDirCalculated = false;
+                isMoving = false;
+                return;
+            }
             else SetDirection(currentPath[currentDir]);
         }
 
@@ -262,11 +267,6 @@ public class GhostMove : MonoBehaviour
                 isMoving = true;
             }
         }
-    }
-
-    public virtual void chasingPacman(int[][] Map)
-    {
-        Debug.Log("Chasing father");
     }
 
     public void SetDirection(int dir)
