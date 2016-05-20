@@ -49,6 +49,21 @@ public class GhostMove : MonoBehaviour
     {
         //isDead = false;
         //canBeKilled = false;
+        initGhost();
+
+        GameObject gameManager = GameObject.Find("GameManager");
+        levelManager = gameManager.GetComponent<LevelManager>();
+    }
+
+    public void restartGhost(Vector3 pos)
+    {
+        transform.position = pos;
+
+        initGhost();
+    }
+
+    public void initGhost()
+    {
         textureState = 0;
         frameState = 0;
 
@@ -57,9 +72,6 @@ public class GhostMove : MonoBehaviour
 
         animationScript = GetComponent<GhostAnimate>();
         animationScript.SetTextures(animationScript.stateMove(), textureState);
-
-        GameObject gameManager = GameObject.Find("GameManager");
-        levelManager = gameManager.GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
