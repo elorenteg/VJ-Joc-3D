@@ -23,6 +23,7 @@ public class GhostMove : MonoBehaviour
     private int currentDir;
     private bool currentDirCalculated;
     private int doorTx, doorTz;
+    private int initTx, initTz;
 
     protected int ghostState;
     protected const int WANDERING_BASE = 0;
@@ -117,6 +118,9 @@ public class GhostMove : MonoBehaviour
     {
         tileX = tx;
         tileZ = tz;
+
+        initTx = tx;
+        initTz = tz;
     }
 
     public void SetDoorTiles(int tx, int tz)
@@ -191,41 +195,12 @@ public class GhostMove : MonoBehaviour
     public void onMove(int[][] Map)
     {
         updateState();
+
         Debug.Log(ghostState);
 
-        if (ghostState == WANDERING_BASE) { }
-        else if (ghostState == LEAVING_BASE)
-        {
-            if (!currentDirCalculated)
-            {
-                bool isBaseValid = true;
-                currentPath = BFS.calculatePath(Map, tileX, tileZ, doorTx, doorTz, isBaseValid);
-                currentDirCalculated = true;
-                currentDir = 0;
+        if (!currentDirCalculated) initMove(Map);
 
-                isMoving = false;
-                SetDirection(currentPath[currentDir]);
-            }
-
-            followPath();
-        }
-        else if (ghostState == CHASING_PACMAN)
-        {
-            if (!currentDirCalculated)
-            {
-                chasingPacman(Map);
-                currentDirCalculated = true;
-                currentDir = 0;
-
-                isMoving = false;
-                SetDirection(currentPath[currentDir]);
-            }
-
-            followPath();
-        }
-        else if (ghostState == EVADING_PACMAN) { }
-        else if (ghostState == RETURNING_BASE) { }
-        else Debug.Log("State error");
+        followPath();
     }
 
     public virtual void chasingPacman(int[][] Map)
@@ -335,12 +310,15 @@ public class GhostMove : MonoBehaviour
             if (isEvadingPacman()) ghostState = CHASING_PACMAN;
         }
 
-        if (isDead) ghostState = RETURNING_BASE;
+        if (isDead)
+        {
+            ghostState = RETURNING_BASE;
+            currentDirCalculated = false;
+        }
     }
 
     private void nextState()
     {
-        int g = ghostState;
         switch(ghostState)
         {
             case WANDERING_BASE:
@@ -350,10 +328,51 @@ public class GhostMove : MonoBehaviour
                 ghostState = CHASING_PACMAN;
                 break;
             case RETURNING_BASE:
-                ghostState = WANDERING_BASE;
+                //ghostState = WANDERING_BASE;
+                ghostState = LEAVING_BASE;
+                SetDead(false);
                 break;
         }
 
-        Debug.Log(g + " -- " + ghostState);
+        currentDirCalculated = false;
+    }
+
+    public void leavingBase(int[][] Map)
+    {
+        bool baseIsValid = true;
+
+        currentPath = BFS.calculatePath(Map, tileX, tileZ, doorTx, doorTz, baseIsValid);
+    }
+
+    public void returningBase(int[][] Map)
+    {
+        bool baseIsValid = true;
+
+        currentPath = BFS.calculatePath(Map, tileX, tileZ, initTx, initTz, baseIsValid);
+    }
+
+    public void initMove(int[][] Map)
+    {
+        switch (ghostState)
+        {
+            case WANDERING_BASE:
+                break;
+            case LEAVING_BASE:
+                leavingBase(Map);
+                break;
+            case CHASING_PACMAN:
+                chasingPacman(Map);
+                break;
+            case EVADING_PACMAN:
+                break;
+            case RETURNING_BASE:
+                returningBase(Map);
+                break;
+        }
+
+        currentDirCalculated = true;
+        currentDir = 0;
+        isMoving = false;
+        SetDirection(currentPath[currentDir]);
     }
 }
