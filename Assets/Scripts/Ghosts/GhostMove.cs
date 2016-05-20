@@ -84,6 +84,8 @@ public class GhostMove : MonoBehaviour
         if (canBeKilled)
             animationScript.SetTextures(animationScript.stateKilleable(), textureState);
 
+        updateState();
+
         // Mover alejandose
         // canBeKilled = false;
     }
@@ -94,6 +96,8 @@ public class GhostMove : MonoBehaviour
 
         if (isDead)
             animationScript.SetTextures(animationScript.stateDead(), textureState);
+
+        updateState();
 
         // Mover a base
         // isDead = false;
@@ -186,6 +190,9 @@ public class GhostMove : MonoBehaviour
 
     public void onMove(int[][] Map)
     {
+        updateState();
+        Debug.Log(ghostState);
+
         if (ghostState == WANDERING_BASE) { }
         else if (ghostState == LEAVING_BASE)
         {
@@ -237,13 +244,8 @@ public class GhostMove : MonoBehaviour
 
             if (currentDir == currentPath.Length)
             {
-                if (ghostState == LEAVING_BASE)
-                {
-                    ghostState = CHASING_PACMAN;
-                    currentDirCalculated = false;
-                }
-                else currentDirCalculated = false;
-                isMoving = false;
+                nextState();
+                currentDirCalculated = false;
                 return;
             }
             else SetDirection(currentPath[currentDir]);
@@ -295,5 +297,63 @@ public class GhostMove : MonoBehaviour
         --currentDir;
 
         return numSameDir;
+    }
+
+    private bool isWanderingBase()
+    {
+        return ghostState == WANDERING_BASE;
+    }
+
+    private bool isLeavingBase()
+    {
+        return ghostState == LEAVING_BASE;
+    }
+
+    private bool isChasingPacman()
+    {
+        return ghostState == CHASING_PACMAN;
+    }
+
+    private bool isEvadingPacman()
+    {
+        return ghostState == EVADING_PACMAN;
+    }
+
+    private bool isReturningBase()
+    {
+        return ghostState == RETURNING_BASE;
+    }
+
+    private void updateState()
+    {
+        if (canBeKilled)
+        {
+            if (isChasingPacman()) ghostState = EVADING_PACMAN;
+        }
+        else
+        {
+            if (isEvadingPacman()) ghostState = CHASING_PACMAN;
+        }
+
+        if (isDead) ghostState = RETURNING_BASE;
+    }
+
+    private void nextState()
+    {
+        int g = ghostState;
+        switch(ghostState)
+        {
+            case WANDERING_BASE:
+                ghostState = LEAVING_BASE;
+                break;
+            case LEAVING_BASE:
+                ghostState = CHASING_PACMAN;
+                break;
+            case RETURNING_BASE:
+                ghostState = WANDERING_BASE;
+                break;
+        }
+
+        Debug.Log(g + " -- " + ghostState);
     }
 }

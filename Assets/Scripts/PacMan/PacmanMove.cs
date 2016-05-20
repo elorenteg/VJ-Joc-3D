@@ -61,7 +61,7 @@ public class PacmanMove : MonoBehaviour
 
             int tx, tz;
             LevelCreator.positionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
-            Debug.Log("Calculated (" + tx + "," + tz + ")");
+            //Debug.Log("Calculated (" + tx + "," + tz + ")");
         }
 
         if (frameState == MAX_FRAMES_STATE)
@@ -179,6 +179,7 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
+        /*
         if (collision.gameObject.tag == Globals.TAG_GHOST ||
             collision.gameObject.tag == Globals.TAG_GHOST_BLUE ||
             collision.gameObject.tag == Globals.TAG_GHOST_ORANGE ||
@@ -196,9 +197,27 @@ public class PacmanMove : MonoBehaviour
                 // Pacman should be killed
             }
         }
+        */
     }
 
     void OnTriggerEnter(Collider collider) {
+        if (collider.gameObject.tag == Globals.TAG_GHOST ||
+            collider.gameObject.tag == Globals.TAG_GHOST_BLUE ||
+            collider.gameObject.tag == Globals.TAG_GHOST_ORANGE ||
+            collider.gameObject.tag == Globals.TAG_GHOST_PINK ||
+            collider.gameObject.tag == Globals.TAG_GHOST_RED)
+        {
+            Debug.Log("PacMan has collisioned with " + collider.gameObject.tag);
+
+            if (levelManager.isBonusPacmanKillsGhost())
+            {
+                levelManager.ghostEaten(collider.gameObject.tag);
+            }
+            else
+            {
+                // Pacman should be killed
+            }
+        }
         if (collider.gameObject.tag == Globals.TAG_COIN)
         {
             Debug.Log("PacMan has eaten a COIN");
