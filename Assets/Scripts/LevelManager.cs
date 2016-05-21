@@ -91,8 +91,12 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        //updateIA();
-        updateTimeBonus();
+
+        if (!gamePaused)
+        {
+            updateIA();
+            updateTimeBonus();
+        }
 
         if (gamePaused && Input.GetKey(KeyCode.Return))
         {
@@ -162,8 +166,6 @@ public class LevelManager : MonoBehaviour
             GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
             gameObjectGhost.SetActive(ghostRedVisible);
         }
-
-        updateIA();
     }
 
     private void updateIA()

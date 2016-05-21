@@ -57,8 +57,6 @@ public class PacmanMove : MonoBehaviour
                 }
             }
 
-
-
             int tx, tz;
             LevelCreator.positionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
             //Debug.Log("Calculated (" + tx + "," + tz + ")");
@@ -200,7 +198,8 @@ public class PacmanMove : MonoBehaviour
         */
     }
 
-    void OnTriggerEnter(Collider collider) {
+    void OnTriggerEnter(Collider collider)
+    {
         if (collider.gameObject.tag == Globals.TAG_GHOST ||
             collider.gameObject.tag == Globals.TAG_GHOST_BLUE ||
             collider.gameObject.tag == Globals.TAG_GHOST_ORANGE ||
