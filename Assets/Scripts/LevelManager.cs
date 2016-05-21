@@ -108,63 +108,66 @@ public class LevelManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Globals.ARE_CHEATS_ON)
         {
-            if (currentLevel != 1)
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                currentLevel = 1;
-                loadLevel(1);
+                if (currentLevel != 1)
+                {
+                    currentLevel = 1;
+                    loadLevel(1);
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (currentLevel != 2)
+            if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                currentLevel = 2;
-                loadLevel(2);
+                if (currentLevel != 2)
+                {
+                    currentLevel = 2;
+                    loadLevel(2);
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (currentLevel != 3)
+            if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                currentLevel = 3;
-                loadLevel(3);
+                if (currentLevel != 3)
+                {
+                    currentLevel = 3;
+                    loadLevel(3);
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ghostBlueVisible = !ghostBlueVisible;
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                ghostBlueVisible = !ghostBlueVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_BLUE);
-            gameObjectGhost.SetActive(ghostBlueVisible);
-        }
+                GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_BLUE);
+                gameObjectGhost.SetActive(ghostBlueVisible);
+            }
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            ghostOrangeVisible = !ghostOrangeVisible;
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                ghostOrangeVisible = !ghostOrangeVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_ORANGE);
-            gameObjectGhost.SetActive(ghostOrangeVisible);
-        }
+                GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_ORANGE);
+                gameObjectGhost.SetActive(ghostOrangeVisible);
+            }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ghostPinkVisible = !ghostPinkVisible;
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                ghostPinkVisible = !ghostPinkVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_PINK);
-            gameObjectGhost.SetActive(ghostPinkVisible);
-        }
+                GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_PINK);
+                gameObjectGhost.SetActive(ghostPinkVisible);
+            }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ghostRedVisible = !ghostRedVisible;
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ghostRedVisible = !ghostRedVisible;
 
-            GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
-            gameObjectGhost.SetActive(ghostRedVisible);
+                GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
+                gameObjectGhost.SetActive(ghostRedVisible);
+            }
         }
     }
 
