@@ -100,6 +100,12 @@ public class LevelManager : MonoBehaviour
 
         if (gamePaused && Input.GetKey(KeyCode.Return))
         {
+            if (remainingCoins == 0)
+            {
+                ++currentLevel;
+                loadLevel(currentLevel);
+            }
+
             endMessage();
         }
 
@@ -221,9 +227,6 @@ public class LevelManager : MonoBehaviour
             {
                 //TODO Imagen final de nivel
                 startMessage(GameGUI.TITLE_END_OF_LEVEL_TEXT, GameGUI.MESSAGE_END_OF_LEVEL_TEXT);
-
-                ++currentLevel;
-                loadLevel(currentLevel);
             }
         }
     }
