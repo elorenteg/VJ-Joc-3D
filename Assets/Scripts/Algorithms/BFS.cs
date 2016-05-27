@@ -95,10 +95,6 @@ public class BFS : MonoBehaviour
 
     private static int[] recoverPath(int[,] dist, int si, int sj, int di, int dj)
     {
-        //Debug.Log("Source: " + si + " " + sj);
-        //Debug.Log("Destin: " + di + " " + dj);
-        //Debug.Log("DIST: " + dist[di, dj]);
-
         int numMoves = dist[di, dj];
         Position[] path = new Position[numMoves + 1];
         Position end = initPosition(di, dj);

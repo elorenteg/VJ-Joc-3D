@@ -488,7 +488,6 @@ public class LevelCreator : MonoBehaviour
                     GameObject newObject;
                     if ((cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C) && ghostCreated)
                     {
-                        string tag;
                         if (cell == GHOST_B_C)
                         {
                             newObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
@@ -646,5 +645,32 @@ public class LevelCreator : MonoBehaviour
             }
         }
         ghostCreated = true;
+        SetGhostTarget();
+    }
+
+    private void SetGhostTarget()
+    {
+        GameObject pacmanObj = GameObject.FindGameObjectsWithTag(Globals.TAG_PACMAN)[0];
+
+        string[] ghostTags = { Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK,
+            Globals.TAG_GHOST_RED };
+
+        GameObject ghostObj;
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
+        GhostBlueMove blueScript = ghostObj.GetComponent<GhostBlueMove>();
+        blueScript.SetPacmanObj(pacmanObj);
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
+        GhostOrangeMove orangeScript = ghostObj.GetComponent<GhostOrangeMove>();
+        orangeScript.SetPacmanObj(pacmanObj);
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
+        GhostPinkMove pinkScript = ghostObj.GetComponent<GhostPinkMove>();
+        pinkScript.SetPacmanObj(pacmanObj);
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
+        GhostRedMove redScript = ghostObj.GetComponent<GhostRedMove>();
+        redScript.SetPacmanObj(pacmanObj);
     }
 }

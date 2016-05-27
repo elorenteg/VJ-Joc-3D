@@ -3,8 +3,6 @@ using System.Collections;
 
 public class GhostOrangeMove : GhostMove
 {
-    private static int[] directions = { Globals.UP, Globals.RIGHT, Globals.DOWN, Globals.LEFT };
-
     public GhostOrangeMove() { }
 
     public override void chasingPacman(int[][] Map)

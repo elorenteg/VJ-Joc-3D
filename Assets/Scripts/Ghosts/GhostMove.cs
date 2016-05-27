@@ -4,8 +4,8 @@ using System.Collections;
 
 public class GhostMove : MonoBehaviour
 {
-    protected static float GHOST_SPEED = 1.0f;
-    protected static float GHOST_ROTATE_SPEED = 5.0f;
+    protected static float GHOST_SPEED = 2.0f;
+    protected static float GHOST_ROTATE_SPEED = 8.0f;
     
     protected static float UP_ANGLE = 90.0f;
     protected static float DOWN_ANGLE = 270.0f;
@@ -41,8 +41,7 @@ public class GhostMove : MonoBehaviour
     private GhostAnimate animationScript;
 
     protected LevelManager levelManager;
-
-    private bool first = true;
+    protected GameObject pacmanObj;
 
     // Use this for initialization
     public void Start()
@@ -72,6 +71,11 @@ public class GhostMove : MonoBehaviour
 
         animationScript = GetComponent<GhostAnimate>();
         animationScript.SetTextures(animationScript.stateMove(), textureState);
+    }
+
+    public void SetPacmanObj(GameObject pacman)
+    {
+        pacmanObj = pacman;
     }
 
     // Update is called once per frame
@@ -139,11 +143,6 @@ public class GhostMove : MonoBehaviour
     {
         doorTx = tx;
         doorTz = tz;
-    }
-
-    protected Vector3 GetPosition(int tx, int tz)
-    {
-        return new Vector3(tx * LevelCreator.TILE_SIZE, transform.position.y, tz * LevelCreator.TILE_SIZE);
     }
 
     public static bool isValid(int[][] Map, int tx, int tz, bool baseIsValid)
@@ -251,7 +250,7 @@ public class GhostMove : MonoBehaviour
             {
                 newPosition = LevelCreator.TileToPosition(newTileX, newTileZ, transform.position.y);
                 startTime = Time.time;
-                duration = Vector3.Distance(transform.position, newPosition);
+                duration = Vector3.Distance(transform.position, newPosition) * LevelCreator.TILE_SIZE;
                 isMoving = true;
             }
         }
@@ -354,14 +353,28 @@ public class GhostMove : MonoBehaviour
         }
     }
 
-    public void leavingBase(int[][] Map)
+    private void leavingBase(int[][] Map)
     {
         bool baseIsValid = true;
 
         currentPath = BFS.calculatePath(Map, tileX, tileZ, doorTx, doorTz, baseIsValid);
     }
 
-    public void returningBase(int[][] Map)
+    private void evadingPacman(int[][] Map)
+    {
+        bool baseIsValid = false;
+        /*
+        int tx, tz;
+        do
+        {
+            tx = Random.Range(0, LevelCreator.MAP_WIDTH);
+            tz = Random.Range(0, LevelCreator.MAP_HEIGHT);
+        } while (!isValid(Map, tx, tz, baseIsValid));
+        */
+        currentPath = BFS.calculatePath(Map, tileX, tileZ, initTx, initTz, baseIsValid);
+    }
+
+    private void returningBase(int[][] Map)
     {
         bool baseIsValid = true;
 
@@ -381,6 +394,7 @@ public class GhostMove : MonoBehaviour
                 chasingPacman(Map);
                 break;
             case EVADING_PACMAN:
+                evadingPacman(Map);
                 break;
             case RETURNING_BASE:
                 returningBase(Map);
