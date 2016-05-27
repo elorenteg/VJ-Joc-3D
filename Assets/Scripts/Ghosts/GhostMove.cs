@@ -208,8 +208,6 @@ public class GhostMove : MonoBehaviour
     {
         updateState();
 
-        Debug.Log(ghostState);
-
         if (!currentDirCalculated) initMove(Map);
 
         followPath();
@@ -220,7 +218,7 @@ public class GhostMove : MonoBehaviour
 
     }
 
-    public virtual void followPath()
+    public void followPath()
     {
         if (isMoving && transform.position == newPosition)
         {
@@ -315,17 +313,26 @@ public class GhostMove : MonoBehaviour
     {
         if (canBeKilled)
         {
-            if (isChasingPacman()) ghostState = EVADING_PACMAN;
+            if (isChasingPacman()) {
+                ghostState = EVADING_PACMAN;
+                currentDirCalculated = false;
+            }
         }
         else
         {
-            if (isEvadingPacman()) ghostState = CHASING_PACMAN;
+            if (isEvadingPacman()) {
+                ghostState = CHASING_PACMAN;
+                currentDirCalculated = false;
+            }
         }
 
         if (isDead)
         {
-            ghostState = RETURNING_BASE;
-            currentDirCalculated = false;
+            if (isEvadingPacman())
+            {
+                ghostState = RETURNING_BASE;
+                currentDirCalculated = false;
+            }
         }
     }
 
@@ -345,8 +352,6 @@ public class GhostMove : MonoBehaviour
                 SetDead(false);
                 break;
         }
-
-        currentDirCalculated = false;
     }
 
     public void leavingBase(int[][] Map)
