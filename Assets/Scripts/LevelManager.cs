@@ -34,9 +34,13 @@ public class LevelManager : MonoBehaviour
 
     private bool gamePaused;
 
-    private static int TIME_BONUS_PACMAN_KILLS_GHOST = 10; //10 seconds
+    private static int TIME_BONUS_PACMAN_KILLS_GHOST = 5; //5 seconds
     private bool bonusPacmanKillsGhost;
     private float bonusPacmanKillsGhostRemaining;
+
+    private static int TIME_BONUS_CHERRY = 5; //5 seconds
+    private bool bonusCherryActive;
+    private float bonusCherryActiveRemaining;
 
     void Start()
     {
@@ -87,6 +91,8 @@ public class LevelManager : MonoBehaviour
         ghostOrangeVisible = true;
         ghostPinkVisible = true;
         ghostRedVisible = true;
+        
+        levelCreator.instantiateCherry();
     }
 
     void Update()
@@ -96,6 +102,10 @@ public class LevelManager : MonoBehaviour
         {
             updateIA();
             updateTimeBonus();
+            if (bonusCherryActive)
+            {
+                updateTimeCherry();
+            }
         }
 
         if (gamePaused && Input.GetKey(KeyCode.Return))
@@ -205,6 +215,26 @@ public class LevelManager : MonoBehaviour
                 ghostPinkMove.SetKilleable(false);
                 ghostRedMove.SetKilleable(false);
                 bonusPacmanKillsGhost = false;
+            }
+        }
+    }
+
+    private void updateTimeCherry()
+    {
+        if (bonusCherryActive)
+        {
+            if (bonusCherryActiveRemaining > 0)
+            {
+                if (bonusCherryActiveRemaining > 2)
+                {
+
+                }
+
+                bonusCherryActiveRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                levelCreator.destroyObject(Globals.TAG_CHERRY);
             }
         }
     }

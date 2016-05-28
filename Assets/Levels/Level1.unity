@@ -66,7 +66,8 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000001, guid: f2e48d5e81a7a9d4da3f409fc7168ee2,
+    type: 2}
   m_RuntimeCPUUsage: 25
 --- !u!196 &4
 NavMeshSettings:
@@ -88,12 +89,12 @@ NavMeshSettings:
 --- !u!1 &1137912229
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 150344, guid: be20ef1161fce284c820026d3e2f348d, type: 2}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1137912231}
-  - 108: {fileID: 1137912230}
+  - 4: {fileID: 1137912230}
+  - 108: {fileID: 1137912231}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -101,7 +102,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!108 &1137912230
+--- !u!4 &1137912230
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 435016, guid: be20ef1161fce284c820026d3e2f348d, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137912229}
+  m_LocalRotation: {x: 0.49240392, y: -0.15038376, z: 0.08682411, w: 0.8528685}
+  m_LocalPosition: {x: 50, y: 50, z: -50}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+--- !u!108 &1137912231
 Light:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -110,7 +123,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 6
   m_Type: 1
-  m_Color: {r: 0.8705883, g: 0.7960785, b: 0.6784314, a: 1}
+  m_Color: {r: 0.87058824, g: 0.79607844, b: 0.6784314, a: 1}
   m_Intensity: 0.94
   m_Range: 10
   m_SpotAngle: 30
@@ -134,18 +147,6 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
---- !u!4 &1137912231
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1137912229}
-  m_LocalRotation: {x: 0.49240392, y: -0.15038376, z: 0.08682411, w: 0.8528685}
-  m_LocalPosition: {x: 50, y: 50, z: -50}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
 --- !u!1 &1160761897
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +198,7 @@ MonoBehaviour:
   redGhostTexture: {fileID: 2800000, guid: f9353223c2dd82341a65af1612be92cf, type: 3}
   coin: {fileID: 138094, guid: 263508c16139fd041bbba38d50640697, type: 2}
   bonus: {fileID: 104492, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
+  cherry: {fileID: 150344, guid: be20ef1161fce284c820026d3e2f348d, type: 2}
 --- !u!4 &1160761899
 Transform:
   m_ObjectHideFlags: 0

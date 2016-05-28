@@ -27,6 +27,7 @@ public class LevelCreator : MonoBehaviour
     public Texture redGhostTexture;
     public GameObject coin;
     public GameObject bonus;
+    public GameObject cherry;
 
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
@@ -71,6 +72,7 @@ public class LevelCreator : MonoBehaviour
     private float PACMAN_Y_POS = 18.0f;
     private float COIN_Y_POS = 10.0f;
     private float BONUS_Y_POS = 13.0f;
+    private float CHERRY_Y_POS = 3.5f;
 
     private float FLOOR_HEIGHT = 1.0f;
     private const float WALL_HEIGHT = 7.5f;
@@ -91,6 +93,8 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 BONUS_SCALE = new Vector3(8.0f, 8.0f, 8.0f);
     private Vector2 BONUS_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+
+    private Vector3 CHERRY_SCALE = new Vector3(0.23f, 0.23f, 0.23f);
 
     private List<GameObject> walls;
     private List<bool> animUpWall;
@@ -143,7 +147,7 @@ public class LevelCreator : MonoBehaviour
         animBackWall = new List<bool>();
 
         string[] destroyTags = { Globals.TAG_PACMAN, Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
-            //Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED};
+        //Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED};
 
         for (int i = 0; i < destroyTags.Length; ++i)
         {
@@ -229,7 +233,7 @@ public class LevelCreator : MonoBehaviour
                                 doorTx = j;
                                 doorTz = i;
                             }
-                            else if(line[j] == DOOR_RES)
+                            else if (line[j] == DOOR_RES)
                             {
                                 MapLine[j] = CELL_EMPTY;
                                 doorTx2 = j;
@@ -275,6 +279,11 @@ public class LevelCreator : MonoBehaviour
     public static bool isBase(int tx, int tz)
     {
         return (Map[tz][tx] == BASE_C || Map[tz][tx] == GHOST_B_C || Map[tz][tx] == GHOST_O_C || Map[tz][tx] == GHOST_P_C || Map[tz][tx] == GHOST_R_C);
+    }
+
+    public static bool isValidAndPlaceableTile(int tx, int tz)
+    {
+        return isValidTile(tx, tx) && !isWall(tx, tz) && !isBase(tx, tz);
     }
 
     public static void positionToTile(Vector3 pos, out int tx, out int tz)
@@ -341,7 +350,7 @@ public class LevelCreator : MonoBehaviour
             newPlane.SetActive(true);
         }
 
-        Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT/2, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_WIDTH * TILE_SIZE / 2);
         Vector3 holeRotation = new Vector3(0, 0, 0);
         Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
 
@@ -488,7 +497,6 @@ public class LevelCreator : MonoBehaviour
                     GameObject newObject;
                     if ((cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C) && ghostCreated)
                     {
-                        string tag;
                         if (cell == GHOST_B_C)
                         {
                             newObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
@@ -522,7 +530,8 @@ public class LevelCreator : MonoBehaviour
                             moveScript.SetDoorTiles(doorTx2, doorTz2);
                         }
                     }
-                    else {
+                    else
+                    {
                         newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
                         newObject.transform.parent = transform;
                         newObject.transform.localScale = cellScale;
@@ -619,7 +628,8 @@ public class LevelCreator : MonoBehaviour
                                 animLat1 = false;
                                 animLat2 = false;
                             }
-                            else {
+                            else
+                            {
                                 texLat1 = texWallLatBig3;
                                 texLat2 = texWallLatBig1;
                                 animLat1 = false;
@@ -631,7 +641,8 @@ public class LevelCreator : MonoBehaviour
                                 texUp = texWallUp1;
                                 animUp = true;
                             }
-                            else {
+                            else
+                            {
                                 texUp = texWallUp2;
                                 animUp = false;
                             }
@@ -646,5 +657,54 @@ public class LevelCreator : MonoBehaviour
             }
         }
         ghostCreated = true;
+    }
+
+    public void instantiateCherry()
+    {
+        GameObject element = cherry;
+        Vector3 cellPosition = generateValidRandomVector3();
+        Vector3 cellScale = CHERRY_SCALE;
+
+        GameObject newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
+        newObject.SetActive(true);
+        newObject.transform.localScale = cellScale;
+        newObject.transform.parent = transform;
+    }
+
+    public void destroyObject(string tag)
+    {
+        GameObject gameObject = GameObject.FindGameObjectWithTag(tag);
+        Destroy(gameObject);
+    }
+
+    public Vector3 generateValidRandomVector3()
+    {
+        Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
+
+        int tx = 0;
+        int tz = 0;
+        do
+        {
+            tx = Random.Range(0, MAP_WIDTH);
+            tz = Random.Range(0, MAP_HEIGHT);
+        } while (!isValidAndPlaceableTile9x9(tx - 1, tz));
+
+        position = TileToPosition(tx, tz, CHERRY_Y_POS);
+
+        return position;
+    }
+
+    public static bool isValidAndPlaceableTile9x9(int tx, int tz)
+    {
+        for (int i = tx - 1; i <= tx + 1; ++i)
+        {
+            for (int j = tz - 1; j <= tz + 1; ++j)
+            {
+                if (!isValidTile(i, j)) return false;
+                else if (isWall(i, j)) return false;
+                else if (isBase(i, j)) return false;
+            }
+        }
+        return true;
     }
 }
