@@ -8,6 +8,7 @@ public static class Globals {
     public static string TAG_GHOST = "ghost";
     public static string TAG_COIN = "coin";
     public static string TAG_BONUS = "bonus";
+    public static string TAG_CHERRY = "cherry";
     public static string TAG_WALL = "wall";
     public static string TAG_FLOOR = "floor";
     public static string TAG_GHOST_BLUE = "ghost_blue";
