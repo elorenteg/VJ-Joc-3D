@@ -266,13 +266,13 @@ public class GhostMove : MonoBehaviour
     {
         newTileX = tileX;
         newTileZ = tileZ;
-        
-        int numSameDir = extendDir();
 
-        if (dir == Globals.UP) newTileZ = newTileZ + numSameDir;
-        else if (dir == Globals.RIGHT) newTileX = newTileX + numSameDir;
-        else if (dir == Globals.DOWN) newTileZ = newTileZ - numSameDir;
-        else if (dir == Globals.LEFT) newTileX = newTileX - numSameDir;
+        //int numSameDir = extendDir();
+
+        if (dir == Globals.UP) newTileZ = newTileZ + 1;
+        else if (dir == Globals.RIGHT) newTileX = newTileX + 1;
+        else if (dir == Globals.DOWN) newTileZ = newTileZ - 1;
+        else if (dir == Globals.LEFT) newTileX = newTileX - 1;
     }
 
     private int extendDir()
