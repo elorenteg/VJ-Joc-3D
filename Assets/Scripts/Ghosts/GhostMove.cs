@@ -208,8 +208,6 @@ public class GhostMove : MonoBehaviour
     {
         updateState();
 
-        Debug.Log(ghostState);
-
         if (!currentDirCalculated) initMove(Map);
 
         followPath();

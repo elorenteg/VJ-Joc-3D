@@ -669,6 +669,7 @@ public class LevelCreator : MonoBehaviour
         newObject.SetActive(true);
         newObject.transform.localScale = cellScale;
         newObject.transform.parent = transform;
+        newObject.tag = Globals.TAG_CHERRY;
     }
 
     public void destroyObject(string tag)
@@ -696,9 +697,9 @@ public class LevelCreator : MonoBehaviour
 
     public static bool isValidAndPlaceableTile9x9(int tx, int tz)
     {
-        for (int i = tx - 1; i <= tx + 1; ++i)
+        for (int i = tx - 2; i <= tx + 2; ++i)
         {
-            for (int j = tz - 1; j <= tz + 1; ++j)
+            for (int j = tz - 2; j <= tz + 2; ++j)
             {
                 if (!isValidTile(i, j)) return false;
                 else if (isWall(i, j)) return false;

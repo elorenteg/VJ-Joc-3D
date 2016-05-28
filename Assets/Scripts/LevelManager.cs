@@ -38,9 +38,11 @@ public class LevelManager : MonoBehaviour
     private bool bonusPacmanKillsGhost;
     private float bonusPacmanKillsGhostRemaining;
 
-    private static int TIME_BONUS_CHERRY = 5; //5 seconds
-    private bool bonusCherryActive;
-    private float bonusCherryActiveRemaining;
+    private static int TIME_BONUS_SHOWING_CHERRY = 5; //5 seconds
+    private static int TIME_BONUS_HIDING_CHERRY = 10; //10 seconds
+    private bool bonusCherryShowing;
+    private float bonusCherryShowingRemaining;
+    private float bonusCherryHidingRemaining;
 
     void Start()
     {
@@ -53,6 +55,9 @@ public class LevelManager : MonoBehaviour
         gamePaused = false;
         bonusPacmanKillsGhost = false;
         bonusPacmanKillsGhostRemaining = 0.0f;
+        bonusCherryShowingRemaining = TIME_BONUS_SHOWING_CHERRY;
+        bonusCherryHidingRemaining = 0;
+        bonusCherryShowing = true;
 
         startGame();
     }
@@ -91,8 +96,6 @@ public class LevelManager : MonoBehaviour
         ghostOrangeVisible = true;
         ghostPinkVisible = true;
         ghostRedVisible = true;
-        
-        levelCreator.instantiateCherry();
     }
 
     void Update()
@@ -102,10 +105,7 @@ public class LevelManager : MonoBehaviour
         {
             updateIA();
             updateTimeBonus();
-            if (bonusCherryActive)
-            {
-                updateTimeCherry();
-            }
+            updateTimeCherry();
         }
 
         if (gamePaused && Input.GetKey(KeyCode.Return))
@@ -221,20 +221,30 @@ public class LevelManager : MonoBehaviour
 
     private void updateTimeCherry()
     {
-        if (bonusCherryActive)
+        if (bonusCherryShowing)
         {
-            if (bonusCherryActiveRemaining > 0)
+            if (bonusCherryShowingRemaining > 0)
             {
-                if (bonusCherryActiveRemaining > 2)
-                {
-
-                }
-
-                bonusCherryActiveRemaining -= Time.deltaTime;
+                bonusCherryShowingRemaining -= Time.deltaTime;
             }
             else
             {
                 levelCreator.destroyObject(Globals.TAG_CHERRY);
+                bonusCherryHidingRemaining = TIME_BONUS_HIDING_CHERRY;
+                bonusCherryShowing = false;
+            }
+        }
+        else
+        {
+            if (bonusCherryHidingRemaining > 0)
+            {
+                bonusCherryHidingRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                levelCreator.instantiateCherry();
+                bonusCherryShowingRemaining = TIME_BONUS_SHOWING_CHERRY;
+                bonusCherryShowing = true;
             }
         }
     }
