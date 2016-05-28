@@ -4,8 +4,8 @@ using System.Collections;
 
 public class GhostMove : MonoBehaviour
 {
-    protected static float GHOST_SPEED = 1.0f;
-    protected static float GHOST_ROTATE_SPEED = 5.0f;
+    protected static float GHOST_SPEED = 14.0f;
+    protected static float GHOST_ROTATE_SPEED = 8.0f;
     
     protected static float UP_ANGLE = 90.0f;
     protected static float DOWN_ANGLE = 270.0f;
@@ -41,14 +41,11 @@ public class GhostMove : MonoBehaviour
     private GhostAnimate animationScript;
 
     protected LevelManager levelManager;
-
-    private bool first = true;
+    protected GameObject pacmanObj;
 
     // Use this for initialization
     public void Start()
     {
-        //isDead = false;
-        //canBeKilled = false;
         initGhost();
 
         GameObject gameManager = GameObject.Find("GameManager");
@@ -67,11 +64,19 @@ public class GhostMove : MonoBehaviour
         textureState = 0;
         frameState = 0;
 
+        isDead = false;
+        canBeKilled = false;
+
         ghostState = LEAVING_BASE;
         currentDirCalculated = false;
 
         animationScript = GetComponent<GhostAnimate>();
         animationScript.SetTextures(animationScript.stateMove(), textureState);
+    }
+
+    public void SetPacmanObj(GameObject pacman)
+    {
+        pacmanObj = pacman;
     }
 
     // Update is called once per frame
@@ -82,12 +87,17 @@ public class GhostMove : MonoBehaviour
             frameState = 0;
             textureState = (textureState + 1) % 2;
 
-            if (isDead) animationScript.SetTextures(animationScript.stateDead(), textureState);
-            else if (canBeKilled) animationScript.SetTextures(animationScript.stateKilleable(), textureState);
-            else animationScript.SetTextures(animationScript.stateMove(), textureState); 
+            UpdateTextures();
         }
 
         ++frameState;
+    }
+
+    public void UpdateTextures()
+    {
+        if (isDead) animationScript.SetTextures(animationScript.stateDead(), textureState);
+        else if (canBeKilled) animationScript.SetTextures(animationScript.stateKilleable(), textureState);
+        else animationScript.SetTextures(animationScript.stateMove(), textureState);
     }
 
     public void SetKilleable(bool killeable)
@@ -98,9 +108,6 @@ public class GhostMove : MonoBehaviour
             animationScript.SetTextures(animationScript.stateKilleable(), textureState);
 
         updateState();
-
-        // Mover alejandose
-        // canBeKilled = false;
     }
 
     public void SetDead(bool dead)
@@ -111,9 +118,6 @@ public class GhostMove : MonoBehaviour
             animationScript.SetTextures(animationScript.stateDead(), textureState);
 
         updateState();
-
-        // Mover a base
-        // isDead = false;
     }
 
     protected float getBaseGhostSpeed()
@@ -139,11 +143,6 @@ public class GhostMove : MonoBehaviour
     {
         doorTx = tx;
         doorTz = tz;
-    }
-
-    protected Vector3 GetPosition(int tx, int tz)
-    {
-        return new Vector3(tx * LevelCreator.TILE_SIZE, transform.position.y, tz * LevelCreator.TILE_SIZE);
     }
 
     public static bool isValid(int[][] Map, int tx, int tz, bool baseIsValid)
@@ -218,7 +217,7 @@ public class GhostMove : MonoBehaviour
 
     }
 
-    public virtual void followPath()
+    public void followPath()
     {
         if (isMoving && transform.position == newPosition)
         {
@@ -238,20 +237,26 @@ public class GhostMove : MonoBehaviour
 
         if (isMoving)
         {
-            float distCovered = (Time.time - startTime) * GHOST_SPEED;
-            float fracJourney = distCovered / duration;
-            transform.position = Vector3.Lerp(transform.position, newPosition, fracJourney);
+            animationScript.PlaySound(animationScript.stateMove());
+
+            //float distCovered = (Time.time - startTime) * GHOST_SPEED;
+            //float fracJourney = distCovered / duration;
+            //transform.position = Vector3.Lerp(transform.position, newPosition, fracJourney);
             //transform.position = Vector3.MoveTowards(transform.position, newPosition, fracJourney);
+
+            float step = GHOST_SPEED * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, newPosition, step);
         }
         else
         {
+            animationScript.StopSound();
             bool ghostCanMove = doRotation(currentPath[currentDir]);
 
             if (ghostCanMove)
             {
                 newPosition = LevelCreator.TileToPosition(newTileX, newTileZ, transform.position.y);
-                startTime = Time.time;
-                duration = Vector3.Distance(transform.position, newPosition);
+                //startTime = Time.time;
+                //duration = Vector3.Distance(transform.position, newPosition) * LevelCreator.TILE_SIZE;
                 isMoving = true;
             }
         }
@@ -261,13 +266,13 @@ public class GhostMove : MonoBehaviour
     {
         newTileX = tileX;
         newTileZ = tileZ;
-        
-        int numSameDir = extendDir();
 
-        if (dir == Globals.UP) newTileZ = newTileZ + numSameDir;
-        else if (dir == Globals.RIGHT) newTileX = newTileX + numSameDir;
-        else if (dir == Globals.DOWN) newTileZ = newTileZ - numSameDir;
-        else if (dir == Globals.LEFT) newTileX = newTileX - numSameDir;
+        //int numSameDir = extendDir();
+
+        if (dir == Globals.UP) newTileZ = newTileZ + 1;
+        else if (dir == Globals.RIGHT) newTileX = newTileX + 1;
+        else if (dir == Globals.DOWN) newTileZ = newTileZ - 1;
+        else if (dir == Globals.LEFT) newTileX = newTileX - 1;
     }
 
     private int extendDir()
@@ -313,17 +318,26 @@ public class GhostMove : MonoBehaviour
     {
         if (canBeKilled)
         {
-            if (isChasingPacman()) ghostState = EVADING_PACMAN;
+            if (isChasingPacman()) {
+                ghostState = EVADING_PACMAN;
+                currentDirCalculated = false;
+            }
         }
         else
         {
-            if (isEvadingPacman()) ghostState = CHASING_PACMAN;
+            if (isEvadingPacman()) {
+                ghostState = CHASING_PACMAN;
+                currentDirCalculated = false;
+            }
         }
 
         if (isDead)
         {
-            ghostState = RETURNING_BASE;
-            currentDirCalculated = false;
+            if (isEvadingPacman())
+            {
+                ghostState = RETURNING_BASE;
+                currentDirCalculated = false;
+            }
         }
     }
 
@@ -341,20 +355,33 @@ public class GhostMove : MonoBehaviour
                 //ghostState = WANDERING_BASE;
                 ghostState = LEAVING_BASE;
                 SetDead(false);
+                SetKilleable(false);
                 break;
         }
-
-        currentDirCalculated = false;
     }
 
-    public void leavingBase(int[][] Map)
+    private void leavingBase(int[][] Map)
     {
         bool baseIsValid = true;
 
         currentPath = BFS.calculatePath(Map, tileX, tileZ, doorTx, doorTz, baseIsValid);
     }
 
-    public void returningBase(int[][] Map)
+    private void evadingPacman(int[][] Map)
+    {
+        bool baseIsValid = false;
+        /*
+        int tx, tz;
+        do
+        {
+            tx = Random.Range(0, LevelCreator.MAP_WIDTH);
+            tz = Random.Range(0, LevelCreator.MAP_HEIGHT);
+        } while (!isValid(Map, tx, tz, baseIsValid));
+        */
+        currentPath = BFS.calculatePath(Map, tileX, tileZ, initTx, initTz, baseIsValid);
+    }
+
+    private void returningBase(int[][] Map)
     {
         bool baseIsValid = true;
 
@@ -374,6 +401,7 @@ public class GhostMove : MonoBehaviour
                 chasingPacman(Map);
                 break;
             case EVADING_PACMAN:
+                evadingPacman(Map);
                 break;
             case RETURNING_BASE:
                 returningBase(Map);

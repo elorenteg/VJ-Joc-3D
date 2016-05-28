@@ -562,6 +562,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostBlueMove moveScript = newObject.GetComponent<GhostBlueMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx, doorTz);
+                                moveScript.initGhost();
                             }
                             else if (cell == GHOST_O_C)
                             {
@@ -571,6 +572,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx2, doorTz2);
+                                moveScript.initGhost();
                             }
                             else if (cell == GHOST_P_C)
                             {
@@ -580,6 +582,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostPinkMove moveScript = newObject.GetComponent<GhostPinkMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx, doorTz);
+                                moveScript.initGhost();
                             }
                             else if (cell == GHOST_R_C)
                             {
@@ -589,6 +592,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostRedMove moveScript = newObject.GetComponent<GhostRedMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx2, doorTz2);
+                                moveScript.initGhost();
                             }
                         }
                         else if (cell == PACMAN_C)
@@ -657,6 +661,33 @@ public class LevelCreator : MonoBehaviour
             }
         }
         ghostCreated = true;
+        SetGhostTarget();
+    }
+
+    private void SetGhostTarget()
+    {
+        GameObject pacmanObj = GameObject.FindGameObjectsWithTag(Globals.TAG_PACMAN)[0];
+
+        string[] ghostTags = { Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK,
+            Globals.TAG_GHOST_RED };
+
+        GameObject ghostObj;
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
+        GhostBlueMove blueScript = ghostObj.GetComponent<GhostBlueMove>();
+        blueScript.SetPacmanObj(pacmanObj);
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
+        GhostOrangeMove orangeScript = ghostObj.GetComponent<GhostOrangeMove>();
+        orangeScript.SetPacmanObj(pacmanObj);
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
+        GhostPinkMove pinkScript = ghostObj.GetComponent<GhostPinkMove>();
+        pinkScript.SetPacmanObj(pacmanObj);
+
+        ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
+        GhostRedMove redScript = ghostObj.GetComponent<GhostRedMove>();
+        redScript.SetPacmanObj(pacmanObj);
     }
 
     public void instantiateCherry()

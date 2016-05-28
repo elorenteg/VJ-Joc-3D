@@ -161,6 +161,11 @@ public class GhostAnimate : MonoBehaviour
         }
     }
 
+    public void StopSound()
+    {
+        audioSource.Stop();
+    }
+
     public static void SetupMaterialWithBlendMode(Material material, int blendMode)
     {
         switch (blendMode)

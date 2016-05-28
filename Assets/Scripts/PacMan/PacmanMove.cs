@@ -59,7 +59,6 @@ public class PacmanMove : MonoBehaviour
 
             int tx, tz;
             LevelCreator.positionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
-            //Debug.Log("Calculated (" + tx + "," + tz + ")");
         }
 
         if (frameState == MAX_FRAMES_STATE)
@@ -176,26 +175,6 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().freezeRotation = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-        /*
-        if (collision.gameObject.tag == Globals.TAG_GHOST ||
-            collision.gameObject.tag == Globals.TAG_GHOST_BLUE ||
-            collision.gameObject.tag == Globals.TAG_GHOST_ORANGE ||
-            collision.gameObject.tag == Globals.TAG_GHOST_PINK ||
-            collision.gameObject.tag == Globals.TAG_GHOST_RED)
-        {
-            Debug.Log("PacMan has collisioned with " + collision.gameObject.tag);
-
-            if (levelManager.isBonusPacmanKillsGhost())
-            {
-                levelManager.ghostEaten(collision.gameObject.tag);
-            }
-            else
-            {
-                // Pacman should be killed
-            }
-        }
-        */
     }
 
     void OnTriggerEnter(Collider collider)
@@ -214,12 +193,13 @@ public class PacmanMove : MonoBehaviour
             }
             else
             {
-                // Pacman should be killed
+                animationScript.PlaySound(animationScript.stateDead());
+                animationScript.Animate(animationScript.stateDead());
             }
         }
         if (collider.gameObject.tag == Globals.TAG_COIN)
         {
-            Debug.Log("PacMan has eaten a COIN");
+            //Debug.Log("PacMan has eaten a COIN");
             collider.enabled = false;
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
@@ -228,7 +208,7 @@ public class PacmanMove : MonoBehaviour
         }
         else if (collider.gameObject.tag == Globals.TAG_BONUS)
         {
-            Debug.Log("PacMan has eaten a BONUS");
+            //Debug.Log("PacMan has eaten a BONUS");
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
             //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
