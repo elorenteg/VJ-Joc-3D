@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GhostMove : MonoBehaviour
 {
-    protected static float GHOST_SPEED = 2.0f;
+    protected static float GHOST_SPEED = 14.0f;
     protected static float GHOST_ROTATE_SPEED = 8.0f;
     
     protected static float UP_ANGLE = 90.0f;
@@ -46,8 +46,6 @@ public class GhostMove : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
-        //isDead = false;
-        //canBeKilled = false;
         initGhost();
 
         GameObject gameManager = GameObject.Find("GameManager");
@@ -65,6 +63,9 @@ public class GhostMove : MonoBehaviour
     {
         textureState = 0;
         frameState = 0;
+
+        isDead = false;
+        canBeKilled = false;
 
         ghostState = LEAVING_BASE;
         currentDirCalculated = false;
@@ -86,12 +87,17 @@ public class GhostMove : MonoBehaviour
             frameState = 0;
             textureState = (textureState + 1) % 2;
 
-            if (isDead) animationScript.SetTextures(animationScript.stateDead(), textureState);
-            else if (canBeKilled) animationScript.SetTextures(animationScript.stateKilleable(), textureState);
-            else animationScript.SetTextures(animationScript.stateMove(), textureState); 
+            UpdateTextures();
         }
 
         ++frameState;
+    }
+
+    public void UpdateTextures()
+    {
+        if (isDead) animationScript.SetTextures(animationScript.stateDead(), textureState);
+        else if (canBeKilled) animationScript.SetTextures(animationScript.stateKilleable(), textureState);
+        else animationScript.SetTextures(animationScript.stateMove(), textureState);
     }
 
     public void SetKilleable(bool killeable)
@@ -102,9 +108,6 @@ public class GhostMove : MonoBehaviour
             animationScript.SetTextures(animationScript.stateKilleable(), textureState);
 
         updateState();
-
-        // Mover alejandose
-        // canBeKilled = false;
     }
 
     public void SetDead(bool dead)
@@ -115,9 +118,6 @@ public class GhostMove : MonoBehaviour
             animationScript.SetTextures(animationScript.stateDead(), textureState);
 
         updateState();
-
-        // Mover a base
-        // isDead = false;
     }
 
     protected float getBaseGhostSpeed()
@@ -237,20 +237,26 @@ public class GhostMove : MonoBehaviour
 
         if (isMoving)
         {
-            float distCovered = (Time.time - startTime) * GHOST_SPEED;
-            float fracJourney = distCovered / duration;
-            transform.position = Vector3.Lerp(transform.position, newPosition, fracJourney);
+            animationScript.PlaySound(animationScript.stateMove());
+
+            //float distCovered = (Time.time - startTime) * GHOST_SPEED;
+            //float fracJourney = distCovered / duration;
+            //transform.position = Vector3.Lerp(transform.position, newPosition, fracJourney);
             //transform.position = Vector3.MoveTowards(transform.position, newPosition, fracJourney);
+
+            float step = GHOST_SPEED * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, newPosition, step);
         }
         else
         {
+            animationScript.StopSound();
             bool ghostCanMove = doRotation(currentPath[currentDir]);
 
             if (ghostCanMove)
             {
                 newPosition = LevelCreator.TileToPosition(newTileX, newTileZ, transform.position.y);
-                startTime = Time.time;
-                duration = Vector3.Distance(transform.position, newPosition) * LevelCreator.TILE_SIZE;
+                //startTime = Time.time;
+                //duration = Vector3.Distance(transform.position, newPosition) * LevelCreator.TILE_SIZE;
                 isMoving = true;
             }
         }
@@ -349,6 +355,7 @@ public class GhostMove : MonoBehaviour
                 //ghostState = WANDERING_BASE;
                 ghostState = LEAVING_BASE;
                 SetDead(false);
+                SetKilleable(false);
                 break;
         }
     }

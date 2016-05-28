@@ -552,6 +552,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostBlueMove moveScript = newObject.GetComponent<GhostBlueMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx, doorTz);
+                                moveScript.initGhost();
                             }
                             else if (cell == GHOST_O_C)
                             {
@@ -561,6 +562,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx2, doorTz2);
+                                moveScript.initGhost();
                             }
                             else if (cell == GHOST_P_C)
                             {
@@ -570,6 +572,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostPinkMove moveScript = newObject.GetComponent<GhostPinkMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx, doorTz);
+                                moveScript.initGhost();
                             }
                             else if (cell == GHOST_R_C)
                             {
@@ -579,6 +582,7 @@ public class LevelCreator : MonoBehaviour
                                 GhostRedMove moveScript = newObject.GetComponent<GhostRedMove>();
                                 moveScript.SetInitTiles(tx, tz);
                                 moveScript.SetDoorTiles(doorTx2, doorTz2);
+                                moveScript.initGhost();
                             }
                         }
                         else if (cell == PACMAN_C)

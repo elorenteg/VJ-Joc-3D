@@ -59,7 +59,6 @@ public class PacmanMove : MonoBehaviour
 
             int tx, tz;
             LevelCreator.positionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
-            //Debug.Log("Calculated (" + tx + "," + tz + ")");
         }
 
         if (frameState == MAX_FRAMES_STATE)
@@ -186,7 +185,7 @@ public class PacmanMove : MonoBehaviour
             collider.gameObject.tag == Globals.TAG_GHOST_PINK ||
             collider.gameObject.tag == Globals.TAG_GHOST_RED)
         {
-            //Debug.Log("PacMan has collisioned with " + collider.gameObject.tag);
+            Debug.Log("PacMan has collisioned with " + collider.gameObject.tag);
 
             if (levelManager.isBonusPacmanKillsGhost())
             {
@@ -194,7 +193,8 @@ public class PacmanMove : MonoBehaviour
             }
             else
             {
-                // Pacman should be killed
+                animationScript.PlaySound(animationScript.stateDead());
+                animationScript.Animate(animationScript.stateDead());
             }
         }
         if (collider.gameObject.tag == Globals.TAG_COIN)
