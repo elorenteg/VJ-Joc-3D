@@ -370,15 +370,10 @@ public class GhostMove : MonoBehaviour
     private void evadingPacman(int[][] Map)
     {
         bool baseIsValid = false;
-        /*
-        int tx, tz;
-        do
-        {
-            tx = Random.Range(0, LevelCreator.MAP_WIDTH);
-            tz = Random.Range(0, LevelCreator.MAP_HEIGHT);
-        } while (!isValid(Map, tx, tz, baseIsValid));
-        */
-        currentPath = BFS.calculatePath(Map, tileX, tileZ, initTx, initTz, baseIsValid);
+        int pactx, pactz;
+        PacmanMove moveScript = pacmanObj.GetComponent<PacmanMove>();
+        moveScript.ActualTiles(out pactx, out pactz);
+        currentPath = BFS.calculatePath(Map, tileX, tileZ, pactx, pactz, baseIsValid);
     }
 
     private void returningBase(int[][] Map)

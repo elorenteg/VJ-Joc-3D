@@ -84,8 +84,8 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
-    private float PACMAN_OFFSET_X = 0.38f;
-    private float PACMAN_OFFSET_Z = -6.2f;
+    private static float PACMAN_OFFSET_X = 0.5f;
+    private static float PACMAN_OFFSET_Z = -7.5f;
 
     private Vector3 COIN_SCALE = new Vector3(4.0f, 4.0f, 4.0f);
     private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -292,6 +292,12 @@ public class LevelCreator : MonoBehaviour
         tz = (int)(pos.z - TILE_SIZE / 2) / TILE_SIZE;
     }
 
+    public static void pacmanPositionToTile(Vector3 pos, out int tx, out int tz)
+    {
+        tx = (int)pos.x / TILE_SIZE;
+        tz = (int)pos.z / TILE_SIZE;
+    }
+
     public static Vector3 TileToPosition(int tx, int tz, float y)
     {
         Vector3 pos;
@@ -456,8 +462,8 @@ public class LevelCreator : MonoBehaviour
                         cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
 
                         // El mapa es de numTiles pares y asi colocamos al Pacman entre medio de dos tiles
-                        if (tx < MAP_WIDTH / 2) cellPosition.x += TILE_SIZE / 2;
-                        else cellPosition.x -= TILE_SIZE / 2;
+                        //if (tx < MAP_WIDTH / 2) cellPosition.x += TILE_SIZE / 2;
+                        //else cellPosition.x -= TILE_SIZE / 2;
                     }
                     else if (cell == COIN_C)
                     {
