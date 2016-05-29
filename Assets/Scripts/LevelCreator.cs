@@ -294,14 +294,8 @@ public class LevelCreator : MonoBehaviour
 
     public static void pacmanPositionToTile(Vector3 pos, out int tx, out int tz)
     {
-        pos.x -= PACMAN_OFFSET_X * TILE_SIZE;
-        pos.z -= PACMAN_OFFSET_Z * TILE_SIZE;
-
         tx = (int)pos.x / TILE_SIZE;
         tz = (int)pos.z / TILE_SIZE;
-
-        tx = tx - 5;
-        tz = tz - 6;
     }
 
     public static Vector3 TileToPosition(int tx, int tz, float y)

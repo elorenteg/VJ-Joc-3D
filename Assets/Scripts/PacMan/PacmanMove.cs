@@ -220,7 +220,7 @@ public class PacmanMove : MonoBehaviour
 
     public void ActualTiles(out int tx, out int tz)
     {
-        LevelCreator.pacmanPositionToTile(transform.position, out tx, out tz);
+        LevelCreator.pacmanPositionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
     }
 }
 
