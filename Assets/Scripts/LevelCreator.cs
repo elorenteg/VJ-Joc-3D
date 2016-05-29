@@ -104,7 +104,7 @@ public class LevelCreator : MonoBehaviour
     private List<bool> animFrontWall;
     private List<bool> animBackWall;
 
-    private bool ghostCreated;
+    private bool playersCreated;
 
     private int timeState;
     private int MAX_TIME_STATE;
@@ -113,7 +113,7 @@ public class LevelCreator : MonoBehaviour
     {
         timeState = 0;
         MAX_TIME_STATE = 20;
-        ghostCreated = false;
+        playersCreated = false;
     }
 
     void Update()
@@ -121,7 +121,7 @@ public class LevelCreator : MonoBehaviour
         if (timeState == MAX_TIME_STATE)
         {
             timeState = 0;
-
+            
             for (int i = 0; i < walls.Count; ++i)
             {
                 walls[i].GetComponent<WallAnimate>().AnimateTexture();
@@ -149,8 +149,8 @@ public class LevelCreator : MonoBehaviour
         animFrontWall = new List<bool>();
         animBackWall = new List<bool>();
 
-        string[] destroyTags = { Globals.TAG_PACMAN, Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
-        //Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED};
+        string[] destroyTags = { Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
+        //Globals.TAG_PACMAN, Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED};
 
         for (int i = 0; i < destroyTags.Length; ++i)
         {
@@ -503,176 +503,113 @@ public class LevelCreator : MonoBehaviour
                         textureScale = Vector2.zero;
                     }
 
-                    GameObject newObject;
-                    if ((cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C) && ghostCreated)
+                    if ((cell == PACMAN_C || cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C))
                     {
-                        if (cell == GHOST_B_C)
-                        {
-                            newObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
-                            GhostBlueMove moveScript = newObject.GetComponent<GhostBlueMove>();
-                            moveScript.restartGhost(cellPosition);
-                            moveScript.SetInitTiles(tx, tz);
-                            moveScript.SetDoorTiles(doorTx, doorTz);
-                        }
-                        else if (cell == GHOST_O_C)
-                        {
-                            newObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
-                            GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
-                            moveScript.restartGhost(cellPosition);
-                            moveScript.SetInitTiles(tx, tz);
-                            moveScript.SetDoorTiles(doorTx2, doorTz2);
-                        }
-                        else if (cell == GHOST_P_C)
-                        {
-                            newObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
-                            GhostPinkMove moveScript = newObject.GetComponent<GhostPinkMove>();
-                            moveScript.restartGhost(cellPosition);
-                            moveScript.SetInitTiles(tx, tz);
-                            moveScript.SetDoorTiles(doorTx, doorTz);
-                        }
+                        if (playersCreated) RestartPlayer(cell, cellPosition, tx, tz);
                         else
                         {
-                            newObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
-                            GhostRedMove moveScript = newObject.GetComponent<GhostRedMove>();
-                            moveScript.restartGhost(cellPosition);
-                            moveScript.SetInitTiles(tx, tz);
-                            moveScript.SetDoorTiles(doorTx2, doorTz2);
+                            GameObject newObject;
+                            newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
+                            newObject.transform.parent = transform;
+                            newObject.transform.localScale = cellScale;
+
+                            newObject.SetActive(true);
+
+                            if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
+                            {
+                                GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
+                                animationScript.SetBodyTexture(texture);
+                                animationScript.Start();
+
+                                if (cell == GHOST_B_C)
+                                {
+                                    newObject.AddComponent<GhostBlueMove>();
+                                    newObject.tag = Globals.TAG_GHOST_BLUE;
+                                }
+                                else if (cell == GHOST_O_C)
+                                {
+                                    newObject.AddComponent<GhostOrangeMove>();
+                                    newObject.tag = Globals.TAG_GHOST_ORANGE;
+                                }
+                                else if (cell == GHOST_P_C)
+                                {
+                                    newObject.AddComponent<GhostPinkMove>();
+                                    newObject.tag = Globals.TAG_GHOST_PINK;
+                                }
+                                else if (cell == GHOST_R_C)
+                                {
+                                    newObject.AddComponent<GhostRedMove>();
+                                    newObject.tag = Globals.TAG_GHOST_RED;
+                                }
+                            }
+
+                            RestartPlayer(cell, cellPosition, tx, tz);
                         }
                     }
-                    else
+                    else if (cell == WALL_H_C || cell == WALL_V_C)
                     {
+                        GameObject newObject;
                         newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
                         newObject.transform.parent = transform;
                         newObject.transform.localScale = cellScale;
 
                         newObject.SetActive(true);
 
-                        int angle = 180;
-                        if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 0;
-                        else if (cell == PACMAN_C) angle = -90;
-
-                        if (cell == PACMAN_C || cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
+                        if (cell == WALL_V_C)
                         {
-                            SkinnedMeshRenderer skinnedMeshRenderer = newObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                            newObject.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
+                            Vector3 center = newObject.transform.position;
+                            //center -= new Vector3(WALL_SCALE.x / (5f * TILE_SIZE), 0, WALL_SCALE.z / 2);
+                            newObject.transform.RotateAround(center, transform.up, WALL_V_ANGLE);
                         }
 
-                        if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
+                        walls.Add(newObject);
+
+                        float rand = Random.value;
+                        Texture texLat1, texLat2, texUp;
+                        bool animLat1, animLat2, animUp;
+                        if (rand <= 0.33f)
                         {
-                            GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
-                            animationScript.SetBodyTexture(texture);
-                            animationScript.Start();
+                            texLat1 = texWallLatBig1;
+                            texLat2 = texWallLatBig3;
+                            animLat1 = true;
+                            animLat2 = false;
 
-                            if (cell == GHOST_B_C)
-                            {
-                                newObject.AddComponent<GhostBlueMove>();
-                                newObject.tag = Globals.TAG_GHOST_BLUE;
-
-                                GhostBlueMove moveScript = newObject.GetComponent<GhostBlueMove>();
-                                moveScript.SetInitTiles(tx, tz);
-                                moveScript.SetDoorTiles(doorTx, doorTz);
-                                moveScript.initGhost();
-                            }
-                            else if (cell == GHOST_O_C)
-                            {
-                                newObject.AddComponent<GhostOrangeMove>();
-                                newObject.tag = Globals.TAG_GHOST_ORANGE;
-
-                                GhostOrangeMove moveScript = newObject.GetComponent<GhostOrangeMove>();
-                                moveScript.SetInitTiles(tx, tz);
-                                moveScript.SetDoorTiles(doorTx2, doorTz2);
-                                moveScript.initGhost();
-                            }
-                            else if (cell == GHOST_P_C)
-                            {
-                                newObject.AddComponent<GhostPinkMove>();
-                                newObject.tag = Globals.TAG_GHOST_PINK;
-
-                                GhostPinkMove moveScript = newObject.GetComponent<GhostPinkMove>();
-                                moveScript.SetInitTiles(tx, tz);
-                                moveScript.SetDoorTiles(doorTx, doorTz);
-                                moveScript.initGhost();
-                            }
-                            else if (cell == GHOST_R_C)
-                            {
-                                newObject.AddComponent<GhostRedMove>();
-                                newObject.tag = Globals.TAG_GHOST_RED;
-
-                                GhostRedMove moveScript = newObject.GetComponent<GhostRedMove>();
-                                moveScript.SetInitTiles(tx, tz);
-                                moveScript.SetDoorTiles(doorTx2, doorTz2);
-                                moveScript.initGhost();
-                            }
                         }
-                        else if (cell == PACMAN_C)
+                        else if (rand <= 0.66f)
                         {
-                            CameraMove cameraScript = cameraObject.GetComponent<Camera>().GetComponent<CameraMove>();
-                            cameraScript.SetPacman(newObject);
-                            cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
-
-                            LightObject.GetComponent<Light>().transform.position = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 30, MAP_HEIGHT * TILE_SIZE / 2);
-                            PacmanMove pacmanmove = newObject.AddComponent<PacmanMove>();
-                            pacmanmove.moveSpeed = PACMAN_SPEED_MOVE;
-                            pacmanmove.turnSpeed = PACMAN_SPEED_TURN;
+                            texLat1 = texWallLatBig2;
+                            texLat2 = texWallLatBig3;
+                            animLat1 = false;
+                            animLat2 = false;
                         }
-                        else if (cell == WALL_H_C || cell == WALL_V_C)
+                        else
                         {
-                            if (cell == WALL_V_C)
-                            {
-                                Vector3 center = newObject.transform.position;
-                                //center -= new Vector3(WALL_SCALE.x / (5f * TILE_SIZE), 0, WALL_SCALE.z / 2);
-                                newObject.transform.RotateAround(center, transform.up, WALL_V_ANGLE);
-                            }
-
-                            walls.Add(newObject);
-
-                            float rand = Random.value;
-                            Texture texLat1, texLat2, texUp;
-                            bool animLat1, animLat2, animUp;
-                            if (rand <= 0.33f)
-                            {
-                                texLat1 = texWallLatBig1;
-                                texLat2 = texWallLatBig3;
-                                animLat1 = true;
-                                animLat2 = false;
-
-                            }
-                            else if (rand <= 0.66f)
-                            {
-                                texLat1 = texWallLatBig2;
-                                texLat2 = texWallLatBig3;
-                                animLat1 = false;
-                                animLat2 = false;
-                            }
-                            else
-                            {
-                                texLat1 = texWallLatBig3;
-                                texLat2 = texWallLatBig1;
-                                animLat1 = false;
-                                animLat2 = true;
-                            }
-
-                            if (rand <= 0.5f)
-                            {
-                                texUp = texWallUp1;
-                                animUp = true;
-                            }
-                            else
-                            {
-                                texUp = texWallUp2;
-                                animUp = false;
-                            }
-
-                            WallAnimate animationScript = newObject.GetComponent<WallAnimate>();
-                            animationScript.SetTextures(texUp, texLat1, texLat2, texWallLatSmall);
-                            animationScript.SetAnimatedWalls(animUp, animLat1, animLat2);
-                            animationScript.AnimateTexture();
+                            texLat1 = texWallLatBig3;
+                            texLat2 = texWallLatBig1;
+                            animLat1 = false;
+                            animLat2 = true;
                         }
+
+                        if (rand <= 0.5f)
+                        {
+                            texUp = texWallUp1;
+                            animUp = true;
+                        }
+                        else
+                        {
+                            texUp = texWallUp2;
+                            animUp = false;
+                        }
+
+                        WallAnimate animationScript = newObject.GetComponent<WallAnimate>();
+                        animationScript.SetTextures(texUp, texLat1, texLat2, texWallLatSmall);
+                        animationScript.SetAnimatedWalls(animUp, animLat1, animLat2);
+                        animationScript.AnimateTexture();
                     }
                 }
             }
         }
-        ghostCreated = true;
+        playersCreated = true;
         SetGhostTarget();
     }
 
@@ -700,6 +637,63 @@ public class LevelCreator : MonoBehaviour
         ghostObj = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
         GhostRedMove redScript = ghostObj.GetComponent<GhostRedMove>();
         redScript.SetPacmanObj(pacmanObj);
+    }
+
+    public void RestartPlayer(int cell, Vector3 cellPosition, int tx, int tz)
+    {
+        GameObject player;
+        if (cell == PACMAN_C)
+        {
+            player = GameObject.FindGameObjectsWithTag(Globals.TAG_PACMAN)[0];
+
+            CameraMove cameraScript = cameraObject.GetComponent<Camera>().GetComponent<CameraMove>();
+            cameraScript.SetPacman(player);
+            cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
+
+            LightObject.GetComponent<Light>().transform.position = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 30, MAP_HEIGHT * TILE_SIZE / 2);
+            PacmanMove pacmanmove = player.AddComponent<PacmanMove>();
+            pacmanmove.moveSpeed = PACMAN_SPEED_MOVE;
+            pacmanmove.turnSpeed = PACMAN_SPEED_TURN;
+        }
+        else if (cell == GHOST_B_C)
+        {
+            player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
+            GhostBlueMove moveScript = player.GetComponent<GhostBlueMove>();
+            moveScript.restartGhost(cellPosition);
+            moveScript.SetInitTiles(tx, tz);
+            moveScript.SetDoorTiles(doorTx, doorTz);
+        }
+        else if (cell == GHOST_O_C)
+        {
+            player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
+            GhostOrangeMove moveScript = player.GetComponent<GhostOrangeMove>();
+            moveScript.restartGhost(cellPosition);
+            moveScript.SetInitTiles(tx, tz);
+            moveScript.SetDoorTiles(doorTx2, doorTz2);
+        }
+        else if (cell == GHOST_P_C)
+        {
+            player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
+            GhostPinkMove moveScript = player.GetComponent<GhostPinkMove>();
+            moveScript.restartGhost(cellPosition);
+            moveScript.SetInitTiles(tx, tz);
+            moveScript.SetDoorTiles(doorTx, doorTz);
+        }
+        else
+        {
+            player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
+            GhostRedMove moveScript = player.GetComponent<GhostRedMove>();
+            moveScript.restartGhost(cellPosition);
+            moveScript.SetInitTiles(tx, tz);
+            moveScript.SetDoorTiles(doorTx2, doorTz2);
+        }
+
+        int angle = 180;
+        if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 0;
+        else if (cell == PACMAN_C) angle = -90;
+
+        SkinnedMeshRenderer skinnedMeshRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
+        player.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
     }
 
     public void instantiateCherry()
