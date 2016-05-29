@@ -27,6 +27,18 @@ public class MainMenu : MonoBehaviour
 
     public AudioClip moveSound;
 
+    public Camera m_camera;
+    public GameObject pacman;
+    public GameObject ghost;
+    public Texture blueGhostTexture;
+    public Texture orangeGhostTexture;
+    public Texture pinkGhostTexture;
+    public Texture redGhostTexture;
+
+    private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
+    private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
+    private Vector3 GHOST_SCALE = new Vector3(1.0f, 1.0f, 1.0f);
+
     void Start()
     {
         mainMenuAction = -1;
@@ -43,6 +55,11 @@ public class MainMenu : MonoBehaviour
         selectFont.alignment = TextAnchor.UpperCenter;
         selectFont.normal.textColor = new Color32(47, 79, 79, 255);
         selectFont.font = (Font)Resources.Load("Fonts/namco", typeof(Font));
+
+        SetInitCameraPosition(0, 0, 0);
+
+        instantiatePacMan();
+        instantiateGhosts();
     }
 
     void Update()
@@ -71,7 +88,7 @@ public class MainMenu : MonoBehaviour
 
     void OnGUI()
     {
-        Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
+        //Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
 
         float h_logo = Screen.height / 5;
         float w_logo = h_logo * 3.75f;
@@ -117,5 +134,29 @@ public class MainMenu : MonoBehaviour
                 Application.Quit();
                 break;
         }
+    }
+
+    private void instantiatePacMan()
+    {
+        GameObject element = pacman;
+        Vector3 position = new Vector3(0, 0, 0);
+        Vector3 scale = new Vector3(PACMAN_SCALE.x, PACMAN_SCALE.y, PACMAN_SCALE.z);
+
+        GameObject newObject = Instantiate(element, position, element.transform.rotation) as GameObject;
+        newObject.transform.parent = transform;
+        newObject.transform.localScale = scale;
+    }
+
+    private void instantiateGhosts()
+    {
+        
+    }
+
+
+    private void SetInitCameraPosition(int x, int y, int z)
+    {
+        Vector3 cameraPosition = new Vector3(x, y, z);
+
+        m_camera.transform.position = cameraPosition;
     }
 }

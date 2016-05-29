@@ -149,7 +149,6 @@ GameObject:
   - 135: {fileID: 13576872}
   - 111: {fileID: 11143080}
   - 82: {fileID: 8212624}
-  - 114: {fileID: 11403812}
   - 114: {fileID: 11456052}
   m_Layer: 0
   m_Name: Pacman
@@ -657,21 +656,6 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &11403812
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 152278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69988bc4907da22468025762a80b2800, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 28
-  turnSpeed: 300
-  pullRadius: 2
-  pullForce: 1
 --- !u!114 &11456052
 MonoBehaviour:
   m_ObjectHideFlags: 1
