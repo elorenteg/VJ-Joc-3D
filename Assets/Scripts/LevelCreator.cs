@@ -96,6 +96,9 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 CHERRY_SCALE = new Vector3(0.23f, 0.23f, 0.23f);
 
+    private int PACMAN_SPEED_MOVE =  28;
+    private int PACMAN_SPEED_TURN = 300;
+
     private List<GameObject> walls;
     private List<bool> animUpWall;
     private List<bool> animFrontWall;
@@ -608,6 +611,9 @@ public class LevelCreator : MonoBehaviour
                             cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
 
                             LightObject.GetComponent<Light>().transform.position = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 30, MAP_HEIGHT * TILE_SIZE / 2);
+                            PacmanMove pacmanmove = newObject.AddComponent<PacmanMove>();
+                            pacmanmove.moveSpeed = PACMAN_SPEED_MOVE;
+                            pacmanmove.turnSpeed = PACMAN_SPEED_TURN;
                         }
                         else if (cell == WALL_H_C || cell == WALL_V_C)
                         {
