@@ -217,5 +217,10 @@ public class PacmanMove : MonoBehaviour
             levelManager.bonusEaten();
         }
     }
+
+    public void ActualTiles(out int tx, out int tz)
+    {
+        LevelCreator.pacmanPositionToTile(transform.position, out tx, out tz);
+    }
 }
 

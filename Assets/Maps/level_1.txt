@@ -42,9 +42,9 @@ vv                  Hhhh    Hhhh                  vv
 Vv                  hhhhhhhhhhhh                  Vv
 vv                  HhhhHhhhHhhh                  vv
 vv                 hhhh      hhhh                 vv
-vv                 Hhhh  +   Hhhh                 vv
+vv                 Hhhh      Hhhh                 vv
 Vv                                                Vv
-hhhh                                            hhhh
+hhhh                         +                  hhhh
 Hhhh                                            Hhhh
 hhhh                      .                     hhhh
 Hhhh                                            Hhhh
