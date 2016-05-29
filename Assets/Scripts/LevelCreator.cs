@@ -606,6 +606,15 @@ public class LevelCreator : MonoBehaviour
                         animationScript.SetAnimatedWalls(animUp, animLat1, animLat2);
                         animationScript.AnimateTexture();
                     }
+                    else
+                    {
+                        GameObject newObject;
+                        newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
+                        newObject.transform.parent = transform;
+                        newObject.transform.localScale = cellScale;
+
+                        newObject.SetActive(true);
+                    }
                 }
             }
         }
