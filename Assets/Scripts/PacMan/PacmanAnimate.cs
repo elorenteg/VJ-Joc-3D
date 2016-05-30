@@ -22,7 +22,7 @@ public class PacmanAnimate : MonoBehaviour
     private const int RIGHT = 1;
 
     // Use this for initialization
-    private void Start()
+    public void Start()
     {
         pacmanAnimation = GetComponent<Animation>();
         audioSource = GetComponent<AudioSource>();

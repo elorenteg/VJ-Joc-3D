@@ -14,23 +14,23 @@ vv                                                vv
 Vv                                                Vv
 vv                                                vv
 vv                                                vv
-vv                                                vv
-Vv                                                Vv
-vv                                                vv
 vv                         +                      vv
-vv                                                vv
 Vv                                                Vv
+vv                                                vv
+vv                                                vv
+vv                                                vv
+Vv                       Xx                       Vv
 vv                                                vv
 vv                vvhhhh    hhhhvv                vv
-vv                vvHhhh    Hhhhvv                vv
-Vv                vv            vv                Vv
-vv                Vv            Vv                vv
-vv                vv  B      O  vv                vv
-vv                vv            vv                vv
-Vv                vv            vv                Vv
-vv                Vv  P      R  Vv                vv
-vv                vv            vv                vv
-vv                vv            vv                vv
+vv                vvHhhh####Hhhhvv                vv
+Vv                vv############vv                Vv
+vv                Vv############Vv                vv
+vv                vv##B######O##vv                vv
+vv                vv############vv                vv
+Vv                vv############vv                Vv
+vv                Vv##P######R##Vv                vv
+vv                vv############vv                vv
+vv                vv############vv                vv
 Vv                vvhhhhhhhhhhhhvv                Vv
 vv                VvHhhhHhhhHhhhVv                vv
 vv                                                vv

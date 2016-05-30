@@ -69,7 +69,7 @@ public class LevelCreator : MonoBehaviour
     private int doorTx, doorTz, doorTx2, doorTz2;
 
     private float GHOST_Y_POS = 6.0f;
-    private float PACMAN_Y_POS = 18.0f;
+    public static float PACMAN_Y_POS = 18.0f;
     private float COIN_Y_POS = 10.0f;
     private float BONUS_Y_POS = 13.0f;
     private float CHERRY_Y_POS = 3.5f;
@@ -84,8 +84,8 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
-    private static float PACMAN_OFFSET_X = 0.5f;
-    private static float PACMAN_OFFSET_Z = -7.5f;
+    private static float PACMAN_OFFSET_X = 8.5f;
+    private static float PACMAN_OFFSET_Z = -0.5f;
 
     private Vector3 COIN_SCALE = new Vector3(4.0f, 4.0f, 4.0f);
     private Vector2 COIN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
@@ -150,8 +150,6 @@ public class LevelCreator : MonoBehaviour
         animBackWall = new List<bool>();
 
         string[] destroyTags = { Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
-        //Globals.TAG_PACMAN, Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED};
-
         for (int i = 0; i < destroyTags.Length; ++i)
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(destroyTags[i]);
@@ -160,6 +158,18 @@ public class LevelCreator : MonoBehaviour
                 Destroy(gameObjects[j]);
             }
         }
+
+        string[] inactiveTags = { Globals.TAG_PACMAN, Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED };
+        for (int i = 0; i < inactiveTags.Length; ++i)
+        {
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(inactiveTags[i]);
+            for (int j = 0; j < gameObjects.Length; j++)
+            {
+                //gameObjects[j].SetActive(false);
+                gameObjects[j].GetComponent<SphereCollider>().enabled = false;
+            }
+        }
+        
     }
 
     private bool readMap(string fileName)
@@ -660,49 +670,54 @@ public class LevelCreator : MonoBehaviour
             cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
 
             LightObject.GetComponent<Light>().transform.position = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 30, MAP_HEIGHT * TILE_SIZE / 2);
-            PacmanMove pacmanmove = player.AddComponent<PacmanMove>();
-            pacmanmove.moveSpeed = PACMAN_SPEED_MOVE;
-            pacmanmove.turnSpeed = PACMAN_SPEED_TURN;
+            PacmanMove moveScript = player.AddComponent<PacmanMove>();
+            Debug.Log(cellPosition);
+            moveScript.restartPacman(cellPosition);
+            moveScript.moveSpeed = PACMAN_SPEED_MOVE;
+            moveScript.turnSpeed = PACMAN_SPEED_TURN;
+            moveScript.fixEulerAngle(-90);
+            player.GetComponent<SphereCollider>().enabled = true;
         }
         else if (cell == GHOST_B_C)
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
+            player.GetComponent<SphereCollider>().enabled = true;
             GhostBlueMove moveScript = player.GetComponent<GhostBlueMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx, doorTz);
+            moveScript.fixEulerAngle(180);
         }
         else if (cell == GHOST_O_C)
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
+            player.GetComponent<SphereCollider>().enabled = true;
             GhostOrangeMove moveScript = player.GetComponent<GhostOrangeMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx2, doorTz2);
+            moveScript.fixEulerAngle(0);
         }
         else if (cell == GHOST_P_C)
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
+            player.GetComponent<SphereCollider>().enabled = true;
             GhostPinkMove moveScript = player.GetComponent<GhostPinkMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx, doorTz);
+            moveScript.fixEulerAngle(180);
         }
         else
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
+            player.GetComponent<SphereCollider>().enabled = true;
             GhostRedMove moveScript = player.GetComponent<GhostRedMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx2, doorTz2);
+            moveScript.fixEulerAngle(0);
         }
-
-        int angle = 180;
-        if (cell == GHOST_O_C || cell == GHOST_R_C) angle = 0;
-        else if (cell == PACMAN_C) angle = -90;
-
-        SkinnedMeshRenderer skinnedMeshRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
-        player.transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, 1, 0), angle);
     }
 
     public void instantiateCherry()

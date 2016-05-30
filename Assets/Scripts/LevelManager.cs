@@ -33,6 +33,12 @@ public class LevelManager : MonoBehaviour
     private GhostRedMove ghostRedMove;
 
     private bool gamePaused;
+    private static int currentMessage;
+    private const int NO_MSS = 0;
+    private const int END_OF_LEVEL_MSS = 1;
+    private const int END_OF_GAME_MSS = 2;
+    private const int LOST_LIFE_MSS = 3;
+    private const int GAME_OVER_MSS = 4;
 
     private static int TIME_BONUS_PACMAN_KILLS_GHOST = 5; //5 seconds
     private bool bonusPacmanKillsGhost;
@@ -65,6 +71,7 @@ public class LevelManager : MonoBehaviour
     void startGame()
     {
         currentLevel = INITIAL_LEVEL;
+        currentMessage = NO_MSS;
         initializeScore();
         initializeLifes();
 
@@ -110,10 +117,24 @@ public class LevelManager : MonoBehaviour
 
         if (gamePaused && Input.GetKey(KeyCode.Return))
         {
-            if (remainingCoins == 0)
+            switch(currentMessage)
             {
-                ++currentLevel;
-                loadLevel(currentLevel);
+                case END_OF_LEVEL_MSS:
+                    if (remainingCoins == 0)
+                    {
+                        ++currentLevel;
+                        loadLevel(currentLevel);
+                    }
+                    break;
+                case END_OF_GAME_MSS:
+                    startGame();
+                    break;
+                case LOST_LIFE_MSS:
+                    loadLevel(currentLevel);
+                    break;
+                case GAME_OVER_MSS:
+                    startGame();
+                    break;
             }
 
             endMessage();
@@ -261,12 +282,14 @@ public class LevelManager : MonoBehaviour
             // Fin del juego
             if (currentLevel == TOTAL_LEVEL)
             {
-
+                startMessage(GameGUI.TITLE_END_OF_GAME_TEXT, GameGUI.MESSAGE_END_OF_GAME_TEXT);
+                currentMessage = END_OF_GAME_MSS;
             }
             else
             {
                 //TODO Imagen final de nivel
                 startMessage(GameGUI.TITLE_END_OF_LEVEL_TEXT, GameGUI.MESSAGE_END_OF_LEVEL_TEXT);
+                currentMessage = END_OF_LEVEL_MSS;
             }
         }
     }
@@ -310,12 +333,15 @@ public class LevelManager : MonoBehaviour
     {
         --currentLifes;
 
-        if (currentLifes == -1)
+        if (currentLifes == 0)
         {
-            // TODO Mostrar mensaje fin del juego
-
-            // Y luego
-            startGame();
+            startMessage(GameGUI.TITLE_GAME_OVER_TEXT, GameGUI.MESSAGE_GAME_OVER_TEXT);
+            currentMessage = GAME_OVER_MSS;
+        }
+        else
+        {
+            startMessage(GameGUI.TITLE_LOST_LIFE_TEXT, GameGUI.MESSAGE_LOST_LIFE_TEXT);
+            currentMessage = LOST_LIFE_MSS;
         }
     }
 
@@ -344,6 +370,8 @@ public class LevelManager : MonoBehaviour
     {
         gameGUI.removeMessage();
         gamePaused = false;
+
+        currentMessage = NO_MSS;
     }
 
     public void setGamePaused(bool paused)

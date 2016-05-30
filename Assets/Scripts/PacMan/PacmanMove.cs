@@ -23,15 +23,40 @@ public class PacmanMove : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        textureState = 0;
-        frameState = 0;
-
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         animationScript = GetComponent<PacmanAnimate>();
         //animationScript.SetTextures(state);
 
+        initPacman();
+
         GameObject gameManager = GameObject.Find("GameManager");
         levelManager = gameManager.GetComponent<LevelManager>();
+    }
+
+    public void restartPacman(Vector3 pos)
+    {
+        transform.position = pos;
+
+        initPacman();
+    }
+
+    public void initPacman()
+    {
+        textureState = 0;
+        frameState = 0;
+
+        GetComponent<Rigidbody>().freezeRotation = true;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        
+        Vector3 pos = transform.position;
+        pos.y = LevelCreator.PACMAN_Y_POS;
+        transform.position = pos;
+        Debug.Log(transform.position);
+
+        animationScript = GetComponent<PacmanAnimate>();
+        animationScript.Start();
+        animationScript.SetTextures(animationScript.stateMove());
     }
 
     // Update is called once per frame
@@ -163,7 +188,7 @@ public class PacmanMove : MonoBehaviour
         return canMove;
     }
 
-    private void fixEulerAngle(float fixedAngle)
+    public void fixEulerAngle(float fixedAngle)
     {
         Vector3 euler = transform.eulerAngles;
         euler.y = fixedAngle;
@@ -175,6 +200,8 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().freezeRotation = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        Debug.Log(collision.collider.tag);
     }
 
     void OnTriggerEnter(Collider collider)
@@ -195,6 +222,8 @@ public class PacmanMove : MonoBehaviour
             {
                 animationScript.PlaySound(animationScript.stateDead());
                 animationScript.Animate(animationScript.stateDead());
+
+                levelManager.decreaseLifes();
             }
         }
         if (collider.gameObject.tag == Globals.TAG_COIN)
