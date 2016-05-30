@@ -3,14 +3,17 @@ using System.Collections;
 
 public class PacmanMove : MonoBehaviour
 {
-    public float moveSpeed;
-    public float turnSpeed;
+    protected static float PACMAN_SPEED = 30.0f;
+    protected static float PACMAN_ROTATE_SPEED = 200.0f;
 
     private const float ERROR = 1.5f;
 
     public static int MAX_FRAMES_STATE = 15;
     private int textureState;
     private int frameState;
+
+    private int tileX;
+    private int tileZ;
 
     private SkinnedMeshRenderer skinnedMeshRenderer;
     private PacmanAnimate animationScript;
@@ -58,6 +61,12 @@ public class PacmanMove : MonoBehaviour
         animationScript.StopSound();
     }
 
+    public void SetInitTiles(int tx, int tz)
+    {
+        tileX = tx;
+        tileZ = tz;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -77,7 +86,7 @@ public class PacmanMove : MonoBehaviour
                     animationScript.PlaySound(animationScript.stateMove());
                     animationScript.Animate(animationScript.stateMove());
 
-                    transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                    transform.Translate(Vector3.left * PACMAN_SPEED * Time.deltaTime);
                 }
             }
 
@@ -102,7 +111,7 @@ public class PacmanMove : MonoBehaviour
 
         bool fixAngle = false;
         float fixedAngle = 0.0f;
-        float incAngle = turnSpeed * Time.deltaTime;
+        float incAngle = PACMAN_ROTATE_SPEED * Time.deltaTime;
 
         float prevAngle = transform.rotation.eulerAngles.y;
         float leftAngle = (prevAngle - incAngle) % 360;
