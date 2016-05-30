@@ -50,6 +50,14 @@ public class PacmanMove : MonoBehaviour
         animationScript.SetTextures(animationScript.stateMove());
     }
 
+    public void SetVisible(bool visible)
+    {
+        GetComponent<SphereCollider>().enabled = visible;
+        GetComponentInChildren<SkinnedMeshRenderer>().GetComponent<Renderer>().enabled = visible;
+
+        animationScript.StopSound();
+    }
+
     // Update is called once per frame
     void Update()
     {

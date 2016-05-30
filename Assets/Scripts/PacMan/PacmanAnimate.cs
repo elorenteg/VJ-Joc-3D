@@ -87,4 +87,9 @@ public class PacmanAnimate : MonoBehaviour
             audioSource.Play();
         }
     }
+
+    public void StopSound()
+    {
+        audioSource.Stop();
+    }
 }

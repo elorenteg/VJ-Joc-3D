@@ -158,33 +158,21 @@ public class LevelCreator : MonoBehaviour
                 Destroy(gameObjects[j]);
             }
         }
-
-        string[] inactiveTags = { Globals.TAG_PACMAN, Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED };
-
-        /*for (int i = 0; i < inactiveTags.Length; ++i)
-        {
-            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(inactiveTags[i]);
-            for (int j = 0; j < gameObjects.Length; j++)
-            {
-                //gameObjects[j].SetActive(false);
-                //gameObjects[j].GetComponent<SphereCollider>().enabled = false;
-            }
-        }*/
-
+        
         if (playersCreated)
         {
-            GameObject gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
-            GhostBlueMove moveScriptb = gameObject.GetComponent<GhostBlueMove>();
-            moveScriptb.SetVisible(false);
-            gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
-            GhostOrangeMove moveScripto = gameObject.GetComponent<GhostOrangeMove>();
-            moveScripto.SetVisible(false);
-            gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
-            GhostPinkMove moveScriptp = gameObject.GetComponent<GhostPinkMove>();
-            moveScriptp.SetVisible(false);
-            gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
-            GhostRedMove moveScriptr = gameObject.GetComponent<GhostRedMove>();
-            moveScriptr.SetVisible(false);
+            PacmanMove pacmanScript = GameObject.FindGameObjectsWithTag(Globals.TAG_PACMAN)[0].gameObject.GetComponent<PacmanMove>();
+            pacmanScript.SetVisible(false);
+
+            GhostMove ghostScript;
+            ghostScript = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0].gameObject.GetComponent<GhostBlueMove>();
+            ghostScript.SetVisible(false);
+            ghostScript = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0].gameObject.GetComponent<GhostOrangeMove>();
+            ghostScript.SetVisible(false);
+            ghostScript = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0].gameObject.GetComponent<GhostPinkMove>();
+            ghostScript.SetVisible(false);
+            ghostScript = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0].gameObject.GetComponent<GhostRedMove>();
+            ghostScript.SetVisible(false);
         }
 
     }
@@ -692,7 +680,7 @@ public class LevelCreator : MonoBehaviour
             moveScript.moveSpeed = PACMAN_SPEED_MOVE;
             moveScript.turnSpeed = PACMAN_SPEED_TURN;
             moveScript.fixEulerAngle(-90);
-            player.GetComponent<SphereCollider>().enabled = true;
+            moveScript.SetVisible(true);
         }
         else if (cell == GHOST_B_C)
         {
