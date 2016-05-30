@@ -160,16 +160,33 @@ public class LevelCreator : MonoBehaviour
         }
 
         string[] inactiveTags = { Globals.TAG_PACMAN, Globals.TAG_GHOST_BLUE, Globals.TAG_GHOST_ORANGE, Globals.TAG_GHOST_PINK, Globals.TAG_GHOST_RED };
-        for (int i = 0; i < inactiveTags.Length; ++i)
+
+        /*for (int i = 0; i < inactiveTags.Length; ++i)
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(inactiveTags[i]);
             for (int j = 0; j < gameObjects.Length; j++)
             {
                 //gameObjects[j].SetActive(false);
-                gameObjects[j].GetComponent<SphereCollider>().enabled = false;
+                //gameObjects[j].GetComponent<SphereCollider>().enabled = false;
             }
+        }*/
+
+        if (playersCreated)
+        {
+            GameObject gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
+            GhostBlueMove moveScriptb = gameObject.GetComponent<GhostBlueMove>();
+            moveScriptb.SetVisible(false);
+            gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
+            GhostOrangeMove moveScripto = gameObject.GetComponent<GhostOrangeMove>();
+            moveScripto.SetVisible(false);
+            gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
+            GhostPinkMove moveScriptp = gameObject.GetComponent<GhostPinkMove>();
+            moveScriptp.SetVisible(false);
+            gameObject = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
+            GhostRedMove moveScriptr = gameObject.GetComponent<GhostRedMove>();
+            moveScriptr.SetVisible(false);
         }
-        
+
     }
 
     private bool readMap(string fileName)
@@ -681,42 +698,42 @@ public class LevelCreator : MonoBehaviour
         else if (cell == GHOST_B_C)
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_BLUE)[0];
-            player.GetComponent<SphereCollider>().enabled = true;
             GhostBlueMove moveScript = player.GetComponent<GhostBlueMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx, doorTz);
             moveScript.fixEulerAngle(180);
+            moveScript.SetVisible(true);
         }
         else if (cell == GHOST_O_C)
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_ORANGE)[0];
-            player.GetComponent<SphereCollider>().enabled = true;
             GhostOrangeMove moveScript = player.GetComponent<GhostOrangeMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx2, doorTz2);
             moveScript.fixEulerAngle(0);
+            moveScript.SetVisible(true);
         }
         else if (cell == GHOST_P_C)
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_PINK)[0];
-            player.GetComponent<SphereCollider>().enabled = true;
             GhostPinkMove moveScript = player.GetComponent<GhostPinkMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx, doorTz);
             moveScript.fixEulerAngle(180);
+            moveScript.SetVisible(true);
         }
         else
         {
             player = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0];
-            player.GetComponent<SphereCollider>().enabled = true;
             GhostRedMove moveScript = player.GetComponent<GhostRedMove>();
             moveScript.restartGhost(cellPosition);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetDoorTiles(doorTx2, doorTz2);
             moveScript.fixEulerAngle(0);
+            moveScript.SetVisible(true);
         }
     }
 

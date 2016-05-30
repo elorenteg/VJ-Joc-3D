@@ -195,7 +195,8 @@ public class LevelManager : MonoBehaviour
                 ghostPinkVisible = !ghostPinkVisible;
 
                 GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_PINK);
-                gameObjectGhost.SetActive(ghostPinkVisible);
+                GhostPinkMove moveScript = gameObjectGhost.GetComponent<GhostPinkMove>();
+                moveScript.SetVisible(ghostPinkVisible);
             }
 
             if (Input.GetKeyDown(KeyCode.R))

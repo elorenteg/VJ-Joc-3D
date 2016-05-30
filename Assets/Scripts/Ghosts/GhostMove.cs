@@ -80,6 +80,12 @@ public class GhostMove : MonoBehaviour
         pacmanObj = pacman;
     }
 
+    public void SetVisible(bool visible)
+    {
+        GetComponent<SphereCollider>().enabled = visible;
+        GetComponentInChildren<SkinnedMeshRenderer>().GetComponent<Renderer>().enabled = visible;
+    }
+
     // Update is called once per frame
     public void Update()
     {
