@@ -314,11 +314,11 @@ public class MainMenu : MonoBehaviour
         newObject.transform.parent = transform;
         newObject.transform.localScale = scale;
 
+        ghost = newObject;
+
         ghostAnimateScript = newObject.GetComponent<GhostAnimate>();
         ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
         ghostAnimateScript.Start();
-
-        ghost = newObject;
     }
 
     private void instantiateBonus()
