@@ -39,7 +39,6 @@ public class GhostAnimate : MonoBehaviour
     private const int LEFT = 0;
     private const int RIGHT = 1;
 
-    // Use this for initialization
     public void Start()
     {
         ghostAnimation = GetComponent<Animation>();

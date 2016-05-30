@@ -49,8 +49,8 @@ public class MainMenu : MonoBehaviour
     private Vector3 GHOST_SCALE = new Vector3(5.0f, 5.0f, 5.0f);
     private Vector3 BONUS_SCALE = new Vector3(7.0f, 7.0f, 7.0f);
 
-    private float PACMAN_SPEED = 20;
-    private float GHOST_SPEED = 19;
+    private float PACMAN_SPEED = 15;
+    private float GHOST_SPEED = 14;
 
     private Quaternion PACMAN_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
     private Quaternion GHOST_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
@@ -61,10 +61,19 @@ public class MainMenu : MonoBehaviour
 
     private State currentPacmanState = State.Moving_to_bonus;
 
+    public static int MAX_FRAMES_STATE = 15;
+    private GhostAnimate ghostAnimateScript;
+    private int textureState;
+    private int frameState;
+    private bool isDead;
+    private bool canBeKilled;
+
     void Start()
     {
         mainMenuAction = -1;
         mainMenuSelected = 0;
+        textureState = 0;
+        frameState = 0;
 
         normalFont = new GUIStyle();
         normalFont.fontSize = 24;
@@ -134,6 +143,16 @@ public class MainMenu : MonoBehaviour
             rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
             rotateGhost(GHOST_LOOKING_LEFT);
         }
+
+        if (frameState == MAX_FRAMES_STATE)
+        {
+            frameState = 0;
+            textureState = (textureState + 1) % 2;
+
+            UpdateTextures();
+        }
+
+        ++frameState;
     }
 
     void OnGUI()
@@ -226,7 +245,6 @@ public class MainMenu : MonoBehaviour
 
     private void eatingBonus()
     {
-        //TODO Comer el bonus
         hideBonus();
         currentPacmanState = State.Eating_ghost;
     }
@@ -246,6 +264,11 @@ public class MainMenu : MonoBehaviour
         currentPacmanState = State.Moving_to_base;
     }
 
+    private void setGhostKilleable()
+    {
+        ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
+    }
+
     private void killGhost()
     {
         Destroy(ghost);
@@ -259,6 +282,13 @@ public class MainMenu : MonoBehaviour
     private void rotateGhost(Quaternion orientation)
     {
 
+    }
+
+    public void UpdateTextures()
+    {
+        if (isDead) ghostAnimateScript.SetTextures(ghostAnimateScript.stateDead(), textureState);
+        else if (canBeKilled) ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
+        else ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
     }
 
     private void instantiatePacMan()
@@ -283,6 +313,10 @@ public class MainMenu : MonoBehaviour
         GameObject newObject = Instantiate(element, position, element.transform.rotation) as GameObject;
         newObject.transform.parent = transform;
         newObject.transform.localScale = scale;
+
+        ghostAnimateScript = newObject.GetComponent<GhostAnimate>();
+        ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
+        ghostAnimateScript.Start();
 
         ghost = newObject;
     }
