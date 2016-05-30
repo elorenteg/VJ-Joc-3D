@@ -96,7 +96,7 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 CHERRY_SCALE = new Vector3(0.23f, 0.23f, 0.23f);
 
-    private int PACMAN_SPEED_MOVE =  28;
+    private int PACMAN_SPEED_MOVE = 28;
     private int PACMAN_SPEED_TURN = 300;
 
     private List<GameObject> walls;
@@ -121,7 +121,7 @@ public class LevelCreator : MonoBehaviour
         if (timeState == MAX_TIME_STATE)
         {
             timeState = 0;
-            
+
             for (int i = 0; i < walls.Count; ++i)
             {
                 walls[i].GetComponent<WallAnimate>().AnimateTexture();
@@ -424,7 +424,7 @@ public class LevelCreator : MonoBehaviour
                     {
                         element = ghost;
                         cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
-                        cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
+                        cellScale = GHOST_SCALE;
                         texture = orangeGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
@@ -435,7 +435,7 @@ public class LevelCreator : MonoBehaviour
                     {
                         element = ghost;
                         cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
-                        cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
+                        cellScale = GHOST_SCALE;
                         texture = pinkGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
@@ -446,7 +446,7 @@ public class LevelCreator : MonoBehaviour
                     {
                         element = ghost;
                         cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
-                        cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
+                        cellScale = GHOST_SCALE;
                         texture = redGhostTexture;
                         textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
@@ -457,9 +457,9 @@ public class LevelCreator : MonoBehaviour
                     {
                         element = pacman;
                         cellPosition = new Vector3(tx * TILE_SIZE, PACMAN_Y_POS, tz * TILE_SIZE);
-                        cellScale = new Vector3(PACMAN_SCALE.x, PACMAN_SCALE.y, PACMAN_SCALE.z);
+                        cellScale = PACMAN_SCALE;
                         texture = null;
-                        textureScale = new Vector2(PACMAN_TEXTURE_SCALE.x, PACMAN_TEXTURE_SCALE.y);
+                        textureScale = PACMAN_TEXTURE_SCALE;
 
                         cellPosition.x += PACMAN_OFFSET_X * TILE_SIZE;
                         cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
@@ -472,9 +472,9 @@ public class LevelCreator : MonoBehaviour
                     {
                         element = coin;
                         cellPosition = new Vector3(tx * TILE_SIZE, COIN_Y_POS, tz * TILE_SIZE);
-                        cellScale = new Vector3(COIN_SCALE.x, COIN_SCALE.y, COIN_SCALE.z);
+                        cellScale = COIN_SCALE;
                         texture = null;
-                        textureScale = new Vector2(COIN_TEXTURE_SCALE.x, COIN_TEXTURE_SCALE.y);
+                        textureScale = COIN_TEXTURE_SCALE;
 
                         cellPosition.x += COIN_OFFSET * TILE_SIZE;
                         cellPosition.z += COIN_OFFSET * TILE_SIZE;
@@ -483,9 +483,9 @@ public class LevelCreator : MonoBehaviour
                     {
                         element = bonus;
                         cellPosition = new Vector3(tx * TILE_SIZE, BONUS_Y_POS, tz * TILE_SIZE);
-                        cellScale = new Vector3(BONUS_SCALE.x, BONUS_SCALE.y, BONUS_SCALE.z);
+                        cellScale = BONUS_SCALE;
                         texture = null;
-                        textureScale = new Vector2(BONUS_TEXTURE_SCALE.x, BONUS_TEXTURE_SCALE.y);
+                        textureScale = BONUS_TEXTURE_SCALE;
 
                         cellPosition.x -= 0.2f * TILE_SIZE;
                         cellPosition.z += 0.5f * TILE_SIZE;

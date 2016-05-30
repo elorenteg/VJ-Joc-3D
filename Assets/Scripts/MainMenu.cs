@@ -34,10 +34,32 @@ public class MainMenu : MonoBehaviour
     public Texture orangeGhostTexture;
     public Texture pinkGhostTexture;
     public Texture redGhostTexture;
+    public GameObject bonus;
+
+    private Vector3 CAMERA_INIT_POS = new Vector3(7.0f, 0, -20.0f);
+    private Vector3 PACMAN_INIT_POS = new Vector3(-24.0f, 6.5f, 35.0f);
+    private Vector3 GHOST_INIT_POS = new Vector3(-36.0f, -8.0f, 49.0f);
+    private Vector3 BONUS_INIT_POS = new Vector3(49.0f, -8.0f, 49.0f);
+
+    private Vector3 PACMAN_DEST_POS = new Vector3(48.0f, 6.5f, 35.0f);
+    private Vector3 GHOST_DEST_POS = new Vector3(38.0f, -8.0f, 49.0f);
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
-    private Vector3 GHOST_SCALE = new Vector3(1.0f, 1.0f, 1.0f);
+    private Vector3 GHOST_SCALE = new Vector3(5.0f, 5.0f, 5.0f);
+    private Vector3 BONUS_SCALE = new Vector3(7.0f, 7.0f, 7.0f);
+
+    private float PACMAN_SPEED = 20;
+    private float GHOST_SPEED = 19;
+
+    private Quaternion PACMAN_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
+    private Quaternion GHOST_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
+    private Quaternion PACMAN_LOOKING_LEFT = new Quaternion(0, 0, 0, 0);
+    private Quaternion GHOST_LOOKING_LEFT = new Quaternion(0, 0, 0, 0);
+
+    private enum State { Moving_to_bonus, Eating_bonus, Eating_ghost, Moving_to_base };
+
+    private State currentPacmanState = State.Moving_to_bonus;
 
     void Start()
     {
@@ -56,10 +78,11 @@ public class MainMenu : MonoBehaviour
         selectFont.normal.textColor = new Color32(47, 79, 79, 255);
         selectFont.font = (Font)Resources.Load("Fonts/namco", typeof(Font));
 
-        SetInitCameraPosition(0, 0, 0);
+        SetInitCameraPosition(CAMERA_INIT_POS);
 
         instantiatePacMan();
         instantiateGhosts();
+        instantiateBonus();
     }
 
     void Update()
@@ -84,13 +107,40 @@ public class MainMenu : MonoBehaviour
         {
             mainMenuAction = mainMenuSelected;
         }
+
+        if (currentPacmanState == State.Moving_to_bonus)
+        {
+            movePacManToPoint(PACMAN_DEST_POS);
+            moveGhostToPoint(GHOST_DEST_POS);
+            rotatePacMan(PACMAN_LOOKING_RIGHT); //Ambos han de mirar hacia la derecha
+            rotateGhost(GHOST_LOOKING_RIGHT);
+        }
+        else if (currentPacmanState == State.Eating_bonus)
+        {
+            eatingBonus();
+            rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
+            rotateGhost(GHOST_LOOKING_LEFT);
+        }
+        else if (currentPacmanState == State.Eating_ghost)
+        {
+            eatingGhost();
+            rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
+            rotateGhost(GHOST_LOOKING_LEFT);
+        }
+        else if (currentPacmanState == State.Moving_to_base)
+        {
+            moveGhostToPoint(GHOST_INIT_POS);
+            movePacManToPoint(PACMAN_INIT_POS);
+            rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
+            rotateGhost(GHOST_LOOKING_LEFT);
+        }
     }
 
     void OnGUI()
     {
         //Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
 
-        float h_logo = Screen.height / 5;
+        /*float h_logo = Screen.height / 5;
         float w_logo = h_logo * 3.75f;
         Graphics.DrawTexture(new Rect(Screen.width / 2 - w_logo / 2, Screen.height / 9, w_logo, h_logo), logoTexture);
 
@@ -133,30 +183,125 @@ public class MainMenu : MonoBehaviour
             case SORTR:
                 Application.Quit();
                 break;
+        }*/
+    }
+
+    private void movePacManToPoint(Vector3 destination)
+    {
+        pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, destination, PACMAN_SPEED * Time.deltaTime);
+
+        if (pacman.transform.position == PACMAN_DEST_POS)
+        {
+            if (currentPacmanState == State.Eating_ghost)
+            {
+                currentPacmanState = State.Moving_to_bonus;
+            }
+            else
+            {
+                currentPacmanState = State.Eating_bonus;
+            }
         }
+        else if (pacman.transform.position == PACMAN_INIT_POS)
+        {
+            //Reinstanciar fantasma
+            currentPacmanState = State.Moving_to_bonus;
+            showBonus();
+        }
+    }
+
+    private void moveGhostToPoint(Vector3 destination)
+    {
+        ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, destination, GHOST_SPEED * Time.deltaTime);
+    }
+
+    private void showBonus()
+    {
+        bonus.transform.localScale = BONUS_SCALE;
+    }
+
+    private void hideBonus()
+    {
+        bonus.transform.localScale = new Vector3(0, 0, 0);
+    }
+
+    private void eatingBonus()
+    {
+        //TODO Comer el bonus
+        hideBonus();
+        currentPacmanState = State.Eating_ghost;
+    }
+
+    private void eatingGhost()
+    {
+        //TODO Poner fantasma como comible
+        Vector3 pacManDestination = new Vector3(ghost.transform.position.x, pacman.transform.position.y, pacman.transform.position.z);
+
+        pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, pacManDestination, PACMAN_SPEED * Time.deltaTime);
+        ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, GHOST_INIT_POS, GHOST_SPEED * Time.deltaTime);
+
+        if (pacman.transform.position == ghost.transform.position)
+        {
+            killGhost();
+        }
+        currentPacmanState = State.Moving_to_base;
+    }
+
+    private void killGhost()
+    {
+        Destroy(ghost);
+    }
+
+    private void rotatePacMan(Quaternion orientation)
+    {
+
+    }
+
+    private void rotateGhost(Quaternion orientation)
+    {
+
     }
 
     private void instantiatePacMan()
     {
         GameObject element = pacman;
-        Vector3 position = new Vector3(0, 0, 0);
-        Vector3 scale = new Vector3(PACMAN_SCALE.x, PACMAN_SCALE.y, PACMAN_SCALE.z);
+        Vector3 position = PACMAN_INIT_POS;
+        Vector3 scale = PACMAN_SCALE;
 
         GameObject newObject = Instantiate(element, position, element.transform.rotation) as GameObject;
         newObject.transform.parent = transform;
         newObject.transform.localScale = scale;
+
+        pacman = newObject;
     }
 
     private void instantiateGhosts()
     {
-        
+        GameObject element = ghost;
+        Vector3 position = GHOST_INIT_POS;
+        Vector3 scale = GHOST_SCALE;
+
+        GameObject newObject = Instantiate(element, position, element.transform.rotation) as GameObject;
+        newObject.transform.parent = transform;
+        newObject.transform.localScale = scale;
+
+        ghost = newObject;
     }
 
-
-    private void SetInitCameraPosition(int x, int y, int z)
+    private void instantiateBonus()
     {
-        Vector3 cameraPosition = new Vector3(x, y, z);
+        GameObject element = bonus;
+        Vector3 position = BONUS_INIT_POS;
+        Vector3 scale = BONUS_SCALE;
 
-        m_camera.transform.position = cameraPosition;
+        GameObject newObject = Instantiate(element, position, element.transform.rotation) as GameObject;
+        newObject.transform.parent = transform;
+        newObject.transform.localScale = scale;
+
+        bonus = newObject;
+    }
+
+    private void SetInitCameraPosition(Vector3 position)
+    {
+        m_camera.transform.position = position;
     }
 }
