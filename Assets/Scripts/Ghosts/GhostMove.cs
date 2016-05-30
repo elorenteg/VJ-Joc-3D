@@ -46,6 +46,7 @@ public class GhostMove : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
+
         initGhost();
 
         GameObject gameManager = GameObject.Find("GameManager");
@@ -77,6 +78,14 @@ public class GhostMove : MonoBehaviour
     public void SetPacmanObj(GameObject pacman)
     {
         pacmanObj = pacman;
+    }
+
+    public void SetVisible(bool visible)
+    {
+        GetComponent<SphereCollider>().enabled = visible;
+        GetComponentInChildren<SkinnedMeshRenderer>().GetComponent<Renderer>().enabled = visible;
+
+        animationScript.StopSound();
     }
 
     // Update is called once per frame
@@ -188,9 +197,7 @@ public class GhostMove : MonoBehaviour
         float diff = eulerAngle - comparisonAngle;
         if (Mathf.Abs(diff) <= 2.0f)
         {
-            Vector3 eulerAngles = transform.eulerAngles;
-            eulerAngles.y = angleRotation;
-            transform.eulerAngles = eulerAngles;
+            fixEulerAngle(angleRotation);
 
             return true;
         }
@@ -201,6 +208,13 @@ public class GhostMove : MonoBehaviour
 
             return false;
         }
+    }
+
+    public void fixEulerAngle(float fixedAngle)
+    {
+        Vector3 euler = transform.eulerAngles;
+        euler.y = fixedAngle;
+        transform.eulerAngles = euler;
     }
 
     public void onMove(int[][] Map)

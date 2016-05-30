@@ -6,6 +6,12 @@ public class GameGUI : MonoBehaviour
 
     public static string TITLE_END_OF_LEVEL_TEXT = "Fi de nivell";
     public static string MESSAGE_END_OF_LEVEL_TEXT = "Nivell finalitzat\nPrem ENTER";
+    public static string TITLE_END_OF_GAME_TEXT = "Fi de joc";
+    public static string MESSAGE_END_OF_GAME_TEXT = "Reiniciar joc\nPrem ENTER";
+    public static string TITLE_LOST_LIFE_TEXT = "Oh! Vida perduda!";
+    public static string MESSAGE_LOST_LIFE_TEXT = "Reiniciar nivell\nPrem ENTER";
+    public static string TITLE_GAME_OVER_TEXT = "Game over!";
+    public static string MESSAGE_GAME_OVER_TEXT = "Reiniciar joc\nPrem ENTER";
 
     private static string texturesPath = "Textures\\";
 

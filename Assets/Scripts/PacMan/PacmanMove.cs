@@ -23,15 +23,31 @@ public class PacmanMove : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        textureState = 0;
-        frameState = 0;
-
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         animationScript = GetComponent<PacmanAnimate>();
         //animationScript.SetTextures(state);
 
+        initPacman();
+
         GameObject gameManager = GameObject.Find("GameManager");
         levelManager = gameManager.GetComponent<LevelManager>();
+    }
+
+    public void restartPacman(Vector3 pos)
+    {
+        transform.position = pos;
+
+        initPacman();
+    }
+
+    public void initPacman()
+    {
+        textureState = 0;
+        frameState = 0;
+
+        animationScript = GetComponent<PacmanAnimate>();
+        animationScript.Start();
+        animationScript.SetTextures(animationScript.stateMove());
     }
 
     // Update is called once per frame
@@ -163,7 +179,7 @@ public class PacmanMove : MonoBehaviour
         return canMove;
     }
 
-    private void fixEulerAngle(float fixedAngle)
+    public void fixEulerAngle(float fixedAngle)
     {
         Vector3 euler = transform.eulerAngles;
         euler.y = fixedAngle;
@@ -185,7 +201,7 @@ public class PacmanMove : MonoBehaviour
             collider.gameObject.tag == Globals.TAG_GHOST_PINK ||
             collider.gameObject.tag == Globals.TAG_GHOST_RED)
         {
-            Debug.Log("PacMan has collisioned with " + collider.gameObject.tag);
+            Debug.Log("GHOST Collision! - " + collider.gameObject.tag);
 
             if (levelManager.isBonusPacmanKillsGhost())
             {
@@ -195,11 +211,13 @@ public class PacmanMove : MonoBehaviour
             {
                 animationScript.PlaySound(animationScript.stateDead());
                 animationScript.Animate(animationScript.stateDead());
+
+                levelManager.decreaseLifes();
             }
         }
         if (collider.gameObject.tag == Globals.TAG_COIN)
         {
-            //Debug.Log("PacMan has eaten a COIN");
+            Debug.Log("COIN Eaten!");
             collider.enabled = false;
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
@@ -208,7 +226,7 @@ public class PacmanMove : MonoBehaviour
         }
         else if (collider.gameObject.tag == Globals.TAG_BONUS)
         {
-            //Debug.Log("PacMan has eaten a BONUS");
+            Debug.Log("BONUS Eaten!");
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
             //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
