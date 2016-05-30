@@ -688,7 +688,6 @@ public class LevelCreator : MonoBehaviour
 
             LightObject.GetComponent<Light>().transform.position = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 30, MAP_HEIGHT * TILE_SIZE / 2);
             PacmanMove moveScript = player.AddComponent<PacmanMove>();
-            Debug.Log(cellPosition);
             moveScript.restartPacman(cellPosition);
             moveScript.moveSpeed = PACMAN_SPEED_MOVE;
             moveScript.turnSpeed = PACMAN_SPEED_TURN;

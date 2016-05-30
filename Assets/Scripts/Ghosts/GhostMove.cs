@@ -84,6 +84,8 @@ public class GhostMove : MonoBehaviour
     {
         GetComponent<SphereCollider>().enabled = visible;
         GetComponentInChildren<SkinnedMeshRenderer>().GetComponent<Renderer>().enabled = visible;
+
+        animationScript.StopSound();
     }
 
     // Update is called once per frame

@@ -173,13 +173,15 @@ public class LevelManager : MonoBehaviour
                     loadLevel(3);
                 }
             }
-
+            
+            GhostMove moveScript;
             if (Input.GetKeyDown(KeyCode.B))
             {
                 ghostBlueVisible = !ghostBlueVisible;
 
                 GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_BLUE);
-                gameObjectGhost.SetActive(ghostBlueVisible);
+                moveScript = gameObjectGhost.GetComponent<GhostBlueMove>();
+                moveScript.SetVisible(ghostBlueVisible);
             }
 
             if (Input.GetKeyDown(KeyCode.O))
@@ -187,7 +189,8 @@ public class LevelManager : MonoBehaviour
                 ghostOrangeVisible = !ghostOrangeVisible;
 
                 GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_ORANGE);
-                gameObjectGhost.SetActive(ghostOrangeVisible);
+                moveScript = gameObjectGhost.GetComponent<GhostOrangeMove>();
+                moveScript.SetVisible(ghostOrangeVisible);
             }
 
             if (Input.GetKeyDown(KeyCode.P))
@@ -195,7 +198,7 @@ public class LevelManager : MonoBehaviour
                 ghostPinkVisible = !ghostPinkVisible;
 
                 GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_PINK);
-                GhostPinkMove moveScript = gameObjectGhost.GetComponent<GhostPinkMove>();
+                moveScript = gameObjectGhost.GetComponent<GhostPinkMove>();
                 moveScript.SetVisible(ghostPinkVisible);
             }
 
@@ -204,7 +207,8 @@ public class LevelManager : MonoBehaviour
                 ghostRedVisible = !ghostRedVisible;
 
                 GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_RED);
-                gameObjectGhost.SetActive(ghostRedVisible);
+                moveScript = gameObjectGhost.GetComponent<GhostRedMove>();
+                moveScript.SetVisible(ghostRedVisible);
             }
         }
     }

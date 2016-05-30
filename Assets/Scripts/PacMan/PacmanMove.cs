@@ -45,15 +45,6 @@ public class PacmanMove : MonoBehaviour
         textureState = 0;
         frameState = 0;
 
-        GetComponent<Rigidbody>().freezeRotation = true;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        
-        Vector3 pos = transform.position;
-        pos.y = LevelCreator.PACMAN_Y_POS;
-        transform.position = pos;
-        Debug.Log(transform.position);
-
         animationScript = GetComponent<PacmanAnimate>();
         animationScript.Start();
         animationScript.SetTextures(animationScript.stateMove());
@@ -200,8 +191,6 @@ public class PacmanMove : MonoBehaviour
         GetComponent<Rigidbody>().freezeRotation = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-        Debug.Log(collision.collider.tag);
     }
 
     void OnTriggerEnter(Collider collider)
@@ -212,7 +201,7 @@ public class PacmanMove : MonoBehaviour
             collider.gameObject.tag == Globals.TAG_GHOST_PINK ||
             collider.gameObject.tag == Globals.TAG_GHOST_RED)
         {
-            Debug.Log("PacMan has collisioned with " + collider.gameObject.tag);
+            Debug.Log("GHOST Collision! - " + collider.gameObject.tag);
 
             if (levelManager.isBonusPacmanKillsGhost())
             {
@@ -228,7 +217,7 @@ public class PacmanMove : MonoBehaviour
         }
         if (collider.gameObject.tag == Globals.TAG_COIN)
         {
-            //Debug.Log("PacMan has eaten a COIN");
+            Debug.Log("COIN Eaten!");
             collider.enabled = false;
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
@@ -237,7 +226,7 @@ public class PacmanMove : MonoBehaviour
         }
         else if (collider.gameObject.tag == Globals.TAG_BONUS)
         {
-            //Debug.Log("PacMan has eaten a BONUS");
+            Debug.Log("BONUS Eaten!");
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
             //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
