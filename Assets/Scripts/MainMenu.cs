@@ -49,8 +49,9 @@ public class MainMenu : MonoBehaviour
     private Vector3 GHOST_SCALE = new Vector3(5.0f, 5.0f, 5.0f);
     private Vector3 BONUS_SCALE = new Vector3(7.0f, 7.0f, 7.0f);
 
-    private float PACMAN_SPEED = 15;
-    private float GHOST_SPEED = 14;
+    private int PACMAN_SPEED = 15;
+    private int GHOST_SPEED_ALIVE = 15;
+    private int GHOST_SPEED_KILLEABLE = 11;
 
     private Quaternion PACMAN_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
     private Quaternion GHOST_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
@@ -61,12 +62,13 @@ public class MainMenu : MonoBehaviour
 
     private State currentPacmanState = State.Moving_to_bonus;
 
+
+    private PacmanAnimate pacmanAnimateScript;
+
     public static int MAX_FRAMES_STATE = 15;
     private GhostAnimate ghostAnimateScript;
     private int textureState;
     private int frameState;
-    private bool isDead;
-    private bool canBeKilled;
 
     void Start()
     {
@@ -117,31 +119,37 @@ public class MainMenu : MonoBehaviour
             mainMenuAction = mainMenuSelected;
         }
 
+        if (pacman.transform.position == PACMAN_DEST_POS && currentPacmanState == State.Moving_to_bonus)
+        {
+            currentPacmanState = State.Eating_bonus;
+        }
+        else if (pacman.transform.position == PACMAN_DEST_POS && currentPacmanState == State.Eating_bonus)
+        {
+            currentPacmanState = State.Eating_ghost;
+        }
+        else if (pacman.transform.position == PACMAN_INIT_POS)
+        {
+            currentPacmanState = State.Moving_to_bonus;
+            showBonus();
+            showGhost(GHOST_INIT_POS);
+        }
+
         if (currentPacmanState == State.Moving_to_bonus)
         {
-            movePacManToPoint(PACMAN_DEST_POS);
-            moveGhostToPoint(GHOST_DEST_POS);
-            rotatePacMan(PACMAN_LOOKING_RIGHT); //Ambos han de mirar hacia la derecha
-            rotateGhost(GHOST_LOOKING_RIGHT);
+            movingToBonus();
         }
         else if (currentPacmanState == State.Eating_bonus)
         {
             eatingBonus();
-            rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
-            rotateGhost(GHOST_LOOKING_LEFT);
         }
         else if (currentPacmanState == State.Eating_ghost)
         {
             eatingGhost();
-            rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
-            rotateGhost(GHOST_LOOKING_LEFT);
+            movingToBase();
         }
         else if (currentPacmanState == State.Moving_to_base)
         {
-            moveGhostToPoint(GHOST_INIT_POS);
-            movePacManToPoint(PACMAN_INIT_POS);
-            rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
-            rotateGhost(GHOST_LOOKING_LEFT);
+            movingToBase();
         }
 
         if (frameState == MAX_FRAMES_STATE)
@@ -151,7 +159,6 @@ public class MainMenu : MonoBehaviour
 
             UpdateTextures();
         }
-
         ++frameState;
     }
 
@@ -205,42 +212,22 @@ public class MainMenu : MonoBehaviour
         }*/
     }
 
-    private void movePacManToPoint(Vector3 destination)
+    private void movingToBonus()
     {
-        pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, destination, PACMAN_SPEED * Time.deltaTime);
+        movePacManToPoint(PACMAN_DEST_POS, PACMAN_SPEED);
+        moveGhostToPoint(GHOST_DEST_POS, GHOST_SPEED_ALIVE);
 
-        if (pacman.transform.position == PACMAN_DEST_POS)
-        {
-            if (currentPacmanState == State.Eating_ghost)
-            {
-                currentPacmanState = State.Moving_to_bonus;
-            }
-            else
-            {
-                currentPacmanState = State.Eating_bonus;
-            }
-        }
-        else if (pacman.transform.position == PACMAN_INIT_POS)
-        {
-            //Reinstanciar fantasma
-            currentPacmanState = State.Moving_to_bonus;
-            showBonus();
-        }
+        rotatePacMan(PACMAN_LOOKING_RIGHT); //Ambos han de mirar hacia la derecha
+        rotateGhost(GHOST_LOOKING_RIGHT);
     }
 
-    private void moveGhostToPoint(Vector3 destination)
+    private void movingToBase()
     {
-        ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, destination, GHOST_SPEED * Time.deltaTime);
-    }
+        movePacManToPoint(PACMAN_INIT_POS, PACMAN_SPEED);
+        moveGhostToPoint(GHOST_INIT_POS, GHOST_SPEED_KILLEABLE);
 
-    private void showBonus()
-    {
-        bonus.transform.localScale = BONUS_SCALE;
-    }
-
-    private void hideBonus()
-    {
-        bonus.transform.localScale = new Vector3(0, 0, 0);
+        rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
+        rotateGhost(GHOST_LOOKING_LEFT);
     }
 
     private void eatingBonus()
@@ -251,17 +238,13 @@ public class MainMenu : MonoBehaviour
 
     private void eatingGhost()
     {
-        //TODO Poner fantasma como comible
-        Vector3 pacManDestination = new Vector3(ghost.transform.position.x, pacman.transform.position.y, pacman.transform.position.z);
+        setGhostKilleable();
 
-        pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, pacManDestination, PACMAN_SPEED * Time.deltaTime);
-        ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, GHOST_INIT_POS, GHOST_SPEED * Time.deltaTime);
-
-        if (pacman.transform.position == ghost.transform.position)
+        if (pacman.transform.position.x - 5 < ghost.transform.position.x)
         {
-            killGhost();
+            currentPacmanState = State.Moving_to_base;
+            hideGhost();
         }
-        currentPacmanState = State.Moving_to_base;
     }
 
     private void setGhostKilleable()
@@ -269,9 +252,35 @@ public class MainMenu : MonoBehaviour
         ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
     }
 
-    private void killGhost()
+    private void showGhost(Vector3 position)
     {
-        Destroy(ghost);
+        ghost.transform.position = position;
+        ghost.transform.localScale = GHOST_SCALE;
+    }
+
+    private void hideGhost()
+    {
+        ghost.transform.localScale = new Vector3(0, 0, 0);
+    }
+
+    private void movePacManToPoint(Vector3 destination, int speed)
+    {
+        pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, destination, speed * Time.deltaTime);
+    }
+
+    private void moveGhostToPoint(Vector3 destination, int speed)
+    {
+        ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, destination, speed * Time.deltaTime);
+    }
+
+    private void showBonus()
+    {
+        bonus.transform.localScale = BONUS_SCALE;
+    }
+
+    private void hideBonus()
+    {
+        bonus.transform.localScale = new Vector3(0, 0, 0);
     }
 
     private void rotatePacMan(Quaternion orientation)
@@ -286,8 +295,9 @@ public class MainMenu : MonoBehaviour
 
     public void UpdateTextures()
     {
-        if (isDead) ghostAnimateScript.SetTextures(ghostAnimateScript.stateDead(), textureState);
-        else if (canBeKilled) ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
+        pacmanAnimateScript.SetTextures(textureState);
+
+        if (currentPacmanState == State.Eating_ghost) ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
         else ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
     }
 
@@ -302,6 +312,10 @@ public class MainMenu : MonoBehaviour
         newObject.transform.localScale = scale;
 
         pacman = newObject;
+
+        pacmanAnimateScript = newObject.GetComponent<PacmanAnimate>();
+        pacmanAnimateScript.Start();
+        pacmanAnimateScript.SetTextures(pacmanAnimateScript.stateMove());
     }
 
     private void instantiateGhosts()
