@@ -46,7 +46,6 @@ public class GhostMove : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
-
         initGhost();
 
         GameObject gameManager = GameObject.Find("GameManager");

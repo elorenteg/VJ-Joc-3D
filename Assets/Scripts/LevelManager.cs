@@ -105,9 +105,10 @@ public class LevelManager : MonoBehaviour
         ghostRedVisible = true;
     }
 
+    
+
     void Update()
     {
-
         if (!gamePaused)
         {
             updateIA();
@@ -427,5 +428,10 @@ public class LevelManager : MonoBehaviour
         {
             ghostRedMove.SetDead(true);
         }
+    }
+
+    public int[][] GetMap()
+    {
+        return levelCreator.GetMap();
     }
 }
