@@ -317,8 +317,8 @@ public class MainMenu : MonoBehaviour
         ghost = newObject;
 
         ghostAnimateScript = newObject.GetComponent<GhostAnimate>();
-        ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
         ghostAnimateScript.Start();
+        ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
     }
 
     private void instantiateBonus()
