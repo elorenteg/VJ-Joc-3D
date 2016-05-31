@@ -557,6 +557,10 @@ public class LevelCreator : MonoBehaviour
                                     newObject.tag = Globals.TAG_GHOST_RED;
                                 }
                             }
+                            else
+                            {
+                                newObject.AddComponent<PacmanMove>();
+                            }
 
                             RestartPlayer(cell, cellPosition, tx, tz);
                         }
@@ -675,7 +679,7 @@ public class LevelCreator : MonoBehaviour
             cameraScript.SetInitPosition(MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE);
 
             LightObject.GetComponent<Light>().transform.position = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 30, MAP_HEIGHT * TILE_SIZE / 2);
-            PacmanMove moveScript = player.AddComponent<PacmanMove>();
+            PacmanMove moveScript = player.GetComponent<PacmanMove>();
             moveScript.restartPacman(cellPosition);
             moveScript.fixEulerAngle(-90);
             moveScript.SetInitTiles(tx, tz);
