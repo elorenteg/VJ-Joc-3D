@@ -316,6 +316,7 @@ public class MainMenu : MonoBehaviour
         pacmanAnimateScript = newObject.GetComponent<PacmanAnimate>();
         pacmanAnimateScript.Start();
         pacmanAnimateScript.SetTextures(pacmanAnimateScript.stateMove());
+        pacmanAnimateScript.PlaySound(pacmanAnimateScript.stateMove());
     }
 
     private void instantiateGhosts()
