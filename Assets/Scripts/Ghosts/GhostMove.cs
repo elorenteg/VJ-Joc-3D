@@ -59,6 +59,7 @@ public class GhostMove : MonoBehaviour
         transform.position = pos;
 
         initGhost();
+        initSpecificGhost();
     }
 
     public void initGhost()
@@ -75,6 +76,8 @@ public class GhostMove : MonoBehaviour
         animationScript = GetComponent<GhostAnimate>();
         animationScript.SetTextures(animationScript.stateMove(), textureState);
     }
+
+    protected virtual void initSpecificGhost() { }
 
     public void SetPacmanObj(GameObject pacman)
     {
@@ -232,9 +235,22 @@ public class GhostMove : MonoBehaviour
         followPath();
     }
 
+    // Completely chasing Pacman
     public virtual void chasingPacman(int[][] Map)
     {
+        bool baseIsValid = false;
+        int pactx, pactz;
+        PacmanMove moveScript = pacmanObj.GetComponent<PacmanMove>();
+        moveScript.ActualTile(out pactx, out pactz);
 
+        // Nos quedamos con un camino de 5 tiles para ir actualizando el camino hasta el pacman cada 5
+        int[] allPath = BFS.calculatePath(Map, tileX, tileZ, pactx, pactz, baseIsValid);
+        int size = Mathf.Min(5, allPath.Length);
+        currentPath = new int[size];
+        for (int i = 0; i < size; ++i)
+        {
+            currentPath[i] = allPath[i];
+        }
     }
 
     public void followPath()
@@ -465,8 +481,42 @@ public class GhostMove : MonoBehaviour
         {
             newSection = LevelCreator.SECTION_BOTTOM_LEFT;
         }
-
-        Debug.Log("Pac: " + pacSection + " Ghost: " + ghostSection + " New: " + newSection);
+        
         return newSection;
+    }
+
+    protected bool CanSeePacman(int[][] Map)
+    {
+        int pactx, pactz;
+        PacmanMove moveScript = pacmanObj.GetComponent<PacmanMove>();
+        moveScript.ActualTile(out pactx, out pactz);
+
+        bool baseIsValid = false;
+
+        if ((tileX - 1 <= pactx && pactx <= tileX + 1) || (tileZ - 1 <= pactz && pactz <= tileZ + 1))
+        {
+            // LEFT
+            for (int tx = tileX; tx >= pactx; --tx)
+            {
+                if (isValid(Map, tx, tileZ, baseIsValid) && (tx - 1 <= pactx && pactx <= tx + 1) && (tileZ - 1 <= pactz && pactz <= tileZ + 1)) return true;
+            }
+            // RIGHT
+            for (int tx = tileX; tx <= pactx; ++tx)
+            {
+                if (isValid(Map, tx, tileZ, baseIsValid) && (tx - 1 <= pactx && pactx <= tx + 1) && (tileZ - 1 <= pactz && pactz <= tileZ + 1)) return true;
+            }
+            // UP
+            for (int tz = tileZ; tz <= pactz; ++tz)
+            {
+                if (isValid(Map, tileX, tz, baseIsValid) && (tileX - 1 <= pactx && pactx <= tileX + 1) && (tz - 1 <= pactz && pactz <= tz + 1)) return true;
+            }
+            // DOWN
+            for (int tz = tileZ; tz >= pactz; --tz)
+            {
+                if (isValid(Map, tileX, tz, baseIsValid) && (tileX - 1 <= pactx && pactx <= tileX + 1) && (tz - 1 <= pactz && pactz <= tz + 1)) return true;
+            }
+        }
+
+        return false;
     }
 }

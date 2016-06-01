@@ -5,6 +5,7 @@ public class GhostOrangeMove : GhostMove
 {
     public GhostOrangeMove() { }
 
+    // Completely random
     public override void chasingPacman(int[][] Map)
     {
         bool baseIsValid = false;

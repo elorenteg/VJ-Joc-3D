@@ -429,7 +429,6 @@ public class LevelCreator : MonoBehaviour
         if (AreSameSection(actSection, newSection)) return Globals.NONE;
         else if (AreContiguousSections(actSection, newSection))
         {
-            Debug.Log("Contiguous");
             if (actSection + 1 == newSection) return Globals.RIGHT;
             else if (actSection + 2 == newSection) return Globals.DOWN;
             else if (newSection + 1 == actSection) return Globals.LEFT;
@@ -487,8 +486,6 @@ public class LevelCreator : MonoBehaviour
                 maxTx = Mathf.Min(MAP_WIDTH, actTx + 2);
                 break;
         }
-
-        Debug.Log("Act:" + actSection + " New:" + sectToMove + " dir:" + dirMove);
 
         secTx = Random.Range(minTx, maxTx);
         secTz = Random.Range(minTz, maxTz);
