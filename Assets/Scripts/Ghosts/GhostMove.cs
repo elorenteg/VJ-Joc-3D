@@ -392,12 +392,17 @@ public class GhostMove : MonoBehaviour
     private void evadingPacman(int[][] Map)
     {
         bool baseIsValid = false;
-        int pactx, pactz;
-        PacmanMove moveScript = pacmanObj.GetComponent<PacmanMove>();
-        moveScript.ActualTiles(out pactx, out pactz);
+        int sectToMove = sectionToMove();
+
+        int secTx, secTz;
+        do
+        {
+            LevelCreator.TileInSection(sectToMove, out secTx, out secTz);
+        }
+        while (!isValid(Map, secTx, secTz, baseIsValid));
 
         // Nos quedamos con un camino de 5 tiles para ir actualizando el camino hasta el pacman cada 5
-        int[] allPath = BFS.calculatePath(Map, tileX, tileZ, pactx, pactz, baseIsValid);
+        int[] allPath = BFS.calculatePath(Map, tileX, tileZ, secTx, secTz, baseIsValid);
         int size = Mathf.Min(5, allPath.Length);
         currentPath = new int[size];
         for (int i = 0; i < size; ++i)
@@ -437,5 +442,31 @@ public class GhostMove : MonoBehaviour
         currentDir = 0;
         isMoving = false;
         SetDirection(currentPath[currentDir]);
+    }
+
+    protected int sectionToMove()
+    {
+        int pactx, pactz;
+        PacmanMove moveScript = pacmanObj.GetComponent<PacmanMove>();
+        moveScript.ActualTile(out pactx, out pactz);
+
+        int pacSection = moveScript.ActualSection();
+        int ghostSection = LevelCreator.SectionTile(tileX, tileZ);
+
+        int newSection;
+        if (isEvadingPacman())
+        {
+            if (LevelCreator.AreDiagonalSections(pacSection, ghostSection)) newSection = ghostSection;
+            else if (LevelCreator.AreContiguousSections(pacSection, ghostSection))
+                newSection = LevelCreator.OppositeSection(pacSection);
+            else newSection = LevelCreator.ContiguousSection(pacSection, tileX, tileZ);
+        }
+        else
+        {
+            newSection = LevelCreator.SECTION_BOTTOM_LEFT;
+        }
+
+        Debug.Log("Pac: " + pacSection + " Ghost: " + ghostSection + " New: " + newSection);
+        return newSection;
     }
 }

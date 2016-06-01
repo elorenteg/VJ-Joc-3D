@@ -99,6 +99,11 @@ public class LevelCreator : MonoBehaviour
     private int PACMAN_SPEED_MOVE = 28;
     private int PACMAN_SPEED_TURN = 300;
 
+    public const int SECTION_TOP_LEFT = 0;
+    public const int SECTION_TOP_RIGHT = 1;
+    public const int SECTION_BOTTOM_LEFT = 2;
+    public const int SECTION_BOTTOM_RIGHT = 3;
+
     private List<GameObject> walls;
     private List<bool> animUpWall;
     private List<bool> animFrontWall;
@@ -314,6 +319,133 @@ public class LevelCreator : MonoBehaviour
     {
         tx = (int)pos.x / TILE_SIZE;
         tz = (int)pos.z / TILE_SIZE;
+    }
+
+    public static int SectionTile(int tx, int tz)
+    {
+        if (tx <= MAP_WIDTH/2)
+        {
+            if (tz <= MAP_HEIGHT / 2) return SECTION_BOTTOM_LEFT;
+            else return SECTION_TOP_LEFT;
+        }
+        else
+        {
+            if (tz <= MAP_HEIGHT / 2) return SECTION_BOTTOM_RIGHT;
+            else return SECTION_TOP_RIGHT;
+        }
+    }
+
+    public static bool AreSameSection(int section1, int section2)
+    {
+        return section1 == section2;
+    }
+
+    public static bool AreDiagonalSections(int section1, int section2)
+    {
+        if (section1 == SECTION_TOP_LEFT && section2 == SECTION_BOTTOM_RIGHT) return true;
+        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_BOTTOM_LEFT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+
+        return false;
+    }
+
+    public static bool AreContiguousSections(int section1, int section2)
+    {
+        if (section1 == SECTION_TOP_LEFT && section2 == SECTION_BOTTOM_LEFT) return true;
+        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_BOTTOM_LEFT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+
+        return false;
+    }
+
+    public static int OppositeSection(int section)
+    {
+        switch (section)
+        {
+            case SECTION_TOP_LEFT:
+                return SECTION_BOTTOM_RIGHT;
+            case SECTION_TOP_RIGHT:
+                return SECTION_BOTTOM_LEFT;
+            case SECTION_BOTTOM_LEFT:
+                return SECTION_TOP_RIGHT;
+            case SECTION_BOTTOM_RIGHT:
+                return SECTION_TOP_LEFT;
+        }
+
+        return -1;
+    }
+
+    public static int ContiguousSection(int section, int tx, int tz)
+    {
+        int posibleSec1 = -1;
+        int posibleSec2 = -1;
+        int distSec1 = -1;
+        int distSec2 = -1;
+        switch (section)
+        {
+            case SECTION_TOP_LEFT:
+                posibleSec1 = SECTION_TOP_RIGHT;
+                posibleSec2 = SECTION_BOTTOM_LEFT;
+                distSec1 = tx - MAP_WIDTH / 2;
+                distSec2 = tz - MAP_HEIGHT / 2;
+                break;
+            case SECTION_TOP_RIGHT:
+                posibleSec1 = SECTION_TOP_LEFT;
+                posibleSec2 = SECTION_BOTTOM_RIGHT;
+                distSec1 = MAP_WIDTH / 2 - tx;
+                distSec2 = tz - MAP_HEIGHT / 2;
+                break;
+            case SECTION_BOTTOM_LEFT:
+                posibleSec1 = SECTION_BOTTOM_RIGHT;
+                posibleSec2 = SECTION_TOP_LEFT;
+                distSec1 = tx - MAP_WIDTH / 2;
+                distSec2 = MAP_HEIGHT / 2 - tz;
+                break;
+            case SECTION_BOTTOM_RIGHT:
+                posibleSec1 = SECTION_BOTTOM_LEFT;
+                posibleSec2 = SECTION_TOP_RIGHT;
+                distSec1 = MAP_WIDTH / 2 - tx;
+                distSec2 = MAP_HEIGHT / 2 - tz;
+                break;
+        }
+        
+        if (distSec1 <= distSec2) return posibleSec1;
+        else return posibleSec2;
+    }
+    
+    public static void TileInSection(int sectToMove, out int secTx, out int secTz)
+    {
+        int minTx = -1, maxTx = -1, minTz = -1, maxTz = -1;
+        switch (sectToMove)
+        {
+            case SECTION_TOP_LEFT:
+            case SECTION_BOTTOM_LEFT:
+                minTx = 0;
+                maxTx = MAP_WIDTH / 2;
+                break;
+            case SECTION_TOP_RIGHT:
+            case SECTION_BOTTOM_RIGHT:
+                minTx = MAP_WIDTH / 2;
+                maxTx = MAP_WIDTH;
+                break;
+        }
+        switch (sectToMove)
+        {
+            case SECTION_TOP_LEFT:
+            case SECTION_TOP_RIGHT:
+                minTz = MAP_HEIGHT / 2;
+                maxTz = MAP_HEIGHT;
+                break;
+            case SECTION_BOTTOM_LEFT:
+            case SECTION_BOTTOM_RIGHT:
+                minTz = 0;
+                maxTz = MAP_HEIGHT / 2;
+                break;
+        }
+        secTx = Random.Range(minTx, maxTx);
+        secTz = Random.Range(minTz, maxTz);
     }
 
     public static Vector3 TileToPosition(int tx, int tz, float y)
