@@ -21,10 +21,6 @@ public class MainMenu : MonoBehaviour
     public Texture2D selectTexture;
     public Texture2D backgroundTexture;
 
-    //http://gameswallpaperhd.com/request-making-a-bioshock-infinite-monopoly-help-bioshock.html
-    public Texture2D logoTexture;
-    public Texture2D logoBioTexture;
-
     public AudioClip moveSound;
 
     public Camera m_camera;
@@ -35,6 +31,7 @@ public class MainMenu : MonoBehaviour
     public Texture pinkGhostTexture;
     public Texture redGhostTexture;
     public GameObject bonus;
+    public GameObject background;
 
     private Vector3 CAMERA_INIT_POS = new Vector3(7.0f, -3.0f, 10.0f);
     private Vector3 PACMAN_INIT_POS = new Vector3(-4.0f, 6.5f, 35.0f);
@@ -66,7 +63,7 @@ public class MainMenu : MonoBehaviour
     private StateGhost currentGhostState = StateGhost.Alive;
 
     private float GHOST_AUDIO_VOLUME = 0.5f;
-    
+
     private PacmanAnimate pacmanAnimateScript;
     private GhostAnimate ghostAnimateScript;
 
@@ -94,6 +91,7 @@ public class MainMenu : MonoBehaviour
         selectFont.font = (Font)Resources.Load("Fonts/namco", typeof(Font));
 
         SetInitCameraPosition(CAMERA_INIT_POS);
+        SetBackgroundPosition();
 
         instantiatePacMan();
         instantiateGhosts();
@@ -177,20 +175,12 @@ public class MainMenu : MonoBehaviour
 
     void OnGUI()
     {
-        //Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
-
-        float h_logo = Screen.height / 5;
-        float w_logo = h_logo * 3.75f;
-        Graphics.DrawTexture(new Rect(Screen.width / 2 - w_logo / 2, Screen.height / 9, w_logo, h_logo), logoTexture);
-
-        float h_bio_logo = Screen.height / 4;
-        float w_bio_logo = h_logo * 1.5f;
-        Graphics.DrawTexture(new Rect(Screen.width * 0.82f - w_bio_logo / 2, 0, w_bio_logo, h_bio_logo), logoBioTexture);
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
 
         float w_text = 200;
         float h_text = 40;
         float xo_text = Screen.width / 14;
-        float yo_text = Screen.height / 5 + h_logo;
+        float yo_text = Screen.height / 2;
 
         //float w_sel = 250;
         //float h_sel = 90;
@@ -301,7 +291,8 @@ public class MainMenu : MonoBehaviour
         if (currentPacmanState == State.Moving_to_bonus)
         {
             ghostAnimateScript.PlaySound(ghostAnimateScript.stateMove(), GHOST_AUDIO_VOLUME);
-        } else if (currentPacmanState == State.Eating_ghost)
+        }
+        else if (currentPacmanState == State.Eating_ghost)
         {
             ghostAnimateScript.PlaySound(ghostAnimateScript.stateKilleable(), GHOST_AUDIO_VOLUME);
         }
@@ -325,7 +316,7 @@ public class MainMenu : MonoBehaviour
     private void rotateGhost(int orientation)
     {
         // esto NO se ha de hacer cada frame
-        switch(orientation)
+        switch (orientation)
         {
             case GHOST_LOOKING_LEFT:
                 // ghostAnimateScript.rotateBounds(-180);
@@ -392,6 +383,19 @@ public class MainMenu : MonoBehaviour
         newObject.transform.localScale = scale;
 
         bonus = newObject;
+    }
+
+    private void SetBackgroundPosition()
+    {
+        float pos = (m_camera.nearClipPlane + 20f);
+
+        background.transform.position = m_camera.transform.position + m_camera.transform.forward * pos;
+        background.transform.LookAt(m_camera.transform);
+        background.transform.Rotate(0.0f, 0.0f, 0.0f);
+
+        float h = (Mathf.Tan(m_camera.fieldOfView * Mathf.Deg2Rad * 0.5f) * pos * 2f) / 10.0f;
+
+        background.transform.localScale = new Vector3(h * m_camera.aspect, 1.0f, h);
     }
 
     private void SetInitCameraPosition(Vector3 position)

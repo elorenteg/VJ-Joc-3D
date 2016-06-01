@@ -114,9 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectTexture: {fileID: 2800000, guid: d5d97cb649b14c4409b4b29d7338cdb4, type: 3}
-  backgroundTexture: {fileID: 2800000, guid: 3d98c9e7d3860f14dbd06270905aa416, type: 3}
-  logoTexture: {fileID: 2800000, guid: 2225be396262c294f8b13646ea7568e2, type: 3}
-  logoBioTexture: {fileID: 2800000, guid: b5124e99fd0c60e4e946db1db26536b9, type: 3}
+  backgroundTexture: {fileID: 2800000, guid: b16ad74706300874fa3e91c7873f380d, type: 3}
   moveSound: {fileID: 8300000, guid: 4c31041d292de9848bf52ea361e967c9, type: 3}
   m_camera: {fileID: 1922795994}
   pacman: {fileID: 152278, guid: b9be12c69160e154e8ee7980728234fc, type: 2}
@@ -126,6 +124,7 @@ MonoBehaviour:
   pinkGhostTexture: {fileID: 2800000, guid: f5ecada3f1c30f14c8be2bc5148f0119, type: 3}
   redGhostTexture: {fileID: 2800000, guid: f9353223c2dd82341a65af1612be92cf, type: 3}
   bonus: {fileID: 104492, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
+  background: {fileID: 1328498706}
 --- !u!4 &75551848
 Transform:
   m_ObjectHideFlags: 0
@@ -149,6 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f175764ab4ad99c4aaae05ecaa571553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1328498706 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 162220, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+  m_PrefabInternal: {fileID: 1729189267}
 --- !u!1 &1381810633
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +213,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!1001 &1729189267
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 474328, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6529286, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483764, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 162220, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4560dbfcc7b74234bb3c9067623d135a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1922795990
 GameObject:
   m_ObjectHideFlags: 0
