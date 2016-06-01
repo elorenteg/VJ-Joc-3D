@@ -50,24 +50,27 @@ public class MainMenu : MonoBehaviour
     private Vector3 BONUS_SCALE = new Vector3(7.0f, 7.0f, 7.0f);
 
     private int PACMAN_SPEED = 15;
-    private int GHOST_SPEED_ALIVE = 15;
-    private int GHOST_SPEED_KILLEABLE = 11;
+    private float GHOST_SPEED_ALIVE = 15;
+    private float GHOST_SPEED_KILLEABLE = 11;
+    private float GHOST_SPEED_DEAD = 17.5f;
 
-    private Quaternion PACMAN_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
-    private Quaternion GHOST_LOOKING_RIGHT = new Quaternion(0, 0, 0, 0);
-    private Quaternion PACMAN_LOOKING_LEFT = new Quaternion(0, 0, 0, 0);
-    private Quaternion GHOST_LOOKING_LEFT = new Quaternion(0, 0, 0, 0);
+    private const int PACMAN_LOOKING_RIGHT = 0;
+    private const int GHOST_LOOKING_RIGHT = 1;
+    private const int PACMAN_LOOKING_LEFT = 2;
+    private const int GHOST_LOOKING_LEFT = 3;
 
     private enum State { Moving_to_bonus, Eating_bonus, Eating_ghost, Moving_to_base };
+    private enum StateGhost { Alive, Dead, Killeable };
 
     private State currentPacmanState = State.Moving_to_bonus;
+    private StateGhost currentGhostState = StateGhost.Alive;
 
     private float GHOST_AUDIO_VOLUME = 0.5f;
-
+    
     private PacmanAnimate pacmanAnimateScript;
+    private GhostAnimate ghostAnimateScript;
 
     public static int MAX_FRAMES_STATE = 15;
-    private GhostAnimate ghostAnimateScript;
     private int textureState;
     private int frameState;
 
@@ -120,27 +123,35 @@ public class MainMenu : MonoBehaviour
             mainMenuAction = mainMenuSelected;
         }
 
-        if (pacman.transform.position == PACMAN_DEST_POS && currentPacmanState == State.Moving_to_bonus)
+        if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Moving_to_bonus)
         {
             currentPacmanState = State.Eating_bonus;
+            ghostAnimateScript.rotateBounds(-180);
+            pacmanAnimateScript.rotateBounds(-180);
         }
-        else if (pacman.transform.position == PACMAN_DEST_POS && currentPacmanState == State.Eating_bonus)
+        else if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Eating_bonus)
         {
             currentPacmanState = State.Eating_ghost;
+            ghostAnimateScript.rotateBounds(-180);
+            pacmanAnimateScript.rotateBounds(-180);
         }
-        else if (pacman.transform.position == PACMAN_INIT_POS)
+        else if (ghost.transform.position == GHOST_INIT_POS)
         {
             currentPacmanState = State.Moving_to_bonus;
             showBonus();
             showGhost(GHOST_INIT_POS);
+            ghostAnimateScript.rotateBounds(180);
+            pacmanAnimateScript.rotateBounds(180);
         }
 
         if (currentPacmanState == State.Moving_to_bonus)
         {
+            currentGhostState = StateGhost.Alive;
             movingToBonus();
         }
         else if (currentPacmanState == State.Eating_bonus)
         {
+            currentGhostState = StateGhost.Killeable;
             eatingBonus();
         }
         else if (currentPacmanState == State.Eating_ghost)
@@ -150,6 +161,7 @@ public class MainMenu : MonoBehaviour
         }
         else if (currentPacmanState == State.Moving_to_base)
         {
+            currentGhostState = StateGhost.Dead;
             movingToBase();
         }
 
@@ -215,7 +227,7 @@ public class MainMenu : MonoBehaviour
 
     private void movingToBonus()
     {
-        movePacManToPoint(PACMAN_DEST_POS, PACMAN_SPEED);
+        movePacManToPoint(PACMAN_LOOKING_RIGHT, PACMAN_SPEED);
         moveGhostToPoint(GHOST_DEST_POS, GHOST_SPEED_ALIVE);
 
         rotatePacMan(PACMAN_LOOKING_RIGHT); //Ambos han de mirar hacia la derecha
@@ -224,8 +236,12 @@ public class MainMenu : MonoBehaviour
 
     private void movingToBase()
     {
-        movePacManToPoint(PACMAN_INIT_POS, PACMAN_SPEED);
-        moveGhostToPoint(GHOST_INIT_POS, GHOST_SPEED_KILLEABLE);
+        movePacManToPoint(PACMAN_LOOKING_LEFT, PACMAN_SPEED);
+        if (currentGhostState == StateGhost.Dead)
+            moveGhostToPoint(GHOST_INIT_POS, GHOST_SPEED_DEAD);
+        else
+            moveGhostToPoint(GHOST_INIT_POS, GHOST_SPEED_KILLEABLE);
+
 
         rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
         rotateGhost(GHOST_LOOKING_LEFT);
@@ -241,7 +257,7 @@ public class MainMenu : MonoBehaviour
     {
         setGhostKilleable();
 
-        if (pacman.transform.position.x - 5 < ghost.transform.position.x)
+        if (pacman.transform.position.x - 4 < ghost.transform.position.x)
         {
             currentPacmanState = State.Moving_to_base;
             hideGhost();
@@ -261,17 +277,25 @@ public class MainMenu : MonoBehaviour
 
     private void hideGhost()
     {
-        ghost.transform.localScale = new Vector3(0, 0, 0);
+        //ghost.transform.localScale = new Vector3(0, 0, 0);
+        ghostAnimateScript.StopSound();
+        ghostAnimateScript.PlaySound(ghostAnimateScript.stateDead(), GHOST_AUDIO_VOLUME);
+        //ghostAnimateScript.Animate(ghostAnimateScript.stateDead());
     }
 
-    private void movePacManToPoint(Vector3 destination, int speed)
+    private void movePacManToPoint(int direction, int speed)
     {
-        pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, destination, speed * Time.deltaTime);
+        if (direction == PACMAN_LOOKING_LEFT)
+            pacman.transform.Translate(-speed * Time.deltaTime, 0, 0);
+        else
+            pacman.transform.Translate(-speed * Time.deltaTime, 0, 0);
+
+        //pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, destination, speed * Time.deltaTime);
         pacmanAnimateScript.Animate(pacmanAnimateScript.stateMove());
         pacmanAnimateScript.PlaySound(pacmanAnimateScript.stateMove());
     }
 
-    private void moveGhostToPoint(Vector3 destination, int speed)
+    private void moveGhostToPoint(Vector3 destination, float speed)
     {
         ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, destination, speed * Time.deltaTime);
         if (currentPacmanState == State.Moving_to_bonus)
@@ -293,22 +317,32 @@ public class MainMenu : MonoBehaviour
         bonus.transform.localScale = new Vector3(0, 0, 0);
     }
 
-    private void rotatePacMan(Quaternion orientation)
+    private void rotatePacMan(int orientation)
     {
-
+        //pacmanAnimateScript.rotateBounds(-180);
     }
 
-    private void rotateGhost(Quaternion orientation)
+    private void rotateGhost(int orientation)
     {
-
+        // esto NO se ha de hacer cada frame
+        switch(orientation)
+        {
+            case GHOST_LOOKING_LEFT:
+                // ghostAnimateScript.rotateBounds(-180);
+                break;
+            case GHOST_LOOKING_RIGHT:
+                // ghostAnimateScript.rotateBounds(180);
+                break;
+        }
     }
 
     public void UpdateTextures()
     {
         pacmanAnimateScript.SetTextures(textureState);
 
-        if (currentPacmanState == State.Eating_ghost) ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
-        else ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
+        if (currentGhostState == StateGhost.Killeable) ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
+        else if (currentGhostState == StateGhost.Alive) ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
+        else ghostAnimateScript.SetTextures(ghostAnimateScript.stateDead(), textureState);
     }
 
     private void instantiatePacMan()
@@ -326,6 +360,7 @@ public class MainMenu : MonoBehaviour
         pacmanAnimateScript = newObject.GetComponent<PacmanAnimate>();
         pacmanAnimateScript.Start();
         pacmanAnimateScript.SetTextures(pacmanAnimateScript.stateMove());
+        //pacmanAnimateScript.rotateBounds(180);
     }
 
     private void instantiateGhosts()
@@ -343,6 +378,7 @@ public class MainMenu : MonoBehaviour
         ghostAnimateScript = newObject.GetComponent<GhostAnimate>();
         ghostAnimateScript.Start();
         ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
+        //ghostAnimateScript.rotateBounds(180);
     }
 
     private void instantiateBonus()

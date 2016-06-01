@@ -92,4 +92,9 @@ public class PacmanAnimate : MonoBehaviour
     {
         audioSource.Stop();
     }
+
+    public void rotateBounds(float angle)
+    {
+        transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), angle);
+    }
 }

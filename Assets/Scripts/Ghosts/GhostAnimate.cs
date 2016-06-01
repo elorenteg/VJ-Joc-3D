@@ -9,6 +9,7 @@ public class GhostAnimate : MonoBehaviour
 
     private AudioSource audioSource;
     public AudioClip moveSound;
+    public AudioClip deadSound;
 
     private Animation ghostAnimation;
 
@@ -145,17 +146,18 @@ public class GhostAnimate : MonoBehaviour
         switch (sound)
         {
             case MOVE:
+                audioSource.clip = moveSound;
                 break;
             case KILLEABLE:
                 break;
             case DIE:
+                audioSource.clip = deadSound;
                 break;
         }
 
         if (!audioSource.isPlaying)
         {
             audioSource.volume = volume;
-            audioSource.clip = moveSound;
             audioSource.Play();
         }
     }
@@ -188,5 +190,10 @@ public class GhostAnimate : MonoBehaviour
                 material.renderQueue = 3000;
                 break;
         }
+    }
+
+    public void rotateBounds(float angle)
+    {
+        transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), angle);
     }
 }
