@@ -140,7 +140,7 @@ public class GhostAnimate : MonoBehaviour
         }
     }
 
-    public void PlaySound(int sound)
+    public void PlaySound(int sound, float volume)
     {
         switch (sound)
         {
@@ -154,7 +154,7 @@ public class GhostAnimate : MonoBehaviour
 
         if (!audioSource.isPlaying)
         {
-            audioSource.volume = 0.5f;
+            audioSource.volume = volume;
             audioSource.clip = moveSound;
             audioSource.Play();
         }

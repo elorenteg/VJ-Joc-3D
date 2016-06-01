@@ -6,7 +6,7 @@ public class GhostMove : MonoBehaviour
 {
     protected static float GHOST_SPEED = 14.0f;
     protected static float GHOST_ROTATE_SPEED = 8.0f;
-    
+
     protected static float UP_ANGLE = 90.0f;
     protected static float DOWN_ANGLE = 270.0f;
     protected static float LEFT_ANGLE = 0.0f;
@@ -42,6 +42,8 @@ public class GhostMove : MonoBehaviour
 
     protected LevelManager levelManager;
     protected GameObject pacmanObj;
+
+    private float GHOST_AUDIO_VOLUME = 0.5f;
 
     // Use this for initialization
     public void Start()
@@ -250,7 +252,7 @@ public class GhostMove : MonoBehaviour
 
         if (isMoving)
         {
-            animationScript.PlaySound(animationScript.stateMove());
+            animationScript.PlaySound(animationScript.stateMove(), GHOST_AUDIO_VOLUME);
 
             //float distCovered = (Time.time - startTime) * GHOST_SPEED;
             //float fracJourney = distCovered / duration;
@@ -331,14 +333,16 @@ public class GhostMove : MonoBehaviour
     {
         if (canBeKilled)
         {
-            if (isChasingPacman()) {
+            if (isChasingPacman())
+            {
                 ghostState = EVADING_PACMAN;
                 currentDirCalculated = false;
             }
         }
         else
         {
-            if (isEvadingPacman()) {
+            if (isEvadingPacman())
+            {
                 ghostState = CHASING_PACMAN;
                 currentDirCalculated = false;
             }
@@ -356,7 +360,7 @@ public class GhostMove : MonoBehaviour
 
     private void nextState()
     {
-        switch(ghostState)
+        switch (ghostState)
         {
             case WANDERING_BASE:
                 ghostState = LEAVING_BASE;

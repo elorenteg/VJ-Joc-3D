@@ -62,6 +62,7 @@ public class MainMenu : MonoBehaviour
 
     private State currentPacmanState = State.Moving_to_bonus;
 
+    private float GHOST_AUDIO_VOLUME = 0.5f;
 
     private PacmanAnimate pacmanAnimateScript;
 
@@ -275,10 +276,10 @@ public class MainMenu : MonoBehaviour
         ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, destination, speed * Time.deltaTime);
         if (currentPacmanState == State.Moving_to_bonus)
         {
-            ghostAnimateScript.PlaySound(ghostAnimateScript.stateMove());
+            ghostAnimateScript.PlaySound(ghostAnimateScript.stateMove(), GHOST_AUDIO_VOLUME);
         } else if (currentPacmanState == State.Eating_ghost)
         {
-            ghostAnimateScript.PlaySound(ghostAnimateScript.stateKilleable());
+            ghostAnimateScript.PlaySound(ghostAnimateScript.stateKilleable(), GHOST_AUDIO_VOLUME);
         }
     }
 
