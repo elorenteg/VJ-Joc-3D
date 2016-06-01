@@ -273,6 +273,13 @@ public class MainMenu : MonoBehaviour
     private void moveGhostToPoint(Vector3 destination, int speed)
     {
         ghost.transform.position = Vector3.MoveTowards(ghost.transform.position, destination, speed * Time.deltaTime);
+        if (currentPacmanState == State.Moving_to_bonus)
+        {
+            ghostAnimateScript.PlaySound(ghostAnimateScript.stateMove());
+        } else if (currentPacmanState == State.Eating_ghost)
+        {
+            ghostAnimateScript.PlaySound(ghostAnimateScript.stateKilleable());
+        }
     }
 
     private void showBonus()
