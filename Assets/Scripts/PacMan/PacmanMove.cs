@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PacmanMove : MonoBehaviour
 {
-    protected static float PACMAN_SPEED = 50.0f;
+    protected static float PACMAN_SPEED = 45.0f;
     protected static float PACMAN_ROTATE_SPEED = 240.0f;
 
     private const float ERROR = 1.5f;
@@ -227,10 +227,14 @@ public class PacmanMove : MonoBehaviour
             }
             else
             {
-                animationScript.PlaySound(animationScript.stateDead());
-                animationScript.Animate(animationScript.stateDead());
+                GhostMove ghostMove = collider.gameObject.GetComponent<GhostMove>();
+                if (!ghostMove.ghostIsDead())
+                {
+                    animationScript.PlaySound(animationScript.stateDead());
+                    animationScript.Animate(animationScript.stateDead());
 
-                levelManager.decreaseLifes();
+                    levelManager.decreaseLifes();
+                }
             }
         }
         if (collider.gameObject.tag == Globals.TAG_COIN)

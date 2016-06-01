@@ -130,6 +130,11 @@ public class GhostMove : MonoBehaviour
         updateState();
     }
 
+    public bool ghostIsDead()
+    {
+        return isDead;
+    }
+
     protected float getBaseGhostSpeed()
     {
         return GHOST_SPEED;

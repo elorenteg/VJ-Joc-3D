@@ -684,6 +684,10 @@ public class LevelCreator : MonoBehaviour
             moveScript.fixEulerAngle(-90);
             moveScript.SetInitTiles(tx, tz);
             moveScript.SetVisible(true);
+
+            PacmanAnimate animScript = player.GetComponent<PacmanAnimate>();
+            animScript.StopSound();
+            animScript.Animate(animScript.stateMove());
         }
         else if (cell == GHOST_B_C)
         {
