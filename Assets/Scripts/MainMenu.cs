@@ -15,6 +15,8 @@ public class MainMenu : MonoBehaviour
     private int mainMenuSelected;
     private int mainMenuAction;
 
+    private HowTo howToMenu;
+
     private GUIStyle normalFont;
     private GUIStyle selectFont;
 
@@ -96,6 +98,8 @@ public class MainMenu : MonoBehaviour
         instantiatePacMan();
         instantiateGhosts();
         instantiateBonus();
+
+        howToMenu = gameObject.GetComponent<HowTo>();
     }
 
     void Update()
@@ -175,35 +179,13 @@ public class MainMenu : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
-
-        float w_text = 200;
-        float h_text = 40;
-        float xo_text = Screen.width / 14;
-        float yo_text = Screen.height / 2;
-
-        //float w_sel = 250;
-        //float h_sel = 90;
-        float yo_sel = yo_text - h_text / 2;
-
-        float inc_sep = (Screen.height / 2.25f) / mainMenuLabels.Length;
-
-        for (int i = 0; i < mainMenuLabels.Length; i++)
-        {
-            if (mainMenuSelected == i)
-            {
-                //GUI.DrawTexture(new Rect(Screen.width / 4.5f - w_sel / 2, yo_sel + i * inc_sep, w_sel, h_sel), selectTexture);
-                GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], selectFont);
-            }
-            else GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], normalFont);
-        }
-
         switch (mainMenuAction)
         {
             case JUGAR:
                 SceneManager.LoadScene("Level1");
                 break;
             case INSTR:
+
                 break;
             case OPTNS:
                 break;
@@ -212,6 +194,32 @@ public class MainMenu : MonoBehaviour
             case SORTR:
                 Application.Quit();
                 break;
+        }
+
+        if (mainMenuAction == -1)
+        {
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
+
+            float w_text = 200;
+            float h_text = 40;
+            float xo_text = Screen.width / 14;
+            float yo_text = Screen.height / 2;
+
+            //float w_sel = 250;
+            //float h_sel = 90;
+            float yo_sel = yo_text - h_text / 2;
+
+            float inc_sep = (Screen.height / 2.25f) / mainMenuLabels.Length;
+
+            for (int i = 0; i < mainMenuLabels.Length; i++)
+            {
+                if (mainMenuSelected == i)
+                {
+                    //GUI.DrawTexture(new Rect(Screen.width / 4.5f - w_sel / 2, yo_sel + i * inc_sep, w_sel, h_sel), selectTexture);
+                    GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], selectFont);
+                }
+                else GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], normalFont);
+            }
         }
     }
 
