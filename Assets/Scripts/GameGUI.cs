@@ -27,9 +27,10 @@ public class GameGUI : MonoBehaviour
     private GUIStyle infoFont;
     private GUIStyle titleFont;
     private GUIStyle messageFont;
-    private Texture2D backgroundLevelTexture;
+    private Texture2D[] backgroundLevelTexture = new Texture2D[3];
     private Texture2D backgroundScoreTexture;
-    private Texture2D backgroundLifesTexture;
+    private Texture2D backgroundHighScoreTexture;
+    private Texture2D[] backgroundLifesTexture = new Texture2D[4];
     private Texture2D backgroundMessageTexture;
 
     private LevelManager levelManager;
@@ -75,11 +76,19 @@ public class GameGUI : MonoBehaviour
         messageFont.alignment = TextAnchor.MiddleCenter;
         messageFont.normal.textColor = Color.cyan;
 
-        backgroundScoreTexture = Resources.Load(texturesPath + "score_tube") as Texture2D;
-        backgroundLevelTexture = backgroundScoreTexture;
-        backgroundLifesTexture = backgroundScoreTexture;
+        backgroundScoreTexture = Resources.Load(texturesPath + "score_texture") as Texture2D;
+        backgroundHighScoreTexture = Resources.Load(texturesPath + "highscore_texture") as Texture2D;
 
-        backgroundMessageTexture = Resources.Load(texturesPath + "message_paper") as Texture2D;
+        backgroundLevelTexture[2] = Resources.Load(texturesPath + "level_3_3") as Texture2D;
+        backgroundLevelTexture[1] = Resources.Load(texturesPath + "level_2_3") as Texture2D;
+        backgroundLevelTexture[0] = Resources.Load(texturesPath + "level_1_3") as Texture2D;
+
+        backgroundLifesTexture[3] = Resources.Load(texturesPath + "player_health_3_3") as Texture2D;
+        backgroundLifesTexture[2] = Resources.Load(texturesPath + "player_health_2_3") as Texture2D;
+        backgroundLifesTexture[1] = Resources.Load(texturesPath + "player_health_1_3") as Texture2D;
+        backgroundLifesTexture[0] = Resources.Load(texturesPath + "player_health_0_3") as Texture2D;
+
+        backgroundMessageTexture = Resources.Load(texturesPath + "message_background") as Texture2D;
 
         isMessageInQueue = false;
     }
@@ -117,40 +126,31 @@ public class GameGUI : MonoBehaviour
         int currentLevel = levelManager.getLevel();
 
         // Score bg
-        GUI.DrawTexture(new Rect(5, 5, 135, 50), backgroundScoreTexture);
+        GUI.DrawTexture(new Rect(5, 5, 160, 50), backgroundScoreTexture);
 
         // Score label
         GUI.Label(new Rect(-80, 50, 200, 20), SCORE_LABEL, infoFont);
 
         // Score value
-        GUI.Label(new Rect(-95, 11, 200, 20), currentScore.ToString(), infoFont);
+        GUI.Label(new Rect(-55, 11, 200, 20), currentScore.ToString(), infoFont);
 
-        // Max. Score bg
-        GUI.DrawTexture(new Rect(Screen.width - 185, 5, 180, 50), backgroundScoreTexture);
+        // High Score bg
+        GUI.DrawTexture(new Rect(Screen.width - 165, 5, 160, 50), backgroundHighScoreTexture);
 
-        // Max. Score label
+        // High Score label
         GUI.Label(new Rect(Screen.width - 205, 50, 200, 20), MAX_SCORE_LABEL, infoFont);
 
-        // Max. Score value
-        GUI.Label(new Rect(Screen.width - 235, 11, 200, 20), currentHighScore.ToString(), infoFont);
+        // High Score value
+        GUI.Label(new Rect(Screen.width - 225, 11, 200, 20), currentHighScore.ToString(), infoFont);
 
-        // Life bg
-        GUI.DrawTexture(new Rect(5, Screen.height - 55, 135, 50), backgroundLifesTexture);
+        // Life bg with life
+        GUI.DrawTexture(new Rect(5, Screen.height - 55, 190, 50), backgroundLifesTexture[currentLifes]);
 
-        // Life label
-        GUI.Label(new Rect(-80, Screen.height - 90, 200, 20), LIFES_LABEL, infoFont);
-
-        // Life value
-        GUI.Label(new Rect(-95, Screen.height - 50, 200, 20), currentLifes.ToString(), infoFont);
-
-        // Level bg
-        GUI.DrawTexture(new Rect(Screen.width - 140, Screen.height - 55, 135, 50), backgroundLevelTexture);
+        // Level bg with level
+        GUI.DrawTexture(new Rect(Screen.width - 140, Screen.height - 55, 135, 50), backgroundLevelTexture[currentLevel - 1]);
 
         // Level label
         GUI.Label(new Rect(Screen.width - 215, Screen.height - 90, 200, 20), LEVEL_LABEL, infoFont);
-
-        // Level value
-        GUI.Label(new Rect(Screen.width - 235, Screen.height - 50, 200, 20), currentLevel.ToString(), infoFont);
     }
 
     private void showMessageQueued(Message message)
