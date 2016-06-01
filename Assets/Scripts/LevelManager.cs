@@ -5,10 +5,10 @@ using System.Collections;
 public class LevelManager : MonoBehaviour
 {
 
-    private static int TOTAL_LEVEL = 2;
+    private static int TOTAL_LEVEL = 3;
     private static int INITIAL_LEVEL = 1;
     private static int INITIAL_LIFES = 3;
-    private static int[] COINS_NUMBER = { 30, 4 };
+    //private static int[] COINS_NUMBER = { 30, 4 };
     private static int COIN_SCORE = 1;
 
     private int currentLevel;
@@ -97,7 +97,8 @@ public class LevelManager : MonoBehaviour
         GameObject gameObjectPacman = GameObject.FindGameObjectWithTag(Globals.TAG_PACMAN);
         pacmanMove = gameObjectPacman.GetComponent<PacmanMove>();
 
-        remainingCoins = COINS_NUMBER[level - 1];
+        //remainingCoins = COINS_NUMBER[level - 1];
+        remainingCoins = LevelCreator.NUM_COINS_LEVEL;
 
         ghostBlueVisible = true;
         ghostOrangeVisible = true;

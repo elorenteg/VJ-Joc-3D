@@ -111,6 +111,8 @@ public class LevelCreator : MonoBehaviour
 
     private bool playersCreated;
 
+    public static int NUM_COINS_LEVEL;
+
     private int timeState;
     private int MAX_TIME_STATE;
 
@@ -139,6 +141,8 @@ public class LevelCreator : MonoBehaviour
     public void loadLevel(int level)
     {
         DeleteAll();
+
+        NUM_COINS_LEVEL = 0;
 
         string fileLocation = levelPath + "level_" + level + ".txt";
         readMap(fileLocation);
@@ -241,6 +245,7 @@ public class LevelCreator : MonoBehaviour
                             else if (line[j] == COIN)
                             {
                                 MapLine[j] = COIN_C;
+                                ++NUM_COINS_LEVEL;
                             }
                             else if (line[j] == BONUS)
                             {
@@ -504,12 +509,9 @@ public class LevelCreator : MonoBehaviour
 
     private void placeFloor()
     {
-        Vector3 floorPosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 floorPosition = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 0.0f, MAP_HEIGHT * TILE_SIZE / 2);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
         Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, FLOOR_HEIGHT, MAP_HEIGHT * TILE_SIZE);
-
-        floorPosition.x -= WALL_SCALE.x;
-        floorPosition.z += WALL_SCALE.x;
 
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;
@@ -547,12 +549,12 @@ public class LevelCreator : MonoBehaviour
             newPlane.SetActive(true);
         }
 
-        Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 holePosition = new Vector3(MAP_WIDTH * TILE_SIZE/2, -PLANE_HEIGHT / 2, MAP_HEIGHT * TILE_SIZE / 2);
         Vector3 holeRotation = new Vector3(0, 0, 0);
         Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
 
-        holePosition.x -= WALL_SCALE.x;
-        holePosition.z += WALL_SCALE.x;
+        //holePosition.x -= WALL_SCALE.x;
+        //holePosition.z += WALL_SCALE.x;
 
         GameObject newHole = Instantiate(hole, holePosition, Quaternion.Euler(holeRotation)) as GameObject;
         newHole.transform.localScale = holeScale;
