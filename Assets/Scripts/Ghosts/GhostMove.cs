@@ -397,7 +397,7 @@ public class GhostMove : MonoBehaviour
         int secTx, secTz;
         do
         {
-            LevelCreator.TileInSection(sectToMove, out secTx, out secTz);
+            LevelCreator.TileInSection(tileX, tileZ, sectToMove, out secTx, out secTz);
         }
         while (!isValid(Map, secTx, secTz, baseIsValid));
 

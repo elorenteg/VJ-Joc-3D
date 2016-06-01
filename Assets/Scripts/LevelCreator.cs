@@ -353,9 +353,13 @@ public class LevelCreator : MonoBehaviour
     public static bool AreContiguousSections(int section1, int section2)
     {
         if (section1 == SECTION_TOP_LEFT && section2 == SECTION_BOTTOM_LEFT) return true;
-        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_BOTTOM_LEFT) return true;
-        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
-        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+        if (section1 == SECTION_TOP_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_TOP_LEFT) return true;
+        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_BOTTOM_RIGHT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_LEFT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_BOTTOM_RIGHT) return true;
+        if (section1 == SECTION_BOTTOM_RIGHT && section2 == SECTION_BOTTOM_LEFT) return true;
+        if (section1 == SECTION_BOTTOM_RIGHT && section2 == SECTION_TOP_RIGHT) return true;
 
         return false;
     }
@@ -414,8 +418,24 @@ public class LevelCreator : MonoBehaviour
         if (distSec1 <= distSec2) return posibleSec1;
         else return posibleSec2;
     }
+
+    public static int directionMoveToSection(int actSection, int newSection)
+    {
+        if (AreSameSection(actSection, newSection)) return Globals.NONE;
+        else if (AreContiguousSections(actSection, newSection))
+        {
+            Debug.Log("Contiguous");
+            if (actSection + 1 == newSection) return Globals.RIGHT;
+            else if (actSection + 2 == newSection) return Globals.DOWN;
+            else if (newSection + 1 == actSection) return Globals.LEFT;
+            else if (newSection + 2 == actSection) return Globals.UP;
+        }
+        else return Globals.NONE;
+
+        return Globals.NONE;
+    }
     
-    public static void TileInSection(int sectToMove, out int secTx, out int secTz)
+    public static void TileInSection(int actTx, int actTz, int sectToMove, out int secTx, out int secTz)
     {
         int minTx = -1, maxTx = -1, minTz = -1, maxTz = -1;
         switch (sectToMove)
@@ -444,6 +464,27 @@ public class LevelCreator : MonoBehaviour
                 maxTz = MAP_HEIGHT / 2;
                 break;
         }
+
+        int actSection = SectionTile(actTx, actTz);
+        int dirMove = directionMoveToSection(actSection, sectToMove);
+        switch(dirMove)
+        {
+            case Globals.NONE:
+                break;
+            case Globals.RIGHT:
+            case Globals.LEFT:
+                minTz = Mathf.Max(0, actTz - 2);
+                maxTz = Mathf.Min(MAP_HEIGHT, actTz + 2);
+                break;
+            case Globals.UP:
+            case Globals.DOWN:
+                minTx = Mathf.Max(0, actTx - 2);
+                maxTx = Mathf.Min(MAP_WIDTH, actTx + 2);
+                break;
+        }
+
+        Debug.Log("Act:" + actSection + " New:" + sectToMove + " dir:" + dirMove);
+
         secTx = Random.Range(minTx, maxTx);
         secTz = Random.Range(minTz, maxTz);
     }
