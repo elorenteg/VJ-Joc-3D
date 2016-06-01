@@ -172,13 +172,13 @@ public class GameGUI : MonoBehaviour
         currentTimeBeforeMessage = timeToShow;
 
         message1.xTitle = (int)((Screen.width / 2) * 1.0);
-        message1.yTitle = (int)((Screen.height / 2) * 0.75);
+        message1.yTitle = (int)((Screen.height / 2) * 0.85);
         message1.widthBackground = (int)((Screen.width / 2) * 0.9);
         message1.heightBackground = (int)((Screen.height / 2) * 1.1);
         message1.xBackground = Screen.width / 2 - message1.widthBackground / 2;
         message1.yBackground = Screen.height / 2 - message1.heightBackground / 2;
         message1.xMessage = (int)((Screen.width / 2) * 1.0);
-        message1.yMessage = (int)((Screen.height / 2) * 1.1);
+        message1.yMessage = (int)((Screen.height / 2) * 1.15);
 
         isMessageInQueue = true;
     }
