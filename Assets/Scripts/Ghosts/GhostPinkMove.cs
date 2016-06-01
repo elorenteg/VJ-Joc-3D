@@ -13,7 +13,7 @@ public class GhostPinkMove : GhostMove
         bool baseIsValid = false;
         int pactx, pactz;
         PacmanMove moveScript = pacmanObj.GetComponent<PacmanMove>();
-        moveScript.ActualTiles(out pactx, out pactz);
+        moveScript.ActualTile(out pactx, out pactz);
 
         // Nos quedamos con un camino de 5 tiles para ir actualizando el camino hasta el pacman cada 5
         int[] allPath = BFS.calculatePath(Map, tileX, tileZ, pactx, pactz, baseIsValid);

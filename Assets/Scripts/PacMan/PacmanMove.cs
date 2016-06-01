@@ -258,9 +258,17 @@ public class PacmanMove : MonoBehaviour
         }
     }
 
-    public void ActualTiles(out int tx, out int tz)
+    public void ActualTile(out int tx, out int tz)
     {
         LevelCreator.pacmanPositionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
+    }
+
+    public int ActualSection()
+    {
+        int tx, tz;
+        ActualTile(out tx, out tz);
+
+        return LevelCreator.SectionTile(tx, tz);
     }
 }
 
