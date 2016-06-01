@@ -36,23 +36,23 @@ public class MainMenu : MonoBehaviour
     public Texture redGhostTexture;
     public GameObject bonus;
 
-    private Vector3 CAMERA_INIT_POS = new Vector3(7.0f, 0, -20.0f);
-    private Vector3 PACMAN_INIT_POS = new Vector3(-24.0f, 6.5f, 35.0f);
-    private Vector3 GHOST_INIT_POS = new Vector3(-36.0f, -8.0f, 49.0f);
-    private Vector3 BONUS_INIT_POS = new Vector3(49.0f, -8.0f, 49.0f);
+    private Vector3 CAMERA_INIT_POS = new Vector3(7.0f, -3.0f, 10.0f);
+    private Vector3 PACMAN_INIT_POS = new Vector3(-4.0f, 6.5f, 35.0f);
+    private Vector3 GHOST_INIT_POS = new Vector3(-16.0f, -8.0f, 49.0f);
+    private Vector3 BONUS_INIT_POS = new Vector3(40.0f, -8.0f, 49.0f);
 
-    private Vector3 PACMAN_DEST_POS = new Vector3(48.0f, 6.5f, 35.0f);
-    private Vector3 GHOST_DEST_POS = new Vector3(38.0f, -8.0f, 49.0f);
+    private Vector3 PACMAN_DEST_POS = new Vector3(36.0f, 6.5f, 35.0f);
+    private Vector3 GHOST_DEST_POS = new Vector3(26.0f, -8.0f, 49.0f);
 
     private Vector3 PACMAN_SCALE = new Vector3(6.0f, 6.0f, 6.0f);
     private Vector2 PACMAN_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
     private Vector3 GHOST_SCALE = new Vector3(5.0f, 5.0f, 5.0f);
     private Vector3 BONUS_SCALE = new Vector3(7.0f, 7.0f, 7.0f);
 
-    private int PACMAN_SPEED = 15;
-    private float GHOST_SPEED_ALIVE = 15;
-    private float GHOST_SPEED_KILLEABLE = 11;
-    private float GHOST_SPEED_DEAD = 17.5f;
+    private int PACMAN_SPEED = 13;
+    private float GHOST_SPEED_ALIVE = 13;
+    private float GHOST_SPEED_KILLEABLE = 8.5f;
+    private float GHOST_SPEED_DEAD = 16.5f;
 
     private const int PACMAN_LOOKING_RIGHT = 0;
     private const int GHOST_LOOKING_RIGHT = 1;
@@ -179,7 +179,7 @@ public class MainMenu : MonoBehaviour
     {
         //Graphics.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
 
-        /*float h_logo = Screen.height / 5;
+        float h_logo = Screen.height / 5;
         float w_logo = h_logo * 3.75f;
         Graphics.DrawTexture(new Rect(Screen.width / 2 - w_logo / 2, Screen.height / 9, w_logo, h_logo), logoTexture);
 
@@ -222,7 +222,7 @@ public class MainMenu : MonoBehaviour
             case SORTR:
                 Application.Quit();
                 break;
-        }*/
+        }
     }
 
     private void movingToBonus()
