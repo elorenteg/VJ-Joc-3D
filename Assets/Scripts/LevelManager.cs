@@ -105,8 +105,6 @@ public class LevelManager : MonoBehaviour
         ghostRedVisible = true;
     }
 
-    
-
     void Update()
     {
         if (!gamePaused)
@@ -118,7 +116,7 @@ public class LevelManager : MonoBehaviour
 
         if (gamePaused && Input.GetKey(KeyCode.Return))
         {
-            switch(currentMessage)
+            switch (currentMessage)
             {
                 case END_OF_LEVEL_MSS:
                     if (remainingCoins == 0)
@@ -174,7 +172,7 @@ public class LevelManager : MonoBehaviour
                     loadLevel(3);
                 }
             }
-            
+
             GhostMove moveScript;
             if (Input.GetKeyDown(KeyCode.B))
             {
@@ -275,7 +273,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
+   
     public void coinEaten()
     {
         // TODO Se deja asi por si se quiere implementar un multiplicador
@@ -288,13 +286,13 @@ public class LevelManager : MonoBehaviour
             // Fin del juego
             if (currentLevel == TOTAL_LEVEL)
             {
-                startMessage(GameGUI.TITLE_END_OF_GAME_TEXT, GameGUI.MESSAGE_END_OF_GAME_TEXT);
+                startMessage(GameGUI.TITLE_END_OF_GAME_TEXT, GameGUI.MESSAGE_END_OF_GAME_TEXT, GameGUI.TIME_BEFORE_MESSAGE_END_OF_LEVEL);
                 currentMessage = END_OF_GAME_MSS;
             }
             else
             {
                 //TODO Imagen final de nivel
-                startMessage(GameGUI.TITLE_END_OF_LEVEL_TEXT, GameGUI.MESSAGE_END_OF_LEVEL_TEXT);
+                startMessage(GameGUI.TITLE_END_OF_LEVEL_TEXT, GameGUI.MESSAGE_END_OF_LEVEL_TEXT, GameGUI.TIME_BEFORE_MESSAGE_END_OF_LEVEL);
                 currentMessage = END_OF_LEVEL_MSS;
             }
         }
@@ -341,12 +339,12 @@ public class LevelManager : MonoBehaviour
 
         if (currentLifes == 0)
         {
-            startMessage(GameGUI.TITLE_GAME_OVER_TEXT, GameGUI.MESSAGE_GAME_OVER_TEXT);
+            startMessage(GameGUI.TITLE_GAME_OVER_TEXT, GameGUI.MESSAGE_GAME_OVER_TEXT, GameGUI.TIME_BEFORE_MESSAGE_LOST_LIFE);
             currentMessage = GAME_OVER_MSS;
         }
         else
         {
-            startMessage(GameGUI.TITLE_LOST_LIFE_TEXT, GameGUI.MESSAGE_LOST_LIFE_TEXT);
+            startMessage(GameGUI.TITLE_LOST_LIFE_TEXT, GameGUI.MESSAGE_LOST_LIFE_TEXT, GameGUI.TIME_BEFORE_MESSAGE_LOST_LIFE);
             currentMessage = LOST_LIFE_MSS;
         }
     }
@@ -366,9 +364,9 @@ public class LevelManager : MonoBehaviour
         return new Vector3(50.0f, 21.0f, 32.0f);
     }
 
-    private void startMessage(string title, string message)
+    private void startMessage(string title, string message, int timeBeforeShow)
     {
-        gameGUI.addMessageToQueue(title, message);
+        gameGUI.queueMessage(title, message, timeBeforeShow);
         gamePaused = true;
     }
 
