@@ -266,6 +266,8 @@ public class MainMenu : MonoBehaviour
     private void movePacManToPoint(Vector3 destination, int speed)
     {
         pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, destination, speed * Time.deltaTime);
+        pacmanAnimateScript.Animate(pacmanAnimateScript.stateMove());
+        pacmanAnimateScript.PlaySound(pacmanAnimateScript.stateMove());
     }
 
     private void moveGhostToPoint(Vector3 destination, int speed)
@@ -316,7 +318,6 @@ public class MainMenu : MonoBehaviour
         pacmanAnimateScript = newObject.GetComponent<PacmanAnimate>();
         pacmanAnimateScript.Start();
         pacmanAnimateScript.SetTextures(pacmanAnimateScript.stateMove());
-        pacmanAnimateScript.PlaySound(pacmanAnimateScript.stateMove());
     }
 
     private void instantiateGhosts()
