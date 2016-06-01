@@ -13,6 +13,10 @@ public class GameGUI : MonoBehaviour
     public static string TITLE_GAME_OVER_TEXT = "Game over!";
     public static string MESSAGE_GAME_OVER_TEXT = "Reiniciar joc\nPrem ENTER";
 
+    public const int TIME_BEFORE_MESSAGE_END_OF_LEVEL = 2; //2 seconds
+    public const int TIME_BEFORE_MESSAGE_LOST_LIFE = 4; //4 seconds
+    private float currentTimeBeforeMessage = 0;
+
     private static string texturesPath = "Textures\\";
 
     private static string LEVEL_LABEL = "LEVEL";
@@ -94,7 +98,14 @@ public class GameGUI : MonoBehaviour
 
         if (isMessageInQueue)
         {
-            showMessageInQueue(message1);
+            if (currentTimeBeforeMessage < 0)
+            {
+                showMessageQueued(message1);
+            }
+            else
+            {
+                updateTimeMessage();
+            }
         }
     }
 
@@ -142,7 +153,7 @@ public class GameGUI : MonoBehaviour
         GUI.Label(new Rect(Screen.width - 235, Screen.height - 50, 200, 20), currentLevel.ToString(), infoFont);
     }
 
-    private void showMessageInQueue(Message message)
+    private void showMessageQueued(Message message)
     {
         // Message bg
         GUI.DrawTexture(new Rect(message1.xBackground, message1.yBackground, message1.widthBackground, message1.heightBackground), backgroundMessageTexture);
@@ -154,10 +165,11 @@ public class GameGUI : MonoBehaviour
         GUI.Label(new Rect(message1.xMessage, message1.yMessage, 0, 0), message.messageToShow, messageFont);
     }
 
-    public void addMessageToQueue(string title, string message)
+    public void queueMessage(string title, string message, float timeToShow)
     {
         message1.titleToShow = title;
         message1.messageToShow = message;
+        currentTimeBeforeMessage = timeToShow;
 
         if (title == TITLE_END_OF_LEVEL_TEXT)
         {
@@ -181,5 +193,10 @@ public class GameGUI : MonoBehaviour
     public void removeMessage()
     {
         isMessageInQueue = false;
+    }
+
+    private void updateTimeMessage()
+    {
+        currentTimeBeforeMessage -= Time.deltaTime;
     }
 }
