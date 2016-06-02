@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class LevelManager : MonoBehaviour
 {
 
@@ -39,6 +38,7 @@ public class LevelManager : MonoBehaviour
     private const int END_OF_GAME_MSS = 2;
     private const int LOST_LIFE_MSS = 3;
     private const int GAME_OVER_MSS = 4;
+    private const int PAUSE_MSS = 5;
 
     private static int TIME_BONUS_PACMAN_KILLS_GHOST = 5; //5 seconds
     private bool bonusPacmanKillsGhost;
@@ -140,9 +140,24 @@ public class LevelManager : MonoBehaviour
             endMessage();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) == true)
+        if (gamePaused && currentMessage == PAUSE_MSS)
         {
-            Application.Quit();
+            if (Input.GetKeyDown(KeyCode.Return) == true)
+            {
+                endMessage();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) == true)
+            {
+                Application.Quit();
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) == true || Input.GetKeyDown(KeyCode.P) == true)
+            {
+                currentMessage = PAUSE_MSS;
+                startMessage(GameGUI.TITLE_PAUSE_TEXT, GameGUI.MESSAGE_PAUSE_TEXT, GameGUI.TIME_BEFORE_MESSAGE_END_OF_LEVEL);
+            }
         }
 
         if (Globals.ARE_CHEATS_ON)
@@ -193,7 +208,7 @@ public class LevelManager : MonoBehaviour
                 moveScript.SetVisible(ghostOrangeVisible);
             }
 
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.K))
             {
                 ghostPinkVisible = !ghostPinkVisible;
 

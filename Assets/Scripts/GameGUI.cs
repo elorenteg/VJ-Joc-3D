@@ -12,9 +12,12 @@ public class GameGUI : MonoBehaviour
     public static string MESSAGE_LOST_LIFE_TEXT = "Reiniciar nivell\nPrem ENTER";
     public static string TITLE_GAME_OVER_TEXT = "Game over!";
     public static string MESSAGE_GAME_OVER_TEXT = "Reiniciar joc\nPrem ENTER";
+    public static string TITLE_PAUSE_TEXT = "Joc pausat";
+    public static string MESSAGE_PAUSE_TEXT = "S'ha pausat el joc\nPrem ENTER per continuar jugant\nPrem ESC per sortir";
 
     public const int TIME_BEFORE_MESSAGE_END_OF_LEVEL = 2; //2 seconds
     public const int TIME_BEFORE_MESSAGE_LOST_LIFE = 4; //4 seconds
+    public const int TIME_BEFORE_MESSAGE_PAUSE = 0; //0 seconds
     private float currentTimeBeforeMessage = 0;
 
     private static string texturesPath = "Textures\\";
@@ -107,8 +110,9 @@ public class GameGUI : MonoBehaviour
 
         if (isMessageInQueue)
         {
-            if (currentTimeBeforeMessage < 0)
+            if (currentTimeBeforeMessage <= 0)
             {
+                Debug.Log("HOAL2");
                 showMessageQueued(message1);
             }
             else
