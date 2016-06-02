@@ -119,12 +119,9 @@ public class GhostMove : MonoBehaviour
     {
         canBeKilled = killeable;
 
-        if (canBeKilled)
-        {
-            textureState = 0;
-            animationScript.SetTextures(animationScript.stateKilleable(), textureState);
-        }
+        if (canBeKilled) textureState = 0;
 
+        UpdateTextures();
         updateState();
     }
 
@@ -132,12 +129,9 @@ public class GhostMove : MonoBehaviour
     {
         isDead = dead;
 
-        if (isDead)
-        {
-            textureState = 0;
-            animationScript.SetTextures(animationScript.stateDead(), textureState);
-        }
+        if (isDead) textureState = 0;
 
+        UpdateTextures();
         updateState();
     }
 
