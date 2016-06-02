@@ -7,9 +7,10 @@ public class GhostBlueMove : GhostMove
     private int timeChasingPacman;
     private bool haveSeenPacman;
 
-    public GhostBlueMove() {}
+    public GhostBlueMove() { }
 
-    protected override void initSpecificGhost() {
+    protected override void initSpecificGhost()
+    {
         haveSeenPacman = false;
     }
 

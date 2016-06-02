@@ -40,13 +40,13 @@ public class BFS : MonoBehaviour
         bool found = false;
         while (queue.Count != 0 && !found)
         {
-            Position p = (Position) queue.Dequeue();
+            Position p = (Position)queue.Dequeue();
             for (int i = 0; i < 4 && !found; ++i)
             {
                 int f = p.f + Y[i];
                 int c = p.c + X[i];
 
-                if (LevelCreator.isValidTile(c, f) && GhostMove.isValid(Map, c, f, baseIsValid) && !vis[f,c])
+                if (LevelCreator.isValidTile(c, f) && GhostMove.isValid(Map, c, f, baseIsValid) && !vis[f, c])
                 {
                     dist[f, c] = dist[p.f, p.c] + 1;
                     vis[f, c] = true;
@@ -100,9 +100,9 @@ public class BFS : MonoBehaviour
         if (numMoves == int.MaxValue) Debug.Log(numMoves);
         Position[] path = new Position[numMoves + 1];
         Position end = initPosition(di, dj);
-        path[path.Length-1] = end;
+        path[path.Length - 1] = end;
 
-        for (int k = path.Length-1; k > 0; --k)
+        for (int k = path.Length - 1; k > 0; --k)
         {
             Position p = path[k];
             int d = dist[p.f, p.c];
@@ -119,7 +119,7 @@ public class BFS : MonoBehaviour
                     if (d2 < d) found = true;
 
                     Position p2 = initPosition(f, c);
-                    path[k-1] = p2;
+                    path[k - 1] = p2;
                 }
             }
         }
@@ -140,7 +140,7 @@ public class BFS : MonoBehaviour
             Position destin = path[k + 1];
             directions[k] = direction(source.f, source.c, destin.f, destin.c);
         }
-        
+
         /*
         Debug.Log("DIRS ----------------- ");
         for (int i = 0; i < directions.Length; ++i)

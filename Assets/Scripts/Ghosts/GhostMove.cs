@@ -481,7 +481,7 @@ public class GhostMove : MonoBehaviour
         {
             newSection = LevelCreator.SECTION_BOTTOM_LEFT;
         }
-        
+
         return newSection;
     }
 

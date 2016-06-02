@@ -274,7 +274,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-   
+
     public void coinEaten()
     {
         // TODO Se deja asi por si se quiere implementar un multiplicador

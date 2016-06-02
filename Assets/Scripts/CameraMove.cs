@@ -14,7 +14,7 @@ public class CameraMove : MonoBehaviour
     public void SetPacman(GameObject player)
     {
         pacman = player;
-        
+
         Update();
 
         transform.rotation = Quaternion.Euler(50, 0, 0);
@@ -22,7 +22,7 @@ public class CameraMove : MonoBehaviour
 
     public void SetInitPosition(int h, int w)
     {
-        Vector3 cameraPosition = new Vector3(h/2, 100, w/2);
+        Vector3 cameraPosition = new Vector3(h / 2, 100, w / 2);
 
         transform.position = cameraPosition;
         //transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);

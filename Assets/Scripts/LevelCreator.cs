@@ -167,7 +167,7 @@ public class LevelCreator : MonoBehaviour
                 Destroy(gameObjects[j]);
             }
         }
-        
+
         if (playersCreated)
         {
             PacmanMove pacmanScript = GameObject.FindGameObjectsWithTag(Globals.TAG_PACMAN)[0].gameObject.GetComponent<PacmanMove>();
@@ -328,7 +328,7 @@ public class LevelCreator : MonoBehaviour
 
     public static int SectionTile(int tx, int tz)
     {
-        if (tx <= MAP_WIDTH/2)
+        if (tx <= MAP_WIDTH / 2)
         {
             if (tz <= MAP_HEIGHT / 2) return SECTION_BOTTOM_LEFT;
             else return SECTION_TOP_LEFT;
@@ -419,7 +419,7 @@ public class LevelCreator : MonoBehaviour
                 distSec2 = MAP_HEIGHT / 2 - tz;
                 break;
         }
-        
+
         if (distSec1 <= distSec2) return posibleSec1;
         else return posibleSec2;
     }
@@ -438,7 +438,7 @@ public class LevelCreator : MonoBehaviour
 
         return Globals.NONE;
     }
-    
+
     public static void TileInSection(int actTx, int actTz, int sectToMove, out int secTx, out int secTz)
     {
         int minTx = -1, maxTx = -1, minTz = -1, maxTz = -1;
@@ -471,7 +471,7 @@ public class LevelCreator : MonoBehaviour
 
         int actSection = SectionTile(actTx, actTz);
         int dirMove = directionMoveToSection(actSection, sectToMove);
-        switch(dirMove)
+        switch (dirMove)
         {
             case Globals.NONE:
                 break;
@@ -546,7 +546,7 @@ public class LevelCreator : MonoBehaviour
             newPlane.SetActive(true);
         }
 
-        Vector3 holePosition = new Vector3(MAP_WIDTH * TILE_SIZE/2, -PLANE_HEIGHT / 2, MAP_HEIGHT * TILE_SIZE / 2);
+        Vector3 holePosition = new Vector3(MAP_WIDTH * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_HEIGHT * TILE_SIZE / 2);
         Vector3 holeRotation = new Vector3(0, 0, 0);
         Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
 

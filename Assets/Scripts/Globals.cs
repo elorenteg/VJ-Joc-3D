@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class Globals {
+public static class Globals
+{
 
     public static bool ARE_CHEATS_ON = true;
     public static string TAG_PACMAN = "pacman";

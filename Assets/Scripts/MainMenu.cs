@@ -66,7 +66,7 @@ public class MainMenu : MonoBehaviour
     private StateGhost currentGhostState = StateGhost.Alive;
 
     private float GHOST_AUDIO_VOLUME = 0.5f;
-    
+
     private PacmanAnimate pacmanAnimateScript;
     private GhostAnimate ghostAnimateScript;
 
@@ -301,7 +301,8 @@ public class MainMenu : MonoBehaviour
         if (currentPacmanState == State.Moving_to_bonus)
         {
             ghostAnimateScript.PlaySound(ghostAnimateScript.stateMove(), GHOST_AUDIO_VOLUME);
-        } else if (currentPacmanState == State.Eating_ghost)
+        }
+        else if (currentPacmanState == State.Eating_ghost)
         {
             ghostAnimateScript.PlaySound(ghostAnimateScript.stateKilleable(), GHOST_AUDIO_VOLUME);
         }
@@ -325,7 +326,7 @@ public class MainMenu : MonoBehaviour
     private void rotateGhost(int orientation)
     {
         // esto NO se ha de hacer cada frame
-        switch(orientation)
+        switch (orientation)
         {
             case GHOST_LOOKING_LEFT:
                 // ghostAnimateScript.rotateBounds(-180);
