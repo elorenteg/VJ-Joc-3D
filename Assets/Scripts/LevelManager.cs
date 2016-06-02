@@ -337,6 +337,7 @@ public class LevelManager : MonoBehaviour
 
         if (showScoreBGhost)
         {
+            infoFont.normal.textColor = new Color32(0, 0, 255, 255);
             timeScoreBGhost -= Time.deltaTime;
             if (timeScoreBGhost <= 0) showScoreBGhost = false;
             else GUI.Label(new Rect(scoreBGhostPosition.x - 150, scoreBGhostPosition.y - 50, 300, 100),
@@ -345,6 +346,7 @@ public class LevelManager : MonoBehaviour
 
         if (showScoreOGhost)
         {
+            infoFont.normal.textColor = new Color32(255, 128, 0, 255);
             timeScoreOGhost -= Time.deltaTime;
             if (timeScoreOGhost <= 0) showScoreOGhost = false;
             else GUI.Label(new Rect(scoreOGhostPosition.x - 150, scoreOGhostPosition.y - 50, 300, 100),
@@ -353,6 +355,7 @@ public class LevelManager : MonoBehaviour
 
         if (showScorePGhost)
         {
+            infoFont.normal.textColor = new Color32(255, 51, 255, 255);
             timeScorePGhost -= Time.deltaTime;
             if (timeScorePGhost <= 0) showScorePGhost = false;
             else GUI.Label(new Rect(scorePGhostPosition.x - 150, scorePGhostPosition.y - 50, 300, 100),
@@ -361,6 +364,7 @@ public class LevelManager : MonoBehaviour
 
         if (showScoreRGhost)
         {
+            infoFont.normal.textColor = new Color32(255, 0, 0, 255);
             timeScoreRGhost -= Time.deltaTime;
             if (timeScoreRGhost <= 0) showScoreRGhost = false;
             else GUI.Label(new Rect(scoreRGhostPosition.x - 150, scoreRGhostPosition.y - 50, 300, 100),
