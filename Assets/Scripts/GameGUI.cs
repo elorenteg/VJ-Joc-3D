@@ -129,31 +129,34 @@ public class GameGUI : MonoBehaviour
         int currentLevel = levelManager.getLevel();
 
         // Score bg
-        GUI.DrawTexture(new Rect(5, 5, 160, 50), backgroundScoreTexture);
+        GUI.DrawTexture(new Rect(5, 5, 170, 55), backgroundScoreTexture);
 
         // Score label
-        GUI.Label(new Rect(-80, 50, 200, 20), SCORE_LABEL, infoFont);
+        GUI.Label(new Rect(150, 50, 0, 0), SCORE_LABEL, infoFont);
 
         // Score value
-        GUI.Label(new Rect(-55, 11, 200, 20), currentScore.ToString(), infoFont);
+        GUI.Label(new Rect(160, 14, 0, 0), currentScore.ToString(), infoFont);
 
         // High Score bg
-        GUI.DrawTexture(new Rect(Screen.width - 165, 5, 160, 50), backgroundHighScoreTexture);
+        GUI.DrawTexture(new Rect(Screen.width - 175, 5, 170, 55), backgroundHighScoreTexture);
 
         // High Score label
-        GUI.Label(new Rect(Screen.width - 205, 50, 200, 20), MAX_SCORE_LABEL, infoFont);
+        GUI.Label(new Rect(Screen.width - 5, 50, 0, 0), MAX_SCORE_LABEL, infoFont);
 
         // High Score value
-        GUI.Label(new Rect(Screen.width - 225, 11, 200, 20), currentHighScore.ToString(), infoFont);
+        GUI.Label(new Rect(Screen.width - 15, 14, 0, 0), currentHighScore.ToString(), infoFont);
 
         // Life bg with life
-        GUI.DrawTexture(new Rect(5, Screen.height - 55, 190, 50), backgroundLifesTexture[currentLifes]);
+        GUI.DrawTexture(new Rect(5, Screen.height - 67, 190, 50), backgroundLifesTexture[currentLifes]);
+
+        // Health label
+        GUI.Label(new Rect(150, Screen.height - 90, 0, 0), LIFES_LABEL, infoFont);
 
         // Level bg with level
         GUI.DrawTexture(new Rect(Screen.width - 140, Screen.height - 55, 135, 50), backgroundLevelTexture[currentLevel - 1]);
 
         // Level label
-        GUI.Label(new Rect(Screen.width - 215, Screen.height - 90, 200, 20), LEVEL_LABEL, infoFont);
+        GUI.Label(new Rect(Screen.width - 20, Screen.height - 90, 0, 0), LEVEL_LABEL, infoFont);
     }
 
     private void showMessageQueued(Message message)
