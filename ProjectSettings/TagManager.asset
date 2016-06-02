@@ -15,6 +15,7 @@ TagManager:
   - ghost_pink
   - ghost_red
   - cherry
+  - battery
   layers:
   - Default
   - TransparentFX

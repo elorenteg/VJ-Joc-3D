@@ -201,6 +201,7 @@ MonoBehaviour:
   coin: {fileID: 138094, guid: 263508c16139fd041bbba38d50640697, type: 2}
   bonus: {fileID: 104492, guid: 3bb1f0fd8f6c8d340911852df40cbd53, type: 2}
   cherry: {fileID: 150344, guid: be20ef1161fce284c820026d3e2f348d, type: 2}
+  battery: {fileID: 139464, guid: a37b4968a1399a342a9b867759e11106, type: 2}
 --- !u!4 &1160761899
 Transform:
   m_ObjectHideFlags: 0

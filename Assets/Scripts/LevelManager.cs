@@ -52,6 +52,12 @@ public class LevelManager : MonoBehaviour
     private float bonusCherryShowingRemaining;
     private float bonusCherryHidingRemaining;
 
+    private static int TIME_BONUS_SHOWING_BATTERY = 10; //5 seconds
+    private static int TIME_BONUS_HIDING_BATTERY = 1; //10 seconds
+    private bool bonusBatteryShowing;
+    private float bonusBatteryShowingRemaining;
+    private float bonusBatteryHidingRemaining;
+
     private bool showScoreBGhost;
     private bool showScoreOGhost;
     private bool showScorePGhost;
@@ -94,6 +100,9 @@ public class LevelManager : MonoBehaviour
         bonusCherryShowingRemaining = 0;
         bonusCherryHidingRemaining = 0;
         bonusCherryShowing = true;
+        bonusBatteryShowingRemaining = TIME_BONUS_SHOWING_BATTERY;
+        bonusBatteryHidingRemaining = 0;
+        bonusBatteryShowing = true;
         currentGhostScore = GHOST_SCORE;
 
         startGame();
@@ -162,6 +171,7 @@ public class LevelManager : MonoBehaviour
             updateIA();
             updateTimeBonus();
             updateTimeCherry();
+            updateTimebattery();
         }
         else
         {
@@ -336,6 +346,37 @@ public class LevelManager : MonoBehaviour
                 levelCreator.instantiateCherry();
                 bonusCherryShowingRemaining = TIME_BONUS_SHOWING_CHERRY;
                 bonusCherryShowing = true;
+            }
+        }
+    }
+
+
+    private void updateTimebattery()
+    {
+        if (bonusBatteryShowing)
+        {
+            if (bonusBatteryShowingRemaining > 0)
+            {
+                bonusBatteryShowingRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                levelCreator.destroyObject(Globals.TAG_BATTERY);
+                bonusBatteryHidingRemaining = TIME_BONUS_HIDING_BATTERY;
+                bonusBatteryShowing = false;
+            }
+        }
+        else
+        {
+            if (bonusBatteryHidingRemaining > 0)
+            {
+                bonusBatteryHidingRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                levelCreator.instantiateBattery();
+                bonusBatteryShowingRemaining = TIME_BONUS_SHOWING_BATTERY;
+                bonusBatteryShowing = true;
             }
         }
     }

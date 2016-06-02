@@ -23,6 +23,9 @@ public class PacmanMove : MonoBehaviour
     public float pullRadius = 5;
     public float pullForce = 4;
 
+    private float currentSpeed;
+    private float BATTERY_SPEED_INCREASE = 20.0f;
+
     // Use this for initialization
     void Start()
     {
@@ -47,6 +50,8 @@ public class PacmanMove : MonoBehaviour
     {
         textureState = 0;
         frameState = 0;
+
+        currentSpeed = PACMAN_SPEED;
 
         animationScript = GetComponent<PacmanAnimate>();
         animationScript.Start();
@@ -86,7 +91,7 @@ public class PacmanMove : MonoBehaviour
                     animationScript.PlaySound(animationScript.stateMove());
                     animationScript.Animate(animationScript.stateMove());
 
-                    transform.Translate(Vector3.left * PACMAN_SPEED * Time.deltaTime);
+                    transform.Translate(Vector3.left * currentSpeed * Time.deltaTime);
                 }
             }
 
@@ -100,6 +105,8 @@ public class PacmanMove : MonoBehaviour
             textureState = (textureState + 1) % 2;
 
             animationScript.SetTextures(textureState);
+
+            currentSpeed = Mathf.Max(currentSpeed - 0.5f, PACMAN_SPEED);
         }
 
         ++frameState;
@@ -250,7 +257,7 @@ public class PacmanMove : MonoBehaviour
             //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
             //attractScript.PlaySound();
 
-            Destroy(collider.gameObject);
+            //Destroy(collider.gameObject);
             levelManager.bonusEaten();
         }
         else if (collider.gameObject.tag == Globals.TAG_CHERRY)
@@ -260,6 +267,15 @@ public class PacmanMove : MonoBehaviour
 
             Destroy(collider.gameObject);
             levelManager.cherryEaten(collider.transform.position);
+        }
+        else if (collider.gameObject.tag == Globals.TAG_BATTERY)
+        {
+            Debug.Log("BATTERY");
+            ObjectAnimate attractScript = collider.gameObject.GetComponent<ObjectAnimate>();
+            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+            attractScript.PlaySound();
+
+            currentSpeed = currentSpeed + BATTERY_SPEED_INCREASE;
         }
     }
 

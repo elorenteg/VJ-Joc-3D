@@ -16,6 +16,7 @@ public static class Globals
     public static string TAG_GHOST_ORANGE = "ghost_orange";
     public static string TAG_GHOST_PINK = "ghost_pink";
     public static string TAG_GHOST_RED = "ghost_red";
+    public static string TAG_BATTERY = "battery";
 
     public static float PACMAN_OFFSET_X = 0.38f;
     public static float PACMAN_OFFSET_Z = -6.2f;
