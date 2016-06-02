@@ -95,6 +95,8 @@ public class MainMenu : MonoBehaviour
     private int textureState;
     private int frameState;
 
+    private AudioSource audioSource;
+
     void Start()
     {
         mainMenuAction = MENU;
@@ -131,6 +133,8 @@ public class MainMenu : MonoBehaviour
         instantiatePacMan();
         instantiateGhosts();
         instantiateBonus();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
