@@ -137,9 +137,6 @@ public class MainMenu : MonoBehaviour
     {
         if (mainMenuAction == MENU)
         {
-            ghostAnimateScript.StopSound();
-            pacmanAnimateScript.StopSound();
-
             if (Input.GetKeyDown(KeyCode.DownArrow) == true)
             {
                 AudioSource.PlayClipAtPoint(moveSound, transform.position);
@@ -157,6 +154,15 @@ public class MainMenu : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Return) == true)
             {
                 mainMenuAction = mainMenuSelected;
+
+                if (mainMenuAction == INSTR || mainMenuAction == CREDS)
+                {
+                    showAnimation();
+                }
+                else
+                {
+                    hideAnimation();
+                }
             }
         }
         else if (mainMenuAction == INSTR)
@@ -174,9 +180,8 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        if (mainMenuAction != MENU)
+        if (mainMenuAction == INSTR || mainMenuAction == CREDS)
         {
-
             if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Moving_to_bonus)
             {
                 currentPacmanState = State.Eating_bonus;
@@ -319,9 +324,6 @@ public class MainMenu : MonoBehaviour
     {
         movePacManToPoint(PACMAN_LOOKING_RIGHT, PACMAN_SPEED);
         moveGhostToPoint(GHOST_DEST_POS, GHOST_SPEED_ALIVE);
-
-        rotatePacMan(PACMAN_LOOKING_RIGHT); //Ambos han de mirar hacia la derecha
-        rotateGhost(GHOST_LOOKING_RIGHT);
     }
 
     private void movingToBase()
@@ -331,10 +333,6 @@ public class MainMenu : MonoBehaviour
             moveGhostToPoint(GHOST_INIT_POS, GHOST_SPEED_DEAD);
         else
             moveGhostToPoint(GHOST_INIT_POS, GHOST_SPEED_KILLEABLE);
-
-
-        rotatePacMan(PACMAN_LOOKING_LEFT); //Ambos han de mirar hacia la izquierda
-        rotateGhost(GHOST_LOOKING_LEFT);
     }
 
     private void eatingBonus()
@@ -350,7 +348,7 @@ public class MainMenu : MonoBehaviour
         if (pacman.transform.position.x - 4 < ghost.transform.position.x)
         {
             currentPacmanState = State.Moving_to_base;
-            hideGhost();
+            hideGhost(false);
         }
     }
 
@@ -359,18 +357,34 @@ public class MainMenu : MonoBehaviour
         ghostAnimateScript.SetTextures(ghostAnimateScript.stateKilleable(), textureState);
     }
 
+    private void showPacman()
+    {
+        pacman.transform.localScale = PACMAN_SCALE;
+    }
+
+    private void hidePacman(bool hide)
+    {
+        if (hide) pacman.transform.localScale = new Vector3(0, 0, 0);
+        pacmanAnimateScript.StopSound();
+        pacmanAnimateScript.PlaySound(pacmanAnimateScript.stateMove());
+    }
+
+    private void showGhost()
+    {
+        ghost.transform.localScale = GHOST_SCALE;
+    }
+
     private void showGhost(Vector3 position)
     {
         ghost.transform.position = position;
         ghost.transform.localScale = GHOST_SCALE;
     }
 
-    private void hideGhost()
+    private void hideGhost(bool hide)
     {
-        //ghost.transform.localScale = new Vector3(0, 0, 0);
+        if (hide) ghost.transform.localScale = new Vector3(0, 0, 0);
         ghostAnimateScript.StopSound();
         ghostAnimateScript.PlaySound(ghostAnimateScript.stateDead(), GHOST_AUDIO_VOLUME);
-        //ghostAnimateScript.Animate(ghostAnimateScript.stateDead());
     }
 
     private void movePacManToPoint(int direction, int speed)
@@ -380,7 +394,6 @@ public class MainMenu : MonoBehaviour
         else
             pacman.transform.Translate(-speed * Time.deltaTime, 0, 0);
 
-        //pacman.transform.position = Vector3.MoveTowards(pacman.transform.position, destination, speed * Time.deltaTime);
         pacmanAnimateScript.Animate(pacmanAnimateScript.stateMove());
         pacmanAnimateScript.PlaySound(pacmanAnimateScript.stateMove());
     }
@@ -408,26 +421,21 @@ public class MainMenu : MonoBehaviour
         bonus.transform.localScale = new Vector3(0, 0, 0);
     }
 
-    private void rotatePacMan(int orientation)
+    private void hideAnimation()
     {
-        //pacmanAnimateScript.rotateBounds(-180);
+        hidePacman(true);
+        hideGhost(true);
+        hideBonus();
     }
 
-    private void rotateGhost(int orientation)
+    private void showAnimation()
     {
-        // esto NO se ha de hacer cada frame
-        switch (orientation)
-        {
-            case GHOST_LOOKING_LEFT:
-                // ghostAnimateScript.rotateBounds(-180);
-                break;
-            case GHOST_LOOKING_RIGHT:
-                // ghostAnimateScript.rotateBounds(180);
-                break;
-        }
+        showPacman();
+        showGhost();
+        showBonus();
     }
 
-    public void UpdateTextures()
+    private void UpdateTextures()
     {
         pacmanAnimateScript.SetTextures(textureState);
 
@@ -451,7 +459,6 @@ public class MainMenu : MonoBehaviour
         pacmanAnimateScript = newObject.GetComponent<PacmanAnimate>();
         pacmanAnimateScript.Start();
         pacmanAnimateScript.SetTextures(pacmanAnimateScript.stateMove());
-        //pacmanAnimateScript.rotateBounds(180);
     }
 
     private void instantiateGhosts()
@@ -469,7 +476,6 @@ public class MainMenu : MonoBehaviour
         ghostAnimateScript = newObject.GetComponent<GhostAnimate>();
         ghostAnimateScript.Start();
         ghostAnimateScript.SetTextures(ghostAnimateScript.stateMove(), textureState);
-        //ghostAnimateScript.rotateBounds(180);
     }
 
     private void instantiateBonus()
