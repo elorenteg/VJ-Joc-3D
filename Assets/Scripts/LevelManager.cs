@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
     private const int GAME_OVER_MSS = 4;
     private const int PAUSE_MSS = 5;
 
-    private static int TIME_BONUS_PACMAN_KILLS_GHOST = 5; //5 seconds
+    private static int TIME_BONUS_PACMAN_KILLS_GHOST = 10; //5 seconds
     private bool bonusPacmanKillsGhost;
     private float bonusPacmanKillsGhostRemaining;
 
@@ -233,7 +233,7 @@ public class LevelManager : MonoBehaviour
         if (ghostBlueVisible) ghostBlueMove.onMove(levelCreator.GetMap());
         if (ghostOrangeVisible) ghostOrangeMove.onMove(levelCreator.GetMap());
         if (ghostPinkVisible) ghostPinkMove.onMove(levelCreator.GetMap());
-        //if (ghostRedVisible) ghostRedMove.onMove(levelCreator.GetMap());
+        if (ghostRedVisible) ghostRedMove.onMove(levelCreator.GetMap());
     }
 
     private void updateTimeBonus()
@@ -447,5 +447,11 @@ public class LevelManager : MonoBehaviour
     public int[][] GetMap()
     {
         return levelCreator.GetMap();
+    }
+
+    public bool lastTimeBonus()
+    {
+        if (bonusPacmanKillsGhostRemaining <= TIME_BONUS_PACMAN_KILLS_GHOST / 3) return true;
+        else return false;
     }
 }

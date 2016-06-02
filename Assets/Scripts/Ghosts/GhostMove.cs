@@ -98,7 +98,9 @@ public class GhostMove : MonoBehaviour
         if (frameState == MAX_FRAMES_STATE)
         {
             frameState = 0;
-            textureState = (textureState + 1) % 2;
+            if (!canBeKilled || (canBeKilled && levelManager.lastTimeBonus())) {
+                textureState = (textureState + 1) % 2;
+            }
 
             UpdateTextures();
         }
@@ -118,7 +120,10 @@ public class GhostMove : MonoBehaviour
         canBeKilled = killeable;
 
         if (canBeKilled)
+        {
+            textureState = 0;
             animationScript.SetTextures(animationScript.stateKilleable(), textureState);
+        }
 
         updateState();
     }
@@ -128,7 +133,10 @@ public class GhostMove : MonoBehaviour
         isDead = dead;
 
         if (isDead)
+        {
+            textureState = 0;
             animationScript.SetTextures(animationScript.stateDead(), textureState);
+        }
 
         updateState();
     }
@@ -491,29 +499,50 @@ public class GhostMove : MonoBehaviour
         PacmanMove moveScript = pacmanObj.GetComponent<PacmanMove>();
         moveScript.ActualTile(out pactx, out pactz);
 
-        bool baseIsValid = false;
-
         if ((tileX - 1 <= pactx && pactx <= tileX + 1) || (tileZ - 1 <= pactz && pactz <= tileZ + 1))
         {
-            // LEFT
-            for (int tx = tileX; tx >= pactx; --tx)
+            for (int tz = tileZ - 1; tz <= tileZ + 1; ++tz)
             {
-                if (isValid(Map, tx, tileZ, baseIsValid) && (tx - 1 <= pactx && pactx <= tx + 1) && (tileZ - 1 <= pactz && pactz <= tileZ + 1)) return true;
+                // LEFT
+                for (int tx = tileX; tx >= pactx; --tx)
+                {
+                    if (LevelCreator.isValidTile(tx, tz))
+                    {
+                        if (LevelCreator.isWall(tx, tz)) break;
+                        else if (pactx == tx && pactz == tz) return true;
+                    }
+                }
+                // RIGHT
+                for (int tx = tileX; tx <= pactx; ++tx)
+                {
+                    if (LevelCreator.isValidTile(tx, tz))
+                    {
+                        if (LevelCreator.isWall(tx, tz)) break;
+                        else if (pactx == tx && pactz == tz) return true;
+                    }
+                }
             }
-            // RIGHT
-            for (int tx = tileX; tx <= pactx; ++tx)
+            
+            for (int tx = tileX - 1; tx <= tileX + 1; ++tx)
             {
-                if (isValid(Map, tx, tileZ, baseIsValid) && (tx - 1 <= pactx && pactx <= tx + 1) && (tileZ - 1 <= pactz && pactz <= tileZ + 1)) return true;
-            }
-            // UP
-            for (int tz = tileZ; tz <= pactz; ++tz)
-            {
-                if (isValid(Map, tileX, tz, baseIsValid) && (tileX - 1 <= pactx && pactx <= tileX + 1) && (tz - 1 <= pactz && pactz <= tz + 1)) return true;
-            }
-            // DOWN
-            for (int tz = tileZ; tz >= pactz; --tz)
-            {
-                if (isValid(Map, tileX, tz, baseIsValid) && (tileX - 1 <= pactx && pactx <= tileX + 1) && (tz - 1 <= pactz && pactz <= tz + 1)) return true;
+                // DOWN
+                for (int tz = tileZ; tz >= pactz; --tz)
+                {
+                    if (LevelCreator.isValidTile(tx, tz))
+                    {
+                        if (LevelCreator.isWall(tx, tz)) break;
+                        else if (pactx == tx && pactz == tz) return true;
+                    }
+                }
+                // UP
+                for (int tz = tileZ; tz <= pactz; ++tz)
+                {
+                    if (LevelCreator.isValidTile(tx, tz))
+                    {
+                        if (LevelCreator.isWall(tx, tz)) break;
+                        else if (pactx == tx && pactz == tz) return true;
+                    }
+                }
             }
         }
 
