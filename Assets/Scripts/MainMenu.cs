@@ -5,29 +5,28 @@ using System.Collections;
 public class MainMenu : MonoBehaviour
 {
 
-    private string[] mainMenuLabels = { "play", "how to", "options", "credits", "exit" };
+    private string[] mainMenuLabels = { "play", "how to", "credits", "exit" };
     private const int MENU = -1;
     private const int JUGAR = 0;
     private const int INSTR = 1;
-    private const int OPTNS = 2;
-    private const int CREDS = 3;
-    private const int SORTR = 4;
+    private const int CREDS = 2;
+    private const int SORTR = 3;
 
-    private const string MENU_INSTRUCTIONS_TITLE = "how to play";
+    private const string MENU_INSTRUCTIONS_TITLE = "How to play";
     private const string MENU_INSTRUCTIONS = @"
-        use the keyboard arrows to move the pacman.
-        (or use the wasd if you are a fps player.)
+        Use the keyboard arrows to move the pacman.
+        (Or use the WASD if you are a fps player.)
 
-        take all the coins to win the game.
-        you can also get the hammers and kill ghosts, 
+        Take all the coins to win the game.
+        You can also get the hammers and kill ghosts, 
         just for fun.
 
-        take care because four ghosts will try to eat you,
-        if you die you will have two more lifes... but...
-        if you lose all your lives you will have to 
+        Take care because four ghosts will try to eat you,
+        if you die you will have two more lifes... But...
+        If you lose all your lives you will have to 
         start all the game again!";
 
-    private const string MENU_CREDITS_TITLE = "credits";
+    private const string MENU_CREDITS_TITLE = "Credits";
     private const string MENU_CREDITS = @"
         Ester Lorente García
         Marc Vila Gómez
@@ -164,13 +163,6 @@ public class MainMenu : MonoBehaviour
                 mainMenuAction = MENU;
             }
         }
-        else if (mainMenuAction == OPTNS)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape) == true)
-            {
-                mainMenuAction = MENU;
-            }
-        }
         else if (mainMenuAction == CREDS)
         {
             if (Input.GetKeyDown(KeyCode.Escape) == true)
@@ -248,9 +240,6 @@ public class MainMenu : MonoBehaviour
             case INSTR:
                 showInstructions();
                 break;
-            case OPTNS:
-                showOptions();
-                break;
             case CREDS:
                 showCredits();
                 break;
@@ -281,16 +270,6 @@ public class MainMenu : MonoBehaviour
         GUI.Label(new Rect(positionmessageX + widthmessage / 2 - 10.0f, Screen.height / 9.5f, 0, 0), MENU_INSTRUCTIONS, menu_descriptionFont);
     }
 
-    private void showOptions()
-    {
-        int positionmessageX = Screen.width / 4;
-        int positionmessageY = Screen.height / 4;
-        int widthmessage = Screen.width / 2;
-        int heightmessage = Screen.height / 2;
-
-        GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
-    }
-
     private void showCredits()
     {
         float widthmessage = Screen.width / 1.5f;
@@ -318,12 +297,8 @@ public class MainMenu : MonoBehaviour
 
         float w_text = 200;
         float h_text = 40;
-        float xo_text = Screen.width / 14;
-        float yo_text = Screen.height / 2;
-
-        //float w_sel = 250;
-        //float h_sel = 90;
-        float yo_sel = yo_text - h_text / 2;
+        float xo_text = Screen.width / 12.0f;
+        float yo_text = Screen.height / 2.75f;
 
         float inc_sep = (Screen.height / 2.25f) / mainMenuLabels.Length;
 
@@ -331,7 +306,6 @@ public class MainMenu : MonoBehaviour
         {
             if (mainMenuSelected == i)
             {
-                //GUI.DrawTexture(new Rect(Screen.width / 4.5f - w_sel / 2, yo_sel + i * inc_sep, w_sel, h_sel), selectTexture);
                 GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], selectFont);
             }
             else GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], normalFont);
