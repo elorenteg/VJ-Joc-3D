@@ -4,16 +4,16 @@ using System.Collections;
 public class GameGUI : MonoBehaviour
 {
 
-    public static string TITLE_END_OF_LEVEL_TEXT = "Fi de nivell";
-    public static string MESSAGE_END_OF_LEVEL_TEXT = "Nivell finalitzat\nPrem ENTER";
-    public static string TITLE_END_OF_GAME_TEXT = "Fi de joc";
-    public static string MESSAGE_END_OF_GAME_TEXT = "Reiniciar joc\nPrem ENTER";
-    public static string TITLE_LOST_LIFE_TEXT = "Oh! Vida perduda!";
-    public static string MESSAGE_LOST_LIFE_TEXT = "Reiniciar nivell\nPrem ENTER";
-    public static string TITLE_GAME_OVER_TEXT = "Game over!";
-    public static string MESSAGE_GAME_OVER_TEXT = "Reiniciar joc\nPrem ENTER";
-    public static string TITLE_PAUSE_TEXT = "Joc pausat";
-    public static string MESSAGE_PAUSE_TEXT = "S'ha pausat el joc\nPrem ENTER per jugar\nPrem ESC per sortir";
+    public static string TITLE_END_OF_LEVEL_TEXT = "Level complete!";
+    public static string MESSAGE_END_OF_LEVEL_TEXT = "Press ENTER\nto continue playing";
+    public static string TITLE_END_OF_GAME_TEXT = "Game finished";
+    public static string MESSAGE_END_OF_GAME_TEXT = "Press ENTER\nto play again";
+    public static string TITLE_LOST_LIFE_TEXT = "OH! Life lost :(";
+    public static string MESSAGE_LOST_LIFE_TEXT = "Press ENTER\nto restart the level";
+    public static string TITLE_GAME_OVER_TEXT = "GAME OVER!";
+    public static string MESSAGE_GAME_OVER_TEXT = "Press ENTER\nto play again";
+    public static string TITLE_PAUSE_TEXT = "Game paused";
+    public static string MESSAGE_PAUSE_TEXT = "Press ENTER\nto continue playing\n\nPress ESC to exit";
 
     public const int TIME_BEFORE_MESSAGE_END_OF_LEVEL = 2; //2 seconds
     public const int TIME_BEFORE_MESSAGE_LOST_LIFE = 4; //4 seconds
