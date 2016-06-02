@@ -218,7 +218,7 @@ public class LevelManager : MonoBehaviour
         if (ghostBlueVisible) ghostBlueMove.onMove(levelCreator.GetMap());
         if (ghostOrangeVisible) ghostOrangeMove.onMove(levelCreator.GetMap());
         if (ghostPinkVisible) ghostPinkMove.onMove(levelCreator.GetMap());
-        //if (ghostRedVisible) ghostRedMove.onMove(levelCreator.GetMap());
+        if (ghostRedVisible) ghostRedMove.onMove(levelCreator.GetMap());
     }
 
     private void updateTimeBonus()
