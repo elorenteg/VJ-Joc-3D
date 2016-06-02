@@ -226,7 +226,7 @@ public class PacmanMove : MonoBehaviour
             collider.gameObject.tag == Globals.TAG_GHOST_RED)
         {
             GhostMove ghostMove = collider.gameObject.GetComponent<GhostMove>();
-            if (levelManager.isBonusPacmanKillsGhost())
+            if (levelManager.isBonusPacmanKillsGhost() && !ghostMove.ghostIsDead())
             {
                 levelManager.ghostEaten(collider.gameObject.tag, ghostMove.boundsPosition());
             }
