@@ -28,6 +28,7 @@ public class LevelCreator : MonoBehaviour
     public GameObject coin;
     public GameObject bonus;
     public GameObject cherry;
+    public GameObject battery;
 
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
@@ -73,6 +74,7 @@ public class LevelCreator : MonoBehaviour
     private float COIN_Y_POS = 10.0f;
     private float BONUS_Y_POS = 13.0f;
     private float CHERRY_Y_POS = 3.5f;
+    private float BATTERY_Y_POS = 0.0f;
 
     private float FLOOR_HEIGHT = 1.0f;
     private const float WALL_HEIGHT = 7.5f;
@@ -95,9 +97,7 @@ public class LevelCreator : MonoBehaviour
     private Vector2 BONUS_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     private Vector3 CHERRY_SCALE = new Vector3(0.23f, 0.23f, 0.23f);
-
-    private int PACMAN_SPEED_MOVE = 28;
-    private int PACMAN_SPEED_TURN = 300;
+    private Vector3 BATTERY_SCALE = new Vector3(1.5f, 1.5f, 1.5f);
 
     public const int SECTION_TOP_LEFT = 0;
     public const int SECTION_TOP_RIGHT = 1;
@@ -906,14 +906,27 @@ public class LevelCreator : MonoBehaviour
     public void instantiateCherry()
     {
         GameObject element = cherry;
-        Vector3 cellPosition = generateValidRandomVector3();
+        Vector3 cellPosition = generateValidRandomVector3(CHERRY_Y_POS);
         Vector3 cellScale = CHERRY_SCALE;
 
         GameObject newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
         newObject.SetActive(true);
         newObject.transform.localScale = cellScale;
-        newObject.transform.parent = transform;
+        //newObject.transform.parent = transform;
         newObject.tag = Globals.TAG_CHERRY;
+    }
+
+    public void instantiateBattery()
+    {
+        GameObject element = battery;
+        Vector3 cellPosition = generateValidRandomVector3(BATTERY_Y_POS);
+        Vector3 cellScale = BATTERY_SCALE;
+
+        GameObject newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
+        newObject.SetActive(true);
+        newObject.transform.localScale = cellScale;
+        //newObject.transform.parent = transform;
+        newObject.tag = Globals.TAG_BATTERY;
     }
 
     public void destroyObject(string tag)
@@ -922,7 +935,7 @@ public class LevelCreator : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public Vector3 generateValidRandomVector3()
+    public Vector3 generateValidRandomVector3(float y)
     {
         Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
 
@@ -934,7 +947,7 @@ public class LevelCreator : MonoBehaviour
             tz = Random.Range(0, MAP_HEIGHT);
         } while (!isValidAndPlaceableTile9x9(tx - 1, tz));
 
-        position = TileToPosition(tx, tz, CHERRY_Y_POS);
+        position = TileToPosition(tx, tz, y);
 
         return position;
     }
