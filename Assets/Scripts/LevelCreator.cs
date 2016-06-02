@@ -32,7 +32,7 @@ public class LevelCreator : MonoBehaviour
     public GameObject turtle;
     public GameObject machine;
 
-    private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
+    private static string levelPath = ".\\Assets\\Maps\\";
 
     public static int TILE_SIZE = 2;
     private static int[][] Map;
