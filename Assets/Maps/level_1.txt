@@ -21,8 +21,8 @@ Hhhh  .  Hhhh  .  HhhhHhhhHhhhHhhh  .  Hhhh  .  Hhhh
 hhhh     hhhh                          hhhh     hhhh
 Hhhh  .  Hhhh  .         Xx         .  Hhhh  .  Hhhh
 vv                                                vv
-vv    .        .  vvhhhh    hhhhvv  .        .    vv
-vv   K   .   .    vvHhhh####Hhhhvv    .   .   .   vv
+vv             .  vvhhhh    hhhhvv  .             vv
+vv   K   .   .    vvHhhh####Hhhhvv    .   .    K  vv
 Vv             .  vv############vv  .             Vv
 vv   .            Vv############Vv            .   vv
 vv        hhhh .  vv##B######O##vv  . hhhh        vv
