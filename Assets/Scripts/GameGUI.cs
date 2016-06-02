@@ -13,7 +13,7 @@ public class GameGUI : MonoBehaviour
     public static string TITLE_GAME_OVER_TEXT = "Game over!";
     public static string MESSAGE_GAME_OVER_TEXT = "Reiniciar joc\nPrem ENTER";
     public static string TITLE_PAUSE_TEXT = "Joc pausat";
-    public static string MESSAGE_PAUSE_TEXT = "S'ha pausat el joc\nPrem ENTER per continuar jugant\nPrem ESC per sortir";
+    public static string MESSAGE_PAUSE_TEXT = "S'ha pausat el joc\nPrem ENTER per jugar\nPrem ESC per sortir";
 
     public const int TIME_BEFORE_MESSAGE_END_OF_LEVEL = 2; //2 seconds
     public const int TIME_BEFORE_MESSAGE_LOST_LIFE = 4; //4 seconds
@@ -175,13 +175,13 @@ public class GameGUI : MonoBehaviour
         currentTimeBeforeMessage = timeToShow;
 
         message1.xTitle = (int)((Screen.width / 2) * 1.0);
-        message1.yTitle = (int)((Screen.height / 2) * 0.85);
-        message1.widthBackground = (int)((Screen.width / 2) * 0.9);
+        message1.yTitle = (int)((Screen.height / 2) * 0.8);
+        message1.widthBackground = (int)((Screen.width / 2) * 1.2);
         message1.heightBackground = (int)((Screen.height / 2) * 1.1);
         message1.xBackground = Screen.width / 2 - message1.widthBackground / 2;
         message1.yBackground = Screen.height / 2 - message1.heightBackground / 2;
         message1.xMessage = (int)((Screen.width / 2) * 1.0);
-        message1.yMessage = (int)((Screen.height / 2) * 1.15);
+        message1.yMessage = (int)((Screen.height / 2) * 1.1);
 
         isMessageInQueue = true;
     }
