@@ -98,7 +98,9 @@ public class GhostMove : MonoBehaviour
         if (frameState == MAX_FRAMES_STATE)
         {
             frameState = 0;
-            textureState = (textureState + 1) % 2;
+            if (!canBeKilled || (canBeKilled && levelManager.lastTimeBonus())) {
+                textureState = (textureState + 1) % 2;
+            }
 
             UpdateTextures();
         }
@@ -118,7 +120,10 @@ public class GhostMove : MonoBehaviour
         canBeKilled = killeable;
 
         if (canBeKilled)
+        {
+            textureState = 0;
             animationScript.SetTextures(animationScript.stateKilleable(), textureState);
+        }
 
         updateState();
     }
@@ -128,7 +133,10 @@ public class GhostMove : MonoBehaviour
         isDead = dead;
 
         if (isDead)
+        {
+            textureState = 0;
             animationScript.SetTextures(animationScript.stateDead(), textureState);
+        }
 
         updateState();
     }
