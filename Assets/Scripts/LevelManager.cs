@@ -156,7 +156,7 @@ public class LevelManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) == true || Input.GetKeyDown(KeyCode.P) == true)
             {
                 currentMessage = PAUSE_MSS;
-                startMessage(GameGUI.TITLE_PAUSE_TEXT, GameGUI.MESSAGE_PAUSE_TEXT, GameGUI.TIME_BEFORE_MESSAGE_END_OF_LEVEL);
+                startMessage(GameGUI.TITLE_PAUSE_TEXT, GameGUI.MESSAGE_PAUSE_TEXT, GameGUI.TIME_BEFORE_MESSAGE_PAUSE);
             }
         }
 

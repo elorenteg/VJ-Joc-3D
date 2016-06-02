@@ -112,7 +112,6 @@ public class GameGUI : MonoBehaviour
         {
             if (currentTimeBeforeMessage <= 0)
             {
-                Debug.Log("HOAL2");
                 showMessageQueued(message1);
             }
             else
