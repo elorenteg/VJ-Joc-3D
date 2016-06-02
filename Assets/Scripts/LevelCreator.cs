@@ -29,6 +29,7 @@ public class LevelCreator : MonoBehaviour
     public GameObject bonus;
     public GameObject cherry;
     public GameObject battery;
+    public GameObject machine;
 
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
@@ -68,6 +69,12 @@ public class LevelCreator : MonoBehaviour
     private static char DOOR_RES = 'x';
     public static int BASE_C = 30;
     private int doorTx, doorTz, doorTx2, doorTz2;
+
+    private static char MACHINE = 'K';
+    public static int MACHINE_C = 40;
+    private float MACHINE_Y_POS = 0.0f;
+    private Vector3 MACHINE_SCALE = new Vector3(11.0f, 8.0f, 11.0f);
+    private Vector2 MACHINE_TEXTURE_SCALE = new Vector2(0.5f, 1.0f);
 
     private float GHOST_Y_POS = 6.0f;
     public static float PACMAN_Y_POS = 18.0f;
@@ -273,6 +280,10 @@ public class LevelCreator : MonoBehaviour
                                 MapLine[j] = CELL_EMPTY;
                                 doorTx2 = j;
                                 doorTz2 = i;
+                            }
+                            else if (line[j] == MACHINE)
+                            {
+                                MapLine[j] = MACHINE_C;
                             }
                             else
                             {
@@ -689,6 +700,14 @@ public class LevelCreator : MonoBehaviour
                             cellPosition.y -= 4 * TILE_SIZE;
                         }
                         else if (cell == WALL_RES || cell == BASE_C) continue;
+                        else if (cell == MACHINE_C)
+                        {
+                            element = machine;
+                            cellPosition = new Vector3(tx * TILE_SIZE, MACHINE_Y_POS, tz * TILE_SIZE);
+                            cellScale = MACHINE_SCALE;
+                            texture = null;
+                            textureScale = MACHINE_TEXTURE_SCALE;
+                        }
                         else
                         {
                             Debug.LogError("Creating a non empty cell");
@@ -814,6 +833,13 @@ public class LevelCreator : MonoBehaviour
                             newObject.transform.localScale = cellScale;
 
                             newObject.SetActive(true);
+
+                            if (cell == MACHINE_C)
+                            {
+                                MachineShoot shooterScript = newObject.GetComponent<MachineShoot>();
+                                if (tx <= MAP_WIDTH / 2) shooterScript.SetShootDirection(Globals.RIGHT);
+                                else shooterScript.SetShootDirection(Globals.LEFT);
+                            }
                         }
                     }
                 }

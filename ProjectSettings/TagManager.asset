@@ -16,6 +16,7 @@ TagManager:
   - ghost_red
   - cherry
   - battery
+  - gum
   layers:
   - Default
   - TransparentFX
