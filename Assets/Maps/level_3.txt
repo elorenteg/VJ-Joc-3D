@@ -9,16 +9,16 @@ vv  .  .         vv   vv          hhhhhhhhhhhhhhhhvv
 vv            .  vv . vv  .       HhhhHhhhHhhhHhhhvv
 Vv  .  .         Vv   Vv      .  .  .  .  .  .  . Vv
 vv         vv .  vv .  .  . vv                    vv
-vv  .  .   vv    vv         vv.  .  .  .  .  .  . vv
-vv         vv    vv         vv                    vv
-Vv  .  .   Vv .  Vv .  .  . Vv.  .  .  .  .  .  . Vv
+vv  .  .   vv    vv         vv.  .  .  .  .     . vv
+vv         vv    vv         vv               K    vv
+Vv  .  .   Vv .  Vv .  .  . Vv.  .  .  .  .     . Vv
 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh    hhhhhhhh
 HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhh    HhhhHhhh
   vv .  . hhhh.  .  .  .  .  .  .  .hhhh  .  .  vv  
   vv      Hhhh                      Hhhh        vv  
   vv .  .  .  .  .  .  .  .  .  .  .  .  .  .  .vv  
   Vv                                            Vv   
-hhhh .  .  .  .  .  . hhhh   .  .  .  .  .  .   hhhh
+hhhh .  .  .  .  .  . hhhh   K  .  .  .  .  .   hhhh
 Hhhh                  Hhhh                      Hhhh
 vv   .  . hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhvv
 vv        HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhvv
@@ -35,14 +35,14 @@ Vv        HhhhHhhh        Hhhh    Hhhh    Hhhh    Vv
 vv        hhhh            hhhh    hhhhhhhhhhhh    vv
 vv        Hhhh            Hhhh    HhhhHhhhHhhh    vv
 vv                                                vv
-Vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  K  Vv
+Vv    K .  .  .  .  .  .  .  .  .  .  .  .  .  K  Vv
 vv                                                vv
 vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  vv
 vv      hhhhhhhhhhhhhhhh    hhhhhhhhhhhhhhhh      vv
 Vv      HhhhHhhhHhhhHhhh    HhhhHhhhHhhhHhhh      Vv
 vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  vv
 vv                       +                        vv
-vv   K  .  .  .  .  .  . Xx  .  .  .  .  .  .  .  vv
+vv      .  .  .  .  .  . Xx  .  .  .  .  .  .  .  vv
 Vv                                                Vv
 hhhh              vvhhhh    hhhhvv              hhhh
 Hhhh    hhhh      vvHhhh####Hhhhvv     hhhh     Hhhh
@@ -50,7 +50,7 @@ hhhh    Hhhh      vv############vv     Hhhh     hhhh
 Hhhh              Vv##B######O##Vv              Hhhh
 vv  .  .  .  .  . vv############vv  .  .  .  .  . vv
 vv                vv############vv                vv
-vv  .  .  .  .  . vv############vv  .  .  .  .  K vv
+vv  K  .  .  .  . vv############vv  .  .  .  .  K vv
 Vv                Vv##P######R##Vv                Vv
 vv  .  .  . vv  . vv############vv  .  vv .  .  . vv
 vv          vv    vv############vv     vv         vv

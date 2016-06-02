@@ -281,7 +281,7 @@ public class MainMenu : MonoBehaviour
 
         GUI.Label(new Rect(positiontitleX + widthtitle / 2, positiontitleY, 0, 0), MENU_INSTRUCTIONS_TITLE, menu_titleFont);
 
-        GUI.Label(new Rect(positionmessageX + widthmessage / 2 - 10.0f, Screen.height / 9.5f, 0, 0), MENU_INSTRUCTIONS, menu_descriptionFont);
+        GUI.Label(new Rect(positionmessageX + widthmessage / 2 - 10.0f, Screen.height / 6.5f, 0, 0), MENU_INSTRUCTIONS, menu_descriptionFont);
     }
 
     private void showCredits()
