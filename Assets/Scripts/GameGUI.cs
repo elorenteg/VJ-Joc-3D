@@ -77,7 +77,7 @@ public class GameGUI : MonoBehaviour
         messageFont.font = (Font)Resources.Load("Fonts/lilliput steps", typeof(Font));
         messageFont.fontSize = 26;
         messageFont.alignment = TextAnchor.MiddleCenter;
-        messageFont.normal.textColor = Color.cyan;
+        messageFont.normal.textColor = Color.green;
 
         backgroundScoreTexture = Resources.Load(texturesPath + "score_texture") as Texture2D;
         backgroundHighScoreTexture = Resources.Load(texturesPath + "highscore_texture") as Texture2D;
@@ -129,16 +129,16 @@ public class GameGUI : MonoBehaviour
         int currentLevel = levelManager.getLevel();
 
         // Score bg
-        GUI.DrawTexture(new Rect(5, 5, 170, 55), backgroundScoreTexture);
+        GUI.DrawTexture(new Rect(5, 5, 200, 55), backgroundScoreTexture);
 
         // Score label
         GUI.Label(new Rect(150, 50, 0, 0), SCORE_LABEL, infoFont);
 
         // Score value
-        GUI.Label(new Rect(160, 14, 0, 0), currentScore.ToString(), infoFont);
+        GUI.Label(new Rect(190, 14, 0, 0), currentScore.ToString(), infoFont);
 
         // High Score bg
-        GUI.DrawTexture(new Rect(Screen.width - 175, 5, 170, 55), backgroundHighScoreTexture);
+        GUI.DrawTexture(new Rect(Screen.width - 205, 5, 200, 55), backgroundHighScoreTexture);
 
         // High Score label
         GUI.Label(new Rect(Screen.width - 5, 50, 0, 0), MAX_SCORE_LABEL, infoFont);
