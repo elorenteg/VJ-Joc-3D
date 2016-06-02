@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ObjectAttraction : MonoBehaviour
+public class ObjectAnimate : MonoBehaviour
 {
+    private AudioSource audioSource;
+    public AudioClip clipsource;
+    public float audioVolume;
 
     private bool stateAttract = false;
     private Vector3 postPos;
@@ -13,7 +16,7 @@ public class ObjectAttraction : MonoBehaviour
 
     public void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetStateAttraction(Vector3 fiPos, float y)
@@ -39,5 +42,17 @@ public class ObjectAttraction : MonoBehaviour
             //Debug.Log(frame);
             if (frame == 4) Destroy(this.gameObject);
         }
+    }
+
+    public void PlaySound()
+    {
+        audioSource.volume = audioVolume;
+        audioSource.clip = clipsource;
+        audioSource.Play();
+    }
+
+    public void StopSound()
+    {
+        audioSource.Stop();
     }
 }

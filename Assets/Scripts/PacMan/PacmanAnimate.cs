@@ -8,6 +8,7 @@ public class PacmanAnimate : MonoBehaviour
 
     private AudioSource audioSource;
     public AudioClip moveSound;
+    public AudioClip deadSound;
 
     private Animation pacmanAnimation;
 
@@ -77,15 +78,16 @@ public class PacmanAnimate : MonoBehaviour
         switch (sound)
         {
             case MOVE:
+                audioSource.clip = moveSound;
                 break;
             case DIE:
+                audioSource.clip = deadSound;
                 break;
         }
 
         if (!audioSource.isPlaying)
         {
             audioSource.volume = 0.1f;
-            audioSource.clip = moveSound;
             audioSource.Play();
         }
     }

@@ -227,6 +227,7 @@ public class PacmanMove : MonoBehaviour
             {
                 if (!ghostMove.ghostIsDead())
                 {
+                    animationScript.StopSound();
                     animationScript.PlaySound(animationScript.stateDead());
                     animationScript.Animate(animationScript.stateDead());
 
@@ -238,14 +239,16 @@ public class PacmanMove : MonoBehaviour
         {
             collider.enabled = false;
 
-            ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
+            ObjectAnimate attractScript = collider.gameObject.GetComponent<ObjectAnimate>();
             attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+            attractScript.PlaySound();
             levelManager.coinEaten();
         }
         else if (collider.gameObject.tag == Globals.TAG_BONUS)
         {
-            ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
-            //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+            ObjectAnimate attractScript = collider.gameObject.GetComponent<ObjectAnimate>();
+            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+            attractScript.PlaySound();
 
             Destroy(collider.gameObject);
             levelManager.bonusEaten();
