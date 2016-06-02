@@ -297,5 +297,14 @@ public class PacmanMove : MonoBehaviour
 
         return LevelCreator.SectionTile(tx, tz);
     }
+
+    public void GumCollision()
+    {
+        animationScript.StopSound();
+        animationScript.PlaySound(animationScript.stateDead());
+        animationScript.Animate(animationScript.stateDead());
+
+        levelManager.decreaseLifes();
+    }
 }
 

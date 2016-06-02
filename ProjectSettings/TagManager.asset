@@ -17,6 +17,7 @@ TagManager:
   - cherry
   - battery
   - turtle
+  - gum
   layers:
   - Default
   - TransparentFX
