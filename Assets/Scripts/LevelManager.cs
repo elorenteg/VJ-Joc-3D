@@ -74,12 +74,18 @@ public class LevelManager : MonoBehaviour
     private float timeScoreRGhost;
     private float timeScoreCherry;
 
+    private AudioSource audioSource;
+    public AudioClip bonusStateAudio;
+    public float bonusStateVolume;
+
     void Start()
     {
         GameObject gameManager = GameObject.Find("GameManager");
         levelCreator = gameManager.GetComponent<LevelCreator>();
         dataManager = gameManager.GetComponent<DataManager>();
         gameGUI = gameManager.GetComponent<GameGUI>();
+
+        audioSource = GetComponent<AudioSource>();
 
         currentHighScore = dataManager.readMaxScore();
         gamePaused = false;
@@ -282,6 +288,13 @@ public class LevelManager : MonoBehaviour
                 }
 
                 bonusPacmanKillsGhostRemaining -= Time.deltaTime;
+                
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.volume = bonusStateVolume;
+                    audioSource.clip = bonusStateAudio;
+                    audioSource.Play();
+                }
             }
             else
             {

@@ -668,6 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSound: {fileID: 8300000, guid: 1612810d6681ceb4083f56015ed85d61, type: 3}
+  deadSound: {fileID: 8300000, guid: 80d03902a85fb1249a48516c95afa9f1, type: 3}
   bodyNormalTex: {fileID: 2800000, guid: ad231fe5130849f4ea16ba0c94d6c4c3, type: 3}
   eyesNormalTex: {fileID: 2800000, guid: be26627c58159ec4dae515377c5d864f, type: 3}
 --- !u!135 &13576872
