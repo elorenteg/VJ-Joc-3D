@@ -25,6 +25,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 435016}
+  - 114: {fileID: 11441914}
+  - 135: {fileID: 13575050}
   m_Layer: 0
   m_Name: Cherry
   m_TagString: Untagged
@@ -216,6 +218,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149682}
   m_Mesh: {fileID: 4300004, guid: 90d418b6414ce70419d3ffad5e8f14a3, type: 3}
+--- !u!114 &11441914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd2751ba04fa6f4d95311883557d0ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 15
+--- !u!135 &13575050
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 14.17204
+  m_Center: {x: -1.6, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

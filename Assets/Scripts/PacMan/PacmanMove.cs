@@ -250,6 +250,14 @@ public class PacmanMove : MonoBehaviour
             Destroy(collider.gameObject);
             levelManager.bonusEaten();
         }
+        else if (collider.gameObject.tag == Globals.TAG_CHERRY)
+        {
+            ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
+            //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+
+            Destroy(collider.gameObject);
+            levelManager.cherryEaten(collider.transform.position);
+        }
     }
 
     public void ActualTile(out int tx, out int tz)

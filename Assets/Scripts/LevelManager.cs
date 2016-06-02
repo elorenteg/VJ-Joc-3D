@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     private static int INITIAL_LIFES = 3;
     private static int COIN_SCORE = 1;
     private static int GHOST_SCORE = 100;
+    private static int CHERRY_SCORE = 20;
     private int currentGhostScore;
 
     private int currentLevel;
@@ -45,8 +46,8 @@ public class LevelManager : MonoBehaviour
     private bool bonusPacmanKillsGhost;
     private float bonusPacmanKillsGhostRemaining;
 
-    private static int TIME_BONUS_SHOWING_CHERRY = 5; //5 seconds
-    private static int TIME_BONUS_HIDING_CHERRY = 10; //10 seconds
+    private static int TIME_BONUS_SHOWING_CHERRY = 6; //6 seconds
+    private static int TIME_BONUS_HIDING_CHERRY = 3; //3 seconds
     private bool bonusCherryShowing;
     private float bonusCherryShowingRemaining;
     private float bonusCherryHidingRemaining;
@@ -60,7 +61,6 @@ public class LevelManager : MonoBehaviour
     private int scoreOGhost;
     private int scoreRGhost;
     private int scorePGhost;
-    private int scoreCherry;
     private Vector3 scoreBGhostPosition;
     private Vector3 scoreOGhostPosition;
     private Vector3 scorePGhostPosition;
@@ -85,7 +85,7 @@ public class LevelManager : MonoBehaviour
         gamePaused = false;
         bonusPacmanKillsGhost = false;
         bonusPacmanKillsGhostRemaining = 0.0f;
-        bonusCherryShowingRemaining = TIME_BONUS_SHOWING_CHERRY;
+        bonusCherryShowingRemaining = 0;
         bonusCherryHidingRemaining = 0;
         bonusCherryShowing = true;
         currentGhostScore = GHOST_SCORE;
@@ -370,6 +370,15 @@ public class LevelManager : MonoBehaviour
             else GUI.Label(new Rect(scoreRGhostPosition.x - 150, scoreRGhostPosition.y - 50, 300, 100),
                 scoreRGhost.ToString(), infoFont);
         }
+
+        if (showScoreCherry)
+        {
+            infoFont.normal.textColor = new Color32(255, 64, 0, 255);
+            timeScoreCherry -= Time.deltaTime;
+            if (timeScoreCherry <= 0) showScoreCherry = false;
+            else GUI.Label(new Rect(scoreCherryPosition.x - 150, scoreCherryPosition.y - 50, 300, 100),
+                CHERRY_SCORE.ToString(), infoFont);
+        }
     }
 
     public void coinEaten()
@@ -547,6 +556,13 @@ public class LevelManager : MonoBehaviour
             scoreRGhostPosition.y = Screen.height - scoreRGhostPosition.y;
         }
         currentGhostScore += GHOST_SCORE;
+    }
+    public void cherryEaten(Vector3 pos)
+    {
+        showScoreCherry = true;
+        timeScoreCherry = MAX_TIME_SHOW_SCORE;
+        scoreCherryPosition = Camera.main.WorldToScreenPoint(pos);
+        scoreCherryPosition.y = Screen.height - scoreBGhostPosition.y;
     }
 
     public int[][] GetMap()
