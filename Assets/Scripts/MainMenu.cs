@@ -13,10 +13,26 @@ public class MainMenu : MonoBehaviour
     private const int CREDS = 3;
     private const int SORTR = 4;
 
+    private const string MENU_INSTRUCTIONS_TITLE = "how to play";
+    private const string MENU_INSTRUCTIONS = @"
+        use the keyboard arrows to move the pacman.
+        (or use the wasd if you are a fps player.)
+
+        take all the coins to win the game.
+        you can also get the hammers and kill ghosts, 
+        just for fun.
+
+        take care because four ghosts will try to eat you,
+        if you die you will have two more lifes... but...
+        if you lose all your lives you will have to 
+        start all the game again!";
+
     private int mainMenuSelected;
     private int mainMenuAction;
 
     private GUIStyle normalFont;
+    private GUIStyle menu_titleFont;
+    private GUIStyle menu_descriptionFont;
     private GUIStyle selectFont;
 
     public Texture2D selectTexture;
@@ -33,9 +49,8 @@ public class MainMenu : MonoBehaviour
     public Texture pinkGhostTexture;
     public Texture redGhostTexture;
     public GameObject bonus;
-    public GameObject background;
 
-    private Vector3 CAMERA_INIT_POS = new Vector3(7.0f, -3.0f, 10.0f);
+    private Vector3 CAMERA_INIT_POS = new Vector3(7.0f, 7.0f, 10.0f);
     private Vector3 PACMAN_INIT_POS = new Vector3(-4.0f, 6.5f, 35.0f);
     private Vector3 GHOST_INIT_POS = new Vector3(-16.0f, -8.0f, 49.0f);
     private Vector3 BONUS_INIT_POS = new Vector3(40.0f, -8.0f, 49.0f);
@@ -86,6 +101,18 @@ public class MainMenu : MonoBehaviour
         normalFont.normal.textColor = new Color32(119, 136, 153, 255);
         normalFont.font = (Font)Resources.Load("Fonts/namco", typeof(Font));
 
+        menu_titleFont = new GUIStyle();
+        menu_titleFont.fontSize = 40;
+        menu_titleFont.alignment = TextAnchor.UpperCenter;
+        menu_titleFont.normal.textColor = new Color32(255, 255, 255, 255);
+        menu_titleFont.font = (Font)Resources.Load("Fonts/karma future", typeof(Font));
+
+        menu_descriptionFont = new GUIStyle();
+        menu_descriptionFont.fontSize = 20;
+        menu_descriptionFont.alignment = TextAnchor.UpperCenter;
+        menu_descriptionFont.normal.textColor = new Color32(255, 255, 255, 255);
+        menu_descriptionFont.font = (Font)Resources.Load("Fonts/failed attempt", typeof(Font));
+
         selectFont = new GUIStyle();
         selectFont.fontSize = 28;
         selectFont.alignment = TextAnchor.UpperCenter;
@@ -93,7 +120,6 @@ public class MainMenu : MonoBehaviour
         selectFont.font = (Font)Resources.Load("Fonts/namco", typeof(Font));
 
         SetInitCameraPosition(CAMERA_INIT_POS);
-        SetBackgroundPosition();
 
         instantiatePacMan();
         instantiateGhosts();
@@ -145,56 +171,60 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Moving_to_bonus)
+        if (mainMenuAction != MENU)
         {
-            currentPacmanState = State.Eating_bonus;
-            ghostAnimateScript.rotateBounds(-180);
-            pacmanAnimateScript.rotateBounds(-180);
-        }
-        else if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Eating_bonus)
-        {
-            currentPacmanState = State.Eating_ghost;
-            ghostAnimateScript.rotateBounds(-180);
-            pacmanAnimateScript.rotateBounds(-180);
-        }
-        else if (ghost.transform.position == GHOST_INIT_POS)
-        {
-            currentPacmanState = State.Moving_to_bonus;
-            showBonus();
-            showGhost(GHOST_INIT_POS);
-            ghostAnimateScript.rotateBounds(180);
-            pacmanAnimateScript.rotateBounds(180);
-        }
 
-        if (currentPacmanState == State.Moving_to_bonus)
-        {
-            currentGhostState = StateGhost.Alive;
-            movingToBonus();
-        }
-        else if (currentPacmanState == State.Eating_bonus)
-        {
-            currentGhostState = StateGhost.Killeable;
-            eatingBonus();
-        }
-        else if (currentPacmanState == State.Eating_ghost)
-        {
-            eatingGhost();
-            movingToBase();
-        }
-        else if (currentPacmanState == State.Moving_to_base)
-        {
-            currentGhostState = StateGhost.Dead;
-            movingToBase();
-        }
+            if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Moving_to_bonus)
+            {
+                currentPacmanState = State.Eating_bonus;
+                ghostAnimateScript.rotateBounds(-180);
+                pacmanAnimateScript.rotateBounds(-180);
+            }
+            else if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Eating_bonus)
+            {
+                currentPacmanState = State.Eating_ghost;
+                ghostAnimateScript.rotateBounds(-180);
+                pacmanAnimateScript.rotateBounds(-180);
+            }
+            else if (ghost.transform.position == GHOST_INIT_POS)
+            {
+                currentPacmanState = State.Moving_to_bonus;
+                showBonus();
+                showGhost(GHOST_INIT_POS);
+                ghostAnimateScript.rotateBounds(180);
+                pacmanAnimateScript.rotateBounds(180);
+            }
 
-        if (frameState == MAX_FRAMES_STATE)
-        {
-            frameState = 0;
-            textureState = (textureState + 1) % 2;
+            if (currentPacmanState == State.Moving_to_bonus)
+            {
+                currentGhostState = StateGhost.Alive;
+                movingToBonus();
+            }
+            else if (currentPacmanState == State.Eating_bonus)
+            {
+                currentGhostState = StateGhost.Killeable;
+                eatingBonus();
+            }
+            else if (currentPacmanState == State.Eating_ghost)
+            {
+                eatingGhost();
+                movingToBase();
+            }
+            else if (currentPacmanState == State.Moving_to_base)
+            {
+                currentGhostState = StateGhost.Dead;
+                movingToBase();
+            }
 
-            UpdateTextures();
+            if (frameState == MAX_FRAMES_STATE)
+            {
+                frameState = 0;
+                textureState = (textureState + 1) % 2;
+
+                UpdateTextures();
+            }
+            ++frameState;
         }
-        ++frameState;
     }
 
     void OnGUI()
@@ -224,12 +254,23 @@ public class MainMenu : MonoBehaviour
 
     private void showInstructions()
     {
-        int positionmessageX = Screen.width / 4;
-        int positionmessageY = Screen.height / 4;
-        int widthmessage = Screen.width / 2;
-        int heightmessage = Screen.height / 2;
+        float widthmessage = Screen.width / 1.5f;
+        float heightmessage = Screen.height / 1.5f;
+        float positionmessageX = Screen.width / 2f - widthmessage / 2;
+        float positionmessageY = Screen.height / 20;
+
+        float widthtitle = Screen.width / 3.8f;
+        float heighttitle = Screen.height / 8.5f;
+        float positiontitleX = positionmessageX + widthmessage / 2 - widthtitle / 2;
+        float positiontitleY = positionmessageY - 20f;
 
         GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
+
+        GUI.DrawTexture(new Rect(positiontitleX, positiontitleY, widthtitle, heighttitle), messageTexture);
+
+        GUI.Label(new Rect(positiontitleX + widthtitle / 2, positiontitleY, 0, 0), MENU_INSTRUCTIONS_TITLE, menu_titleFont);
+
+        GUI.Label(new Rect(positionmessageX + widthmessage / 2 - 10.0f, Screen.height / 9.5f, 0, 0), MENU_INSTRUCTIONS, menu_descriptionFont);
     }
 
     private void showOptions()
@@ -446,19 +487,6 @@ public class MainMenu : MonoBehaviour
         newObject.transform.localScale = scale;
 
         bonus = newObject;
-    }
-
-    private void SetBackgroundPosition()
-    {
-        float pos = (m_camera.nearClipPlane + 20f);
-
-        background.transform.position = m_camera.transform.position + m_camera.transform.forward * pos;
-        background.transform.LookAt(m_camera.transform);
-        background.transform.Rotate(0.0f, 0.0f, 0.0f);
-
-        float h = (Mathf.Tan(m_camera.fieldOfView * Mathf.Deg2Rad * 0.5f) * pos * 2f) / 10.0f;
-
-        background.transform.localScale = new Vector3(h * m_camera.aspect, 1.0f, h);
     }
 
     private void SetInitCameraPosition(Vector3 position)
