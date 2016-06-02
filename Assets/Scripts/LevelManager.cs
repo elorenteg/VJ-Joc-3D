@@ -7,7 +7,6 @@ public class LevelManager : MonoBehaviour
     private static int TOTAL_LEVEL = 3;
     private static int INITIAL_LEVEL = 1;
     private static int INITIAL_LIFES = 3;
-    //private static int[] COINS_NUMBER = { 30, 4 };
     private static int COIN_SCORE = 1;
 
     private int currentLevel;
@@ -97,7 +96,6 @@ public class LevelManager : MonoBehaviour
         GameObject gameObjectPacman = GameObject.FindGameObjectWithTag(Globals.TAG_PACMAN);
         pacmanMove = gameObjectPacman.GetComponent<PacmanMove>();
 
-        //remainingCoins = COINS_NUMBER[level - 1];
         remainingCoins = LevelCreator.NUM_COINS_LEVEL;
 
         ghostBlueVisible = true;
@@ -110,53 +108,52 @@ public class LevelManager : MonoBehaviour
     {
         if (!gamePaused)
         {
+            if ((Input.GetKeyDown(KeyCode.Escape) == true || Input.GetKeyDown(KeyCode.P) == true) && currentMessage == NO_MSS)
+            {
+                currentMessage = PAUSE_MSS;
+                startMessage(GameGUI.TITLE_PAUSE_TEXT, GameGUI.MESSAGE_PAUSE_TEXT, GameGUI.TIME_BEFORE_MESSAGE_PAUSE);
+            }
+
             updateIA();
             updateTimeBonus();
             updateTimeCherry();
         }
-
-        if (gamePaused && Input.GetKey(KeyCode.Return))
-        {
-            switch (currentMessage)
-            {
-                case END_OF_LEVEL_MSS:
-                    if (remainingCoins == 0)
-                    {
-                        ++currentLevel;
-                        loadLevel(currentLevel);
-                    }
-                    break;
-                case END_OF_GAME_MSS:
-                    startGame();
-                    break;
-                case LOST_LIFE_MSS:
-                    loadLevel(currentLevel);
-                    break;
-                case GAME_OVER_MSS:
-                    startGame();
-                    break;
-            }
-
-            endMessage();
-        }
-
-        if (gamePaused && currentMessage == PAUSE_MSS)
-        {
-            if (Input.GetKeyDown(KeyCode.Return) == true)
-            {
-                endMessage();
-            }
-            else if (Input.GetKeyDown(KeyCode.Escape) == true)
-            {
-                Application.Quit();
-            }
-        }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Escape) == true || Input.GetKeyDown(KeyCode.P) == true)
+            if (Input.GetKey(KeyCode.Return))
             {
-                currentMessage = PAUSE_MSS;
-                startMessage(GameGUI.TITLE_PAUSE_TEXT, GameGUI.MESSAGE_PAUSE_TEXT, GameGUI.TIME_BEFORE_MESSAGE_PAUSE);
+                switch (currentMessage)
+                {
+                    case END_OF_LEVEL_MSS:
+                        if (remainingCoins == 0)
+                        {
+                            ++currentLevel;
+                            loadLevel(currentLevel);
+                        }
+                        break;
+                    case END_OF_GAME_MSS:
+                        startGame();
+                        break;
+                    case LOST_LIFE_MSS:
+                        loadLevel(currentLevel);
+                        break;
+                    case GAME_OVER_MSS:
+                        startGame();
+                        break;
+                }
+
+                endMessage();
+            }
+            if (currentMessage == PAUSE_MSS)
+            {
+                if (Input.GetKeyDown(KeyCode.Return) == true)
+                {
+                    endMessage();
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape) == true)
+                {
+                    Application.Quit();
+                }
             }
         }
 
