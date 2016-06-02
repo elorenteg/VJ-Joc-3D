@@ -70,7 +70,6 @@ public class PacmanMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update");
         int keyPressed = -1;
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) keyPressed = Globals.LEFT;
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) keyPressed = Globals.RIGHT;
@@ -258,9 +257,17 @@ public class PacmanMove : MonoBehaviour
         }
     }
 
-    public void ActualTiles(out int tx, out int tz)
+    public void ActualTile(out int tx, out int tz)
     {
         LevelCreator.pacmanPositionToTile(skinnedMeshRenderer.bounds.center, out tx, out tz);
+    }
+
+    public int ActualSection()
+    {
+        int tx, tz;
+        ActualTile(out tx, out tz);
+
+        return LevelCreator.SectionTile(tx, tz);
     }
 }
 

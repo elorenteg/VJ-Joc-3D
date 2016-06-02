@@ -99,12 +99,19 @@ public class LevelCreator : MonoBehaviour
     private int PACMAN_SPEED_MOVE = 28;
     private int PACMAN_SPEED_TURN = 300;
 
+    public const int SECTION_TOP_LEFT = 0;
+    public const int SECTION_TOP_RIGHT = 1;
+    public const int SECTION_BOTTOM_LEFT = 2;
+    public const int SECTION_BOTTOM_RIGHT = 3;
+
     private List<GameObject> walls;
     private List<bool> animUpWall;
     private List<bool> animFrontWall;
     private List<bool> animBackWall;
 
     private bool playersCreated;
+
+    public static int NUM_COINS_LEVEL;
 
     private int timeState;
     private int MAX_TIME_STATE;
@@ -135,6 +142,8 @@ public class LevelCreator : MonoBehaviour
     {
         DeleteAll();
 
+        NUM_COINS_LEVEL = 0;
+
         string fileLocation = levelPath + "level_" + level + ".txt";
         readMap(fileLocation);
         placeFloor();
@@ -158,7 +167,7 @@ public class LevelCreator : MonoBehaviour
                 Destroy(gameObjects[j]);
             }
         }
-        
+
         if (playersCreated)
         {
             PacmanMove pacmanScript = GameObject.FindGameObjectsWithTag(Globals.TAG_PACMAN)[0].gameObject.GetComponent<PacmanMove>();
@@ -236,6 +245,7 @@ public class LevelCreator : MonoBehaviour
                             else if (line[j] == COIN)
                             {
                                 MapLine[j] = COIN_C;
+                                ++NUM_COINS_LEVEL;
                             }
                             else if (line[j] == BONUS)
                             {
@@ -316,6 +326,171 @@ public class LevelCreator : MonoBehaviour
         tz = (int)pos.z / TILE_SIZE;
     }
 
+    public static int SectionTile(int tx, int tz)
+    {
+        if (tx <= MAP_WIDTH / 2)
+        {
+            if (tz <= MAP_HEIGHT / 2) return SECTION_BOTTOM_LEFT;
+            else return SECTION_TOP_LEFT;
+        }
+        else
+        {
+            if (tz <= MAP_HEIGHT / 2) return SECTION_BOTTOM_RIGHT;
+            else return SECTION_TOP_RIGHT;
+        }
+    }
+
+    public static bool AreSameSection(int section1, int section2)
+    {
+        return section1 == section2;
+    }
+
+    public static bool AreDiagonalSections(int section1, int section2)
+    {
+        if (section1 == SECTION_TOP_LEFT && section2 == SECTION_BOTTOM_RIGHT) return true;
+        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_BOTTOM_LEFT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+
+        return false;
+    }
+
+    public static bool AreContiguousSections(int section1, int section2)
+    {
+        if (section1 == SECTION_TOP_LEFT && section2 == SECTION_BOTTOM_LEFT) return true;
+        if (section1 == SECTION_TOP_LEFT && section2 == SECTION_TOP_RIGHT) return true;
+        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_TOP_LEFT) return true;
+        if (section1 == SECTION_TOP_RIGHT && section2 == SECTION_BOTTOM_RIGHT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_TOP_LEFT) return true;
+        if (section1 == SECTION_BOTTOM_LEFT && section2 == SECTION_BOTTOM_RIGHT) return true;
+        if (section1 == SECTION_BOTTOM_RIGHT && section2 == SECTION_BOTTOM_LEFT) return true;
+        if (section1 == SECTION_BOTTOM_RIGHT && section2 == SECTION_TOP_RIGHT) return true;
+
+        return false;
+    }
+
+    public static int OppositeSection(int section)
+    {
+        switch (section)
+        {
+            case SECTION_TOP_LEFT:
+                return SECTION_BOTTOM_RIGHT;
+            case SECTION_TOP_RIGHT:
+                return SECTION_BOTTOM_LEFT;
+            case SECTION_BOTTOM_LEFT:
+                return SECTION_TOP_RIGHT;
+            case SECTION_BOTTOM_RIGHT:
+                return SECTION_TOP_LEFT;
+        }
+
+        return -1;
+    }
+
+    public static int ContiguousSection(int section, int tx, int tz)
+    {
+        int posibleSec1 = -1;
+        int posibleSec2 = -1;
+        int distSec1 = -1;
+        int distSec2 = -1;
+        switch (section)
+        {
+            case SECTION_TOP_LEFT:
+                posibleSec1 = SECTION_TOP_RIGHT;
+                posibleSec2 = SECTION_BOTTOM_LEFT;
+                distSec1 = tx - MAP_WIDTH / 2;
+                distSec2 = tz - MAP_HEIGHT / 2;
+                break;
+            case SECTION_TOP_RIGHT:
+                posibleSec1 = SECTION_TOP_LEFT;
+                posibleSec2 = SECTION_BOTTOM_RIGHT;
+                distSec1 = MAP_WIDTH / 2 - tx;
+                distSec2 = tz - MAP_HEIGHT / 2;
+                break;
+            case SECTION_BOTTOM_LEFT:
+                posibleSec1 = SECTION_BOTTOM_RIGHT;
+                posibleSec2 = SECTION_TOP_LEFT;
+                distSec1 = tx - MAP_WIDTH / 2;
+                distSec2 = MAP_HEIGHT / 2 - tz;
+                break;
+            case SECTION_BOTTOM_RIGHT:
+                posibleSec1 = SECTION_BOTTOM_LEFT;
+                posibleSec2 = SECTION_TOP_RIGHT;
+                distSec1 = MAP_WIDTH / 2 - tx;
+                distSec2 = MAP_HEIGHT / 2 - tz;
+                break;
+        }
+
+        if (distSec1 <= distSec2) return posibleSec1;
+        else return posibleSec2;
+    }
+
+    public static int directionMoveToSection(int actSection, int newSection)
+    {
+        if (AreSameSection(actSection, newSection)) return Globals.NONE;
+        else if (AreContiguousSections(actSection, newSection))
+        {
+            if (actSection + 1 == newSection) return Globals.RIGHT;
+            else if (actSection + 2 == newSection) return Globals.DOWN;
+            else if (newSection + 1 == actSection) return Globals.LEFT;
+            else if (newSection + 2 == actSection) return Globals.UP;
+        }
+        else return Globals.NONE;
+
+        return Globals.NONE;
+    }
+
+    public static void TileInSection(int actTx, int actTz, int sectToMove, out int secTx, out int secTz)
+    {
+        int minTx = -1, maxTx = -1, minTz = -1, maxTz = -1;
+        switch (sectToMove)
+        {
+            case SECTION_TOP_LEFT:
+            case SECTION_BOTTOM_LEFT:
+                minTx = 0;
+                maxTx = MAP_WIDTH / 2;
+                break;
+            case SECTION_TOP_RIGHT:
+            case SECTION_BOTTOM_RIGHT:
+                minTx = MAP_WIDTH / 2;
+                maxTx = MAP_WIDTH;
+                break;
+        }
+        switch (sectToMove)
+        {
+            case SECTION_TOP_LEFT:
+            case SECTION_TOP_RIGHT:
+                minTz = MAP_HEIGHT / 2;
+                maxTz = MAP_HEIGHT;
+                break;
+            case SECTION_BOTTOM_LEFT:
+            case SECTION_BOTTOM_RIGHT:
+                minTz = 0;
+                maxTz = MAP_HEIGHT / 2;
+                break;
+        }
+
+        int actSection = SectionTile(actTx, actTz);
+        int dirMove = directionMoveToSection(actSection, sectToMove);
+        switch (dirMove)
+        {
+            case Globals.NONE:
+                break;
+            case Globals.RIGHT:
+            case Globals.LEFT:
+                minTz = Mathf.Max(0, actTz - 2);
+                maxTz = Mathf.Min(MAP_HEIGHT, actTz + 2);
+                break;
+            case Globals.UP:
+            case Globals.DOWN:
+                minTx = Mathf.Max(0, actTx - 2);
+                maxTx = Mathf.Min(MAP_WIDTH, actTx + 2);
+                break;
+        }
+
+        secTx = Random.Range(minTx, maxTx);
+        secTz = Random.Range(minTz, maxTz);
+    }
+
     public static Vector3 TileToPosition(int tx, int tz, float y)
     {
         Vector3 pos;
@@ -331,12 +506,9 @@ public class LevelCreator : MonoBehaviour
 
     private void placeFloor()
     {
-        Vector3 floorPosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, 0.0f, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 floorPosition = new Vector3(MAP_WIDTH * TILE_SIZE / 2, 0.0f, MAP_HEIGHT * TILE_SIZE / 2);
         Vector3 floorRotation = new Vector3(0.0f, 0.0f, 0.0f);
         Vector3 floorScale = new Vector3(MAP_WIDTH * TILE_SIZE, FLOOR_HEIGHT, MAP_HEIGHT * TILE_SIZE);
-
-        floorPosition.x -= WALL_SCALE.x;
-        floorPosition.z += WALL_SCALE.x;
 
         GameObject newFloor = Instantiate(floor, floorPosition, Quaternion.Euler(floorRotation)) as GameObject;
         newFloor.transform.localScale = floorScale;
@@ -374,12 +546,12 @@ public class LevelCreator : MonoBehaviour
             newPlane.SetActive(true);
         }
 
-        Vector3 holePosition = new Vector3(MAP_HEIGHT * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_WIDTH * TILE_SIZE / 2);
+        Vector3 holePosition = new Vector3(MAP_WIDTH * TILE_SIZE / 2, -PLANE_HEIGHT / 2, MAP_HEIGHT * TILE_SIZE / 2);
         Vector3 holeRotation = new Vector3(0, 0, 0);
         Vector3 holeScale = new Vector3(MAP_WIDTH * TILE_SIZE + PLANE_SEP * 2, 0, MAP_HEIGHT * TILE_SIZE + PLANE_SEP * 2);
 
-        holePosition.x -= WALL_SCALE.x;
-        holePosition.z += WALL_SCALE.x;
+        //holePosition.x -= WALL_SCALE.x;
+        //holePosition.z += WALL_SCALE.x;
 
         GameObject newHole = Instantiate(hole, holePosition, Quaternion.Euler(holeRotation)) as GameObject;
         newHole.transform.localScale = holeScale;

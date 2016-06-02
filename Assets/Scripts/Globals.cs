@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class Globals {
+public static class Globals
+{
 
     public static bool ARE_CHEATS_ON = true;
     public static string TAG_PACMAN = "pacman";
@@ -21,8 +22,9 @@ public static class Globals {
 
     private const float ERROR = 1.5f;
 
-    public const int LEFT = 0;
-    public const int RIGHT = 1;
-    public const int UP = 2;
-    public const int DOWN = 3;
+    public const int NONE = 0;
+    public const int LEFT = 1;
+    public const int RIGHT = 2;
+    public const int UP = 3;
+    public const int DOWN = 4;
 }

@@ -59,7 +59,8 @@ public class PacmanAnimate : MonoBehaviour
         skinnedMeshRenderer.materials[EYES].mainTextureOffset = offset;
     }
 
-    public void Animate(int anim) {
+    public void Animate(int anim)
+    {
         switch (anim)
         {
             case MOVE:
@@ -71,8 +72,9 @@ public class PacmanAnimate : MonoBehaviour
         }
     }
 
-    public void PlaySound(int sound) {
-        switch(sound)
+    public void PlaySound(int sound)
+    {
+        switch (sound)
         {
             case MOVE:
                 break;
