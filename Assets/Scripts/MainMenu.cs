@@ -27,6 +27,14 @@ public class MainMenu : MonoBehaviour
         if you lose all your lives you will have to 
         start all the game again!";
 
+    private const string MENU_CREDITS_TITLE = "credits";
+    private const string MENU_CREDITS = @"
+        Ester Lorente García
+        Marc Vila Gómez
+
+        Pràctica 3D Videojocs
+        FIB - UPC - 2015 - 2016";
+
     private int mainMenuSelected;
     private int mainMenuAction;
 
@@ -285,12 +293,23 @@ public class MainMenu : MonoBehaviour
 
     private void showCredits()
     {
-        int positionmessageX = Screen.width / 4;
-        int positionmessageY = Screen.height / 4;
-        int widthmessage = Screen.width / 2;
-        int heightmessage = Screen.height / 2;
+        float widthmessage = Screen.width / 1.5f;
+        float heightmessage = Screen.height / 1.5f;
+        float positionmessageX = Screen.width / 2f - widthmessage / 2;
+        float positionmessageY = Screen.height / 20;
+
+        float widthtitle = Screen.width / 3.8f;
+        float heighttitle = Screen.height / 8.5f;
+        float positiontitleX = positionmessageX + widthmessage / 2 - widthtitle / 2;
+        float positiontitleY = positionmessageY - 20f;
 
         GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
+
+        GUI.DrawTexture(new Rect(positiontitleX, positiontitleY, widthtitle, heighttitle), messageTexture);
+
+        GUI.Label(new Rect(positiontitleX + widthtitle / 2, positiontitleY, 0, 0), MENU_CREDITS_TITLE, menu_titleFont);
+
+        GUI.Label(new Rect(positionmessageX + widthmessage / 2 - 10.0f, positionmessageY + heightmessage / 2.0f - 80.0f, 0, 0), MENU_CREDITS, menu_descriptionFont);
     }
 
     private void showMenu()

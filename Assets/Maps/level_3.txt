@@ -1,60 +1,60 @@
 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhh
-vv                       vv                       vv
-vv                       vv                       vv
-vv  *                    vv                    *  vv
-Vv                       Vv                       Vv
-vv                                                vv
-vv     hhhh    hhhh              hhhh    hhhh     vv
-vv     Hhhh    Hhhh              Hhhh    Hhhh     vv
+vv  .  .   vv .  .  . vv  . vv  .  .  .  .  .  *  vv
+vv  .  .   vv         vv    vv                    vv
+vv  .  .   vv .  .  . vv  . vv  .  .  .  .  .  .  vv
+Vv  .  .   Vv         Vv    Vv                    Vv
+vv            .  vv . vv  .        .  .  .  .  .  vv
+vv  .  .         vv   vv          hhhhhhhhhhhhhhhhvv
+vv            .  vv . vv  .       HhhhHhhhHhhhHhhhvv
+Vv  .  .         Vv   Vv      .  .  .  .  .  .  . Vv
+vv         vv .  vv .  .  . vv                    vv
+vv  .  .   vv    vv         vv.  .  .  .  .  .  . vv
+vv         vv    vv         vv                    vv
+Vv  .  .   Vv .  Vv .  .  . Vv.  .  .  .  .  .  . Vv
+hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh    hhhhhhhh
+HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhh    HhhhHhhh
+  vv .  . hhhh.  .  .  .  .  .  .  .hhhh  .  .  vv  
+  vv      Hhhh                      Hhhh        vv  
+  vv .  .  .  .  .  .  .  .  .  .  .  .  .  .  .vv  
+  Vv                                            Vv   
+hhhh .  .  .  .  .  . hhhh   .  .  .  .  .  .   hhhh
+Hhhh                  Hhhh                      Hhhh
+vv   .  . hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhvv
+vv        HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhvv
+vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  vv
 Vv                                                Vv
-vv                       vv                       vv
-vv                       vv                       vv
-vv                       vv                       vv
-Vv                       Vv                       Vv
-hhhh     hhhh     hhhhhhhhhhhhhhhh     hhhh     hhhh
-Hhhh     Hhhh     HhhhHhhhHhhhHhhh     Hhhh     Hhhh
-  vv     hhhh                          hhhh     vv  
-  vv     hhhh                          hhhh     vv  
-  vv     hhhh                          hhhh     vv  
-  Vv     Hhhh                          Hhhh     Vv   
-hhhh     hhhh                          hhhh     hhhh
-Hhhh     Hhhh            Xx            Hhhh     Hhhh
+vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  vv
 vv                                                vv
-vv                vvhhhh    hhhhvv                vv
-vv                vvHhhh####Hhhhvv                vv
-Vv                vv############vv                Vv
-vv                Vv############Vv                vv
-vv        hhhh    vv##B######O##vv    hhhh        vv
-vv        Hhhh    vv############vv    Hhhh        vv
-Vv        hhhh    vv############vv    hhhh        Vv
-vv        Hhhh    Vv##P######R##Vv    Hhhh        vv
-vv        hhhh    vv############vv    hhhh        vv
-vv        Hhhh    vv############vv    Hhhh        vv
-Vv        hhhh    vvhhhhhhhhhhhhvv    hhhh        Vv
-vv        Hhhh    VvHhhhHhhhHhhhVv    Hhhh        vv
-vv        hhhh                        hhhh        vv
-vv        Hhhh                        Hhhh        vv
-Vv    hhhhhhhh                        hhhhhhhh    Vv
-vv    HhhhHhhh                        HhhhHhhh    vv
-vv                  hhhh    hhhh                  vv
-vv                  Hhhh    Hhhh                  vv
-Vv                  hhhhhhhhhhhh                  Vv
-vv                  HhhhHhhhHhhh                  vv
-vv                 hhhh      hhhh                 vv
-vv                 Hhhh      Hhhh                 vv
-Vv                        +                       Vv
-hhhh                                            hhhh
-Hhhh                      .                     Hhhh
-hhhh                                            hhhh
-Hhhh                                            Hhhh
+vv        hhhhhhhhhhhh    hhhh    hhhhhhhhhhhh    vv
+Vv        HhhhHhhhHhhh    Hhhh    HhhhHhhhHhhh    Vv
+vv        hhhh            hhhh    hhhh    hhhh    vv
+vv        Hhhh            Hhhh    HhhhhhhhHhhh    vv
+vv        hhhhhhhh        hhhh    hhhhHhhhhhhh    vv
+Vv        HhhhHhhh        Hhhh    Hhhh    Hhhh    Vv
+vv        hhhh            hhhh    hhhhhhhhhhhh    vv
+vv        Hhhh            Hhhh    HhhhHhhhHhhh    vv
 vv                                                vv
+Vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Vv
 vv                                                vv
-vv         hhhhhhhhhhhh      hhhhhhhhhhhh         vv
-Vv         HhhhHhhhHhhh      HhhhHhhhHhhh         Vv
-vv                                                vv
-vv                                                vv
-vv  *                                          *  vv
+vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  vv
+vv      hhhhhhhhhhhhhhhh    hhhhhhhhhhhhhhhh      vv
+Vv      HhhhHhhhHhhhHhhh    HhhhHhhhHhhhHhhh      Vv
+vv   .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  vv
+vv                       +                        vv
+vv   .  .  .  .  .  .  . Xx  .  .  .  .  .  .  .  vv
 Vv                                                Vv
+hhhh              vvhhhh    hhhhvv              hhhh
+Hhhh    hhhh      vvHhhh####Hhhhvv     hhhh     Hhhh
+hhhh    Hhhh      vv############vv     Hhhh     hhhh
+Hhhh              Vv##B######O##Vv              Hhhh
+vv  .  .  .  .  . vv############vv  .  .  .  .  . vv
+vv                vv############vv                vv
+vv  .  .  .  .  . vv############vv  .  .  .  .  . vv
+Vv                Vv##P######R##Vv                Vv
+vv  .  .  . vv  . vv############vv  .  vv .  .  . vv
+vv          vv    vv############vv     vv         vv
+vv  *  .  . vv  . vvhhhhhhhhhhhhvv  .  vv .  . *  vv
+Vv          Vv    VvHhhhHhhhHhhhVv     Vv         Vv
 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhh
