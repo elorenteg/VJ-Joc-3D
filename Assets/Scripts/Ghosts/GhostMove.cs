@@ -548,4 +548,9 @@ public class GhostMove : MonoBehaviour
 
         return false;
     }
+
+    public Vector3 boundsPosition()
+    {
+        return animationScript.boundsPosition();
+    }
 }

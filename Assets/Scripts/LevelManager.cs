@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     private static int INITIAL_LIFES = 3;
     //private static int[] COINS_NUMBER = { 30, 4 };
     private static int COIN_SCORE = 1;
+    private static int GHOST_SCORE = 100;
+    private int currentGhostScore;
 
     private int currentLevel;
     private int currentScore;
@@ -50,6 +52,29 @@ public class LevelManager : MonoBehaviour
     private float bonusCherryShowingRemaining;
     private float bonusCherryHidingRemaining;
 
+    private bool showScoreBGhost;
+    private bool showScoreOGhost;
+    private bool showScorePGhost;
+    private bool showScoreRGhost;
+    private bool showScoreCherry;
+    private int scoreBGhost;
+    private int scoreOGhost;
+    private int scoreRGhost;
+    private int scorePGhost;
+    private int scoreCherry;
+    private Vector3 scoreBGhostPosition;
+    private Vector3 scoreOGhostPosition;
+    private Vector3 scorePGhostPosition;
+    private Vector3 scoreRGhostPosition;
+    private Vector3 scoreCherryPosition;
+
+    private int MAX_TIME_SHOW_SCORE = 5;
+    private float timeScoreBGhost;
+    private float timeScoreOGhost;
+    private float timeScorePGhost;
+    private float timeScoreRGhost;
+    private float timeScoreCherry;
+
     void Start()
     {
         GameObject gameManager = GameObject.Find("GameManager");
@@ -64,6 +89,7 @@ public class LevelManager : MonoBehaviour
         bonusCherryShowingRemaining = TIME_BONUS_SHOWING_CHERRY;
         bonusCherryHidingRemaining = 0;
         bonusCherryShowing = true;
+        currentGhostScore = GHOST_SCORE;
 
         startGame();
     }
@@ -104,6 +130,17 @@ public class LevelManager : MonoBehaviour
         ghostOrangeVisible = true;
         ghostPinkVisible = true;
         ghostRedVisible = true;
+
+        showScoreBGhost = false;
+        showScoreOGhost = false;
+        showScorePGhost = false;
+        showScoreRGhost = false;
+        showScoreCherry = false;
+    }
+
+    void OnGUI()
+    {
+        updateShowScores();
     }
 
     void Update()
@@ -256,6 +293,7 @@ public class LevelManager : MonoBehaviour
                 ghostPinkMove.SetKilleable(false);
                 ghostRedMove.SetKilleable(false);
                 bonusPacmanKillsGhost = false;
+                currentGhostScore = GHOST_SCORE;
             }
         }
     }
@@ -287,6 +325,47 @@ public class LevelManager : MonoBehaviour
                 bonusCherryShowingRemaining = TIME_BONUS_SHOWING_CHERRY;
                 bonusCherryShowing = true;
             }
+        }
+    }
+
+    public void updateShowScores()
+    {
+        GUIStyle infoFont = new GUIStyle();
+        infoFont.font = (Font)Resources.Load("Fonts/lilliput steps", typeof(Font));
+        infoFont.fontSize = 28;
+        infoFont.alignment = TextAnchor.UpperRight;
+        infoFont.normal.textColor = Color.green;
+
+        if (showScoreBGhost)
+        {
+            timeScoreBGhost -= Time.deltaTime;
+            if (timeScoreBGhost <= 0) showScoreBGhost = false;
+            else GUI.Label(new Rect(scoreBGhostPosition.x - 150, scoreBGhostPosition.y - 50, 300, 100), 
+                scoreBGhost.ToString(), infoFont);
+        }
+
+        if (showScoreOGhost)
+        {
+            timeScoreOGhost -= Time.deltaTime;
+            if (timeScoreOGhost <= 0) showScoreOGhost = false;
+            else GUI.Label(new Rect(scoreOGhostPosition.x - 150, scoreOGhostPosition.y - 50, 300, 100),
+                scoreOGhost.ToString(), infoFont);
+        }
+
+        if (showScorePGhost)
+        {
+            timeScorePGhost -= Time.deltaTime;
+            if (timeScorePGhost <= 0) showScorePGhost = false;
+            else GUI.Label(new Rect(scorePGhostPosition.x - 150, scorePGhostPosition.y - 50, 300, 100),
+                scorePGhost.ToString(), infoFont);
+        }
+
+        if (showScoreRGhost)
+        {
+            timeScoreRGhost -= Time.deltaTime;
+            if (timeScoreRGhost <= 0) showScoreRGhost = false;
+            else GUI.Label(new Rect(scoreRGhostPosition.x - 150, scoreRGhostPosition.y - 50, 300, 100),
+                scoreRGhost.ToString(), infoFont);
         }
     }
 
@@ -424,24 +503,47 @@ public class LevelManager : MonoBehaviour
         ghostRedMove.SetKilleable(true);
     }
 
-    public void ghostEaten(string ghostTag)
+    public void ghostEaten(string ghostTag, Vector3 pos)
     {
+        increaseScore(currentGhostScore);
+
         if (ghostTag == Globals.TAG_GHOST_BLUE)
         {
             ghostBlueMove.SetDead(true);
+            showScoreBGhost = true;
+            timeScoreBGhost = MAX_TIME_SHOW_SCORE;
+            scoreBGhost = currentGhostScore;
+            scoreBGhostPosition = Camera.main.WorldToScreenPoint(pos);
+            scoreBGhostPosition.y = Screen.height - scoreBGhostPosition.y;
         }
         else if (ghostTag == Globals.TAG_GHOST_ORANGE)
         {
             ghostOrangeMove.SetDead(true);
+            showScoreOGhost = true;
+            timeScoreOGhost = MAX_TIME_SHOW_SCORE;
+            scoreOGhost = currentGhostScore;
+            scoreOGhostPosition = Camera.main.WorldToScreenPoint(pos);
+            scoreOGhostPosition.y = Screen.height - scoreOGhostPosition.y;
         }
         else if (ghostTag == Globals.TAG_GHOST_PINK)
         {
             ghostPinkMove.SetDead(true);
+            showScorePGhost = true;
+            timeScorePGhost = MAX_TIME_SHOW_SCORE;
+            scorePGhost = currentGhostScore;
+            scorePGhostPosition = Camera.main.WorldToScreenPoint(pos);
+            scorePGhostPosition.y = Screen.height - scorePGhostPosition.y;
         }
         else if (ghostTag == Globals.TAG_GHOST_RED)
         {
             ghostRedMove.SetDead(true);
+            showScoreRGhost = true;
+            timeScoreRGhost = MAX_TIME_SHOW_SCORE;
+            scoreRGhost = currentGhostScore;
+            scoreRGhostPosition = Camera.main.WorldToScreenPoint(pos);
+            scoreRGhostPosition.y = Screen.height - scoreRGhostPosition.y;
         }
+        currentGhostScore += GHOST_SCORE;
     }
 
     public int[][] GetMap()

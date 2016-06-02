@@ -98,6 +98,7 @@ public class BFS : MonoBehaviour
         int numMoves = dist[di, dj];
         if (numMoves <= 0) Debug.Log(numMoves);
         if (numMoves == int.MaxValue) Debug.Log(numMoves);
+
         Position[] path = new Position[numMoves + 1];
         Position end = initPosition(di, dj);
         path[path.Length - 1] = end;

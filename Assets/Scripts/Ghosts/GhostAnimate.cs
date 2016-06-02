@@ -196,4 +196,9 @@ public class GhostAnimate : MonoBehaviour
     {
         transform.RotateAround(skinnedMeshRenderer.bounds.center, new Vector3(0, -1, 0), angle);
     }
+
+    public Vector3 boundsPosition()
+    {
+        return skinnedMeshRenderer.bounds.center;
+    }
 }

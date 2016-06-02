@@ -218,15 +218,13 @@ public class PacmanMove : MonoBehaviour
             collider.gameObject.tag == Globals.TAG_GHOST_PINK ||
             collider.gameObject.tag == Globals.TAG_GHOST_RED)
         {
-            Debug.Log("GHOST Collision! - " + collider.gameObject.tag);
-
+            GhostMove ghostMove = collider.gameObject.GetComponent<GhostMove>();
             if (levelManager.isBonusPacmanKillsGhost())
             {
-                levelManager.ghostEaten(collider.gameObject.tag);
+                levelManager.ghostEaten(collider.gameObject.tag, ghostMove.boundsPosition());
             }
             else
             {
-                GhostMove ghostMove = collider.gameObject.GetComponent<GhostMove>();
                 if (!ghostMove.ghostIsDead())
                 {
                     animationScript.PlaySound(animationScript.stateDead());
@@ -238,7 +236,6 @@ public class PacmanMove : MonoBehaviour
         }
         if (collider.gameObject.tag == Globals.TAG_COIN)
         {
-            Debug.Log("COIN Eaten!");
             collider.enabled = false;
 
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
@@ -247,8 +244,6 @@ public class PacmanMove : MonoBehaviour
         }
         else if (collider.gameObject.tag == Globals.TAG_BONUS)
         {
-            Debug.Log("BONUS Eaten!");
-
             ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
             //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
 
