@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     private static int INITIAL_LIFES = 3;
     private static int COIN_SCORE = 1;
     private static int GHOST_SCORE = 100;
+    private static int CHERRY_SCORE = 20;
     private int currentGhostScore;
 
     private int currentLevel;
@@ -45,8 +46,8 @@ public class LevelManager : MonoBehaviour
     private bool bonusPacmanKillsGhost;
     private float bonusPacmanKillsGhostRemaining;
 
-    private static int TIME_BONUS_SHOWING_CHERRY = 5; //5 seconds
-    private static int TIME_BONUS_HIDING_CHERRY = 10; //10 seconds
+    private static int TIME_BONUS_SHOWING_CHERRY = 6; //6 seconds
+    private static int TIME_BONUS_HIDING_CHERRY = 3; //3 seconds
     private bool bonusCherryShowing;
     private float bonusCherryShowingRemaining;
     private float bonusCherryHidingRemaining;
@@ -60,7 +61,6 @@ public class LevelManager : MonoBehaviour
     private int scoreOGhost;
     private int scoreRGhost;
     private int scorePGhost;
-    private int scoreCherry;
     private Vector3 scoreBGhostPosition;
     private Vector3 scoreOGhostPosition;
     private Vector3 scorePGhostPosition;
@@ -91,7 +91,7 @@ public class LevelManager : MonoBehaviour
         gamePaused = false;
         bonusPacmanKillsGhost = false;
         bonusPacmanKillsGhostRemaining = 0.0f;
-        bonusCherryShowingRemaining = TIME_BONUS_SHOWING_CHERRY;
+        bonusCherryShowingRemaining = 0;
         bonusCherryHidingRemaining = 0;
         bonusCherryShowing = true;
         currentGhostScore = GHOST_SCORE;
@@ -106,12 +106,16 @@ public class LevelManager : MonoBehaviour
         initializeScore();
         initializeLifes();
 
-        loadLevel(currentLevel);
+        loadLevel(currentLevel, true);
     }
 
-    void loadLevel(int level)
+    void loadLevel(int level, bool resetCoins)
     {
-        levelCreator.loadLevel(level);
+        levelCreator.loadLevel(level, resetCoins);
+        if (resetCoins)
+        {
+            remainingCoins = LevelCreator.NUM_COINS_LEVEL;
+        }
 
         GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_BLUE);
         ghostBlueMove = gameObjectGhost.GetComponent<GhostBlueMove>();
@@ -127,8 +131,6 @@ public class LevelManager : MonoBehaviour
 
         GameObject gameObjectPacman = GameObject.FindGameObjectWithTag(Globals.TAG_PACMAN);
         pacmanMove = gameObjectPacman.GetComponent<PacmanMove>();
-
-        remainingCoins = LevelCreator.NUM_COINS_LEVEL;
 
         ghostBlueVisible = true;
         ghostOrangeVisible = true;
@@ -171,14 +173,14 @@ public class LevelManager : MonoBehaviour
                         if (remainingCoins == 0)
                         {
                             ++currentLevel;
-                            loadLevel(currentLevel);
+                            loadLevel(currentLevel, true);
                         }
                         break;
                     case END_OF_GAME_MSS:
                         startGame();
                         break;
                     case LOST_LIFE_MSS:
-                        loadLevel(currentLevel);
+                        loadLevel(currentLevel, false);
                         break;
                     case GAME_OVER_MSS:
                         startGame();
@@ -207,7 +209,7 @@ public class LevelManager : MonoBehaviour
                 if (currentLevel != 1)
                 {
                     currentLevel = 1;
-                    loadLevel(1);
+                    loadLevel(1, true);
                 }
             }
 
@@ -216,7 +218,7 @@ public class LevelManager : MonoBehaviour
                 if (currentLevel != 2)
                 {
                     currentLevel = 2;
-                    loadLevel(2);
+                    loadLevel(2, true);
                 }
             }
 
@@ -225,7 +227,7 @@ public class LevelManager : MonoBehaviour
                 if (currentLevel != 3)
                 {
                     currentLevel = 3;
-                    loadLevel(3);
+                    loadLevel(3, true);
                 }
             }
 
@@ -348,14 +350,16 @@ public class LevelManager : MonoBehaviour
 
         if (showScoreBGhost)
         {
+            infoFont.normal.textColor = new Color32(0, 0, 255, 255);
             timeScoreBGhost -= Time.deltaTime;
             if (timeScoreBGhost <= 0) showScoreBGhost = false;
-            else GUI.Label(new Rect(scoreBGhostPosition.x - 150, scoreBGhostPosition.y - 50, 300, 100), 
+            else GUI.Label(new Rect(scoreBGhostPosition.x - 150, scoreBGhostPosition.y - 50, 300, 100),
                 scoreBGhost.ToString(), infoFont);
         }
 
         if (showScoreOGhost)
         {
+            infoFont.normal.textColor = new Color32(255, 128, 0, 255);
             timeScoreOGhost -= Time.deltaTime;
             if (timeScoreOGhost <= 0) showScoreOGhost = false;
             else GUI.Label(new Rect(scoreOGhostPosition.x - 150, scoreOGhostPosition.y - 50, 300, 100),
@@ -364,6 +368,7 @@ public class LevelManager : MonoBehaviour
 
         if (showScorePGhost)
         {
+            infoFont.normal.textColor = new Color32(255, 51, 255, 255);
             timeScorePGhost -= Time.deltaTime;
             if (timeScorePGhost <= 0) showScorePGhost = false;
             else GUI.Label(new Rect(scorePGhostPosition.x - 150, scorePGhostPosition.y - 50, 300, 100),
@@ -372,10 +377,20 @@ public class LevelManager : MonoBehaviour
 
         if (showScoreRGhost)
         {
+            infoFont.normal.textColor = new Color32(255, 0, 0, 255);
             timeScoreRGhost -= Time.deltaTime;
             if (timeScoreRGhost <= 0) showScoreRGhost = false;
             else GUI.Label(new Rect(scoreRGhostPosition.x - 150, scoreRGhostPosition.y - 50, 300, 100),
                 scoreRGhost.ToString(), infoFont);
+        }
+
+        if (showScoreCherry)
+        {
+            infoFont.normal.textColor = new Color32(255, 64, 0, 255);
+            timeScoreCherry -= Time.deltaTime;
+            if (timeScoreCherry <= 0) showScoreCherry = false;
+            else GUI.Label(new Rect(scoreCherryPosition.x - 150, scoreCherryPosition.y - 50, 300, 100),
+                CHERRY_SCORE.ToString(), infoFont);
         }
     }
 
@@ -554,6 +569,13 @@ public class LevelManager : MonoBehaviour
             scoreRGhostPosition.y = Screen.height - scoreRGhostPosition.y;
         }
         currentGhostScore += GHOST_SCORE;
+    }
+    public void cherryEaten(Vector3 pos)
+    {
+        showScoreCherry = true;
+        timeScoreCherry = MAX_TIME_SHOW_SCORE;
+        scoreCherryPosition = Camera.main.WorldToScreenPoint(pos);
+        scoreCherryPosition.y = Screen.height - scoreBGhostPosition.y;
     }
 
     public int[][] GetMap()

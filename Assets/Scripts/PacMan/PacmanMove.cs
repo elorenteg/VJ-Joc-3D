@@ -247,11 +247,19 @@ public class PacmanMove : MonoBehaviour
         else if (collider.gameObject.tag == Globals.TAG_BONUS)
         {
             ObjectAnimate attractScript = collider.gameObject.GetComponent<ObjectAnimate>();
-            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
-            attractScript.PlaySound();
+            //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+            //attractScript.PlaySound();
 
             Destroy(collider.gameObject);
             levelManager.bonusEaten();
+        }
+        else if (collider.gameObject.tag == Globals.TAG_CHERRY)
+        {
+            //ObjectAttraction attractScript = collider.gameObject.GetComponent<ObjectAttraction>();
+            //attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+
+            Destroy(collider.gameObject);
+            levelManager.cherryEaten(collider.transform.position);
         }
     }
 
