@@ -4,7 +4,7 @@ using System.Collections;
 public class PacmanMove : MonoBehaviour
 {
     protected static float PACMAN_SPEED = 45.0f;
-    protected static float PACMAN_ROTATE_SPEED = 240.0f;
+    protected static float PACMAN_ROTATE_SPEED = 350.0f;
 
     private const float ERROR = 1.5f;
 
