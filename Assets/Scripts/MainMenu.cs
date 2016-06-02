@@ -269,6 +269,8 @@ public class MainMenu : MonoBehaviour
         float positiontitleX = positionmessageX + widthmessage / 2 - widthtitle / 2;
         float positiontitleY = positionmessageY - 20f;
 
+        menu_descriptionFont.fontSize = 20;
+
         GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
 
         GUI.DrawTexture(new Rect(positiontitleX, positiontitleY, widthtitle, heighttitle), messageTexture);
@@ -289,6 +291,8 @@ public class MainMenu : MonoBehaviour
         float heighttitle = Screen.height / 8.5f;
         float positiontitleX = positionmessageX + widthmessage / 2 - widthtitle / 2;
         float positiontitleY = positionmessageY - 20f;
+        
+        menu_descriptionFont.fontSize = 30;
 
         GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
 
@@ -296,7 +300,7 @@ public class MainMenu : MonoBehaviour
 
         GUI.Label(new Rect(positiontitleX + widthtitle / 2, positiontitleY, 0, 0), MENU_CREDITS_TITLE, menu_titleFont);
 
-        GUI.Label(new Rect(positionmessageX + widthmessage / 2 - 10.0f, positionmessageY + heightmessage / 2.0f - 80.0f, 0, 0), MENU_CREDITS, menu_descriptionFont);
+        GUI.Label(new Rect(positionmessageX + widthmessage / 2 - 10.0f, positionmessageY + heightmessage / 5.0f, 0, 0), MENU_CREDITS, menu_descriptionFont);
     }
 
     private void showMenu()
