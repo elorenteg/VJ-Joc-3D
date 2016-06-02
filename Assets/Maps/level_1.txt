@@ -22,7 +22,7 @@ hhhh     hhhh                          hhhh     hhhh
 Hhhh  .  Hhhh  .         Xx         .  Hhhh  .  Hhhh
 vv                                                vv
 vv    .        .  vvhhhh    hhhhvv  .        .    vv
-vv   .   .   .    vvHhhh####Hhhhvv    .   .   .   vv
+vv   K   .   .    vvHhhh####Hhhhvv    .   .   .   vv
 Vv             .  vv############vv  .             Vv
 vv   .            Vv############Vv            .   vv
 vv        hhhh .  vv##B######O##vv  . hhhh        vv
