@@ -5,7 +5,7 @@ using System.Collections;
 public class MachineShoot : MonoBehaviour {
     public GameObject gum;
 
-    private int MAX_TIME_BETWEEN_GUMS = 2;
+    private int MAX_TIME_BETWEEN_GUMS = 5;
     private float timeLastGum;
 
     private int shootDirection;

@@ -12,9 +12,9 @@ vv  .  hhhh .         .  vv  .         . hhhh  .  vv
 vv     Hhhh    hhhh      vv      hhhh    Hhhh     vv
 vv  .  hhhh .  Hhhh  . . vv . .  Hhhh  . hhhh  .  vv
 Vv     Hhhh              Vv              Hhhh     Vv
-vv  .       .         .  vv  .         .       .  vv
-vv    . . .   . . . .    vv    . . . .   . . .    vv
-vv  .       .         .  vv  .         .       .  vv
+vv          .         .  vv  .         .          vv
+vv      . .   . . . .    vv    . . . .   . .      vv
+vv  K       .         .  vv  .         .       K  vv
 Vv    .        .         Vv         .        .    Vv
 hhhh      hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh      hhhh
 Hhhh  .   HhhhHhhhHhhhHhhhHhhhHhhhHhhhHhhh   .  Hhhh
@@ -28,7 +28,7 @@ vv        vv                            vv        vv
 vv    .   Vv   .  vvhhhh    hhhhvv  .   Vv   .    vv
 vv   .   .   .    vvHhhh####Hhhhvv    .   .   .   vv
 Vv             .  vv############vv  .             Vv
-vv   .            Vv############Vv            .   vv
+vv   .            Vv############Vv             K  vv
 vv             .  vv##B######O##vv  .             vv
 vv   .            vv############vv            .   vv
 Vv        vv   .  vv############vv  .   vv        Vv
@@ -44,7 +44,7 @@ vv .  HhhhHhhh                        HhhhHhhh  . vv
 vv             .    hhhh    hhhh    .             vv
 vv   .   .   .      Hhhh    Hhhh      .   .   .   vv
 Vv             .    hhhhhhhhhhhh    .             Vv
-vv .         .      HhhhHhhhHhhh      .         . vv
+vv  K        .      HhhhHhhhHhhh      .         . vv
 vv             .   hhhh      hhhh   .             vv
 vv .   .   .       Hhhh      Hhhh       .   .   . vv
 Vv             .   vv     +    vv   .             Vv

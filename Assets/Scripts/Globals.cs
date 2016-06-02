@@ -19,6 +19,7 @@ public static class Globals
     public static string TAG_BATTERY = "battery";
     public static string TAG_TURTLE = "turtle";
     public static string TAG_GUM = "gum";
+    public static string TAG_MACHINE = "machine";
 
     public static float PACMAN_OFFSET_X = 0.38f;
     public static float PACMAN_OFFSET_Z = -6.2f;

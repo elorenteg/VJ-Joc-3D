@@ -163,12 +163,14 @@ public class LevelCreator : MonoBehaviour
         if (resetCoins)
         {
             NUM_COINS_LEVEL = 0;
-            string[] destroyTags = { Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
+            string[] destroyTags = { Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR,
+                Globals.TAG_MACHINE, Globals.TAG_GUM, Globals.TAG_CHERRY, Globals.TAG_BATTERY, Globals.TAG_TURTLE};
             DeleteAll(destroyTags);
         }
         else
         {
-            string[] destroyTags = { Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
+            string[] destroyTags = { Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR, Globals.TAG_MACHINE,
+                Globals.TAG_GUM, Globals.TAG_CHERRY, Globals.TAG_BATTERY, Globals.TAG_TURTLE};
             DeleteAll(destroyTags);
         }
 

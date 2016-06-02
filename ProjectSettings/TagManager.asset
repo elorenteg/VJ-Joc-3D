@@ -18,6 +18,7 @@ TagManager:
   - battery
   - turtle
   - gum
+  - machine
   layers:
   - Default
   - TransparentFX
