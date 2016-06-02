@@ -100,12 +100,16 @@ public class LevelManager : MonoBehaviour
         initializeScore();
         initializeLifes();
 
-        loadLevel(currentLevel);
+        loadLevel(currentLevel, true);
     }
 
-    void loadLevel(int level)
+    void loadLevel(int level, bool resetCoins)
     {
-        levelCreator.loadLevel(level);
+        levelCreator.loadLevel(level, resetCoins);
+        if (resetCoins)
+        {
+            remainingCoins = LevelCreator.NUM_COINS_LEVEL;
+        }
 
         GameObject gameObjectGhost = GameObject.FindGameObjectWithTag(Globals.TAG_GHOST_BLUE);
         ghostBlueMove = gameObjectGhost.GetComponent<GhostBlueMove>();
@@ -121,8 +125,6 @@ public class LevelManager : MonoBehaviour
 
         GameObject gameObjectPacman = GameObject.FindGameObjectWithTag(Globals.TAG_PACMAN);
         pacmanMove = gameObjectPacman.GetComponent<PacmanMove>();
-
-        remainingCoins = LevelCreator.NUM_COINS_LEVEL;
 
         ghostBlueVisible = true;
         ghostOrangeVisible = true;
@@ -165,14 +167,14 @@ public class LevelManager : MonoBehaviour
                         if (remainingCoins == 0)
                         {
                             ++currentLevel;
-                            loadLevel(currentLevel);
+                            loadLevel(currentLevel, true);
                         }
                         break;
                     case END_OF_GAME_MSS:
                         startGame();
                         break;
                     case LOST_LIFE_MSS:
-                        loadLevel(currentLevel);
+                        loadLevel(currentLevel, false);
                         break;
                     case GAME_OVER_MSS:
                         startGame();
@@ -201,7 +203,7 @@ public class LevelManager : MonoBehaviour
                 if (currentLevel != 1)
                 {
                     currentLevel = 1;
-                    loadLevel(1);
+                    loadLevel(1, true);
                 }
             }
 
@@ -210,7 +212,7 @@ public class LevelManager : MonoBehaviour
                 if (currentLevel != 2)
                 {
                     currentLevel = 2;
-                    loadLevel(2);
+                    loadLevel(2, true);
                 }
             }
 
@@ -219,7 +221,7 @@ public class LevelManager : MonoBehaviour
                 if (currentLevel != 3)
                 {
                     currentLevel = 3;
-                    loadLevel(3);
+                    loadLevel(3, true);
                 }
             }
 
@@ -337,7 +339,7 @@ public class LevelManager : MonoBehaviour
         {
             timeScoreBGhost -= Time.deltaTime;
             if (timeScoreBGhost <= 0) showScoreBGhost = false;
-            else GUI.Label(new Rect(scoreBGhostPosition.x - 150, scoreBGhostPosition.y - 50, 300, 100), 
+            else GUI.Label(new Rect(scoreBGhostPosition.x - 150, scoreBGhostPosition.y - 50, 300, 100),
                 scoreBGhost.ToString(), infoFont);
         }
 

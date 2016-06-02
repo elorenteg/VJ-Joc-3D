@@ -138,27 +138,35 @@ public class LevelCreator : MonoBehaviour
         ++timeState;
     }
 
-    public void loadLevel(int level)
+    public void loadLevel(int level, bool resetCoins)
     {
-        DeleteAll();
 
-        NUM_COINS_LEVEL = 0;
+        if (resetCoins)
+        {
+            NUM_COINS_LEVEL = 0;
+            string[] destroyTags = { Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
+            DeleteAll(destroyTags);
+        }
+        else
+        {
+            string[] destroyTags = { Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
+            DeleteAll(destroyTags);
+        }
 
         string fileLocation = levelPath + "level_" + level + ".txt";
         readMap(fileLocation);
         placeFloor();
         placePlanes();
-        placeObjects();
+        placeObjects(resetCoins);
     }
 
-    public void DeleteAll()
+    public void DeleteAll(string[] destroyTags)
     {
         walls = new List<GameObject>();
         animUpWall = new List<bool>();
         animFrontWall = new List<bool>();
         animBackWall = new List<bool>();
 
-        string[] destroyTags = { Globals.TAG_COIN, Globals.TAG_BONUS, Globals.TAG_WALL, Globals.TAG_FLOOR };
         for (int i = 0; i < destroyTags.Length; ++i)
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(destroyTags[i]);
@@ -183,7 +191,6 @@ public class LevelCreator : MonoBehaviour
             ghostScript = GameObject.FindGameObjectsWithTag(Globals.TAG_GHOST_RED)[0].gameObject.GetComponent<GhostRedMove>();
             ghostScript.SetVisible(false);
         }
-
     }
 
     private bool readMap(string fileName)
@@ -559,7 +566,7 @@ public class LevelCreator : MonoBehaviour
         newHole.SetActive(true);
     }
 
-    private void placeObjects()
+    private void placeObjects(bool place_coins)
     {
         for (int tz = 0; tz < MAP_HEIGHT; ++tz)
         {
@@ -568,132 +575,178 @@ public class LevelCreator : MonoBehaviour
                 int cell = Map[tz][tx];
                 if (cell != CELL_EMPTY)
                 {
-                    GameObject element;
-                    Vector3 cellPosition;
-                    Vector3 cellScale;
-                    Texture texture;
-                    Vector2 textureScale;
-
-                    if (cell == WALL_V_C)
+                    if (cell != COIN_C || (cell == COIN_C && place_coins))
                     {
-                        element = wall;
-                        cellPosition = new Vector3(tx * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, tz * TILE_SIZE);
-                        cellScale = WALL_SCALE;
-                        texture = null;
-                        textureScale = new Vector2(0.5f, 1.0f);
+                        GameObject element;
+                        Vector3 cellPosition;
+                        Vector3 cellScale;
+                        Texture texture;
+                        Vector2 textureScale;
 
-                        cellPosition.x += WALL_SCALE.z / 2;
-                        cellPosition.z += WALL_SCALE.x / 2;
-                    }
-                    else if (cell == WALL_H_C)
-                    {
-                        element = wall;
-                        cellPosition = new Vector3(tx * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, tz * TILE_SIZE);
-                        cellScale = WALL_SCALE;
-                        texture = null;
-                        textureScale = new Vector2(0.5f, 1.0f);
+                        if (cell == WALL_V_C)
+                        {
+                            element = wall;
+                            cellPosition = new Vector3(tx * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, tz * TILE_SIZE);
+                            cellScale = WALL_SCALE;
+                            texture = null;
+                            textureScale = new Vector2(0.5f, 1.0f);
 
-                        cellPosition.x += WALL_SCALE.x / 2;
-                        cellPosition.z += WALL_SCALE.z / 2;
-                    }
-                    else if (cell == GHOST_B_C)
-                    {
-                        element = ghost;
-                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
-                        cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
-                        texture = blueGhostTexture;
-                        textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
+                            cellPosition.x += WALL_SCALE.z / 2;
+                            cellPosition.z += WALL_SCALE.x / 2;
+                        }
+                        else if (cell == WALL_H_C)
+                        {
+                            element = wall;
+                            cellPosition = new Vector3(tx * TILE_SIZE, WALL_HEIGHT / 2 + FLOOR_HEIGHT / 2, tz * TILE_SIZE);
+                            cellScale = WALL_SCALE;
+                            texture = null;
+                            textureScale = new Vector2(0.5f, 1.0f);
 
-                        cellPosition.x += TILE_SIZE / 2;
-                        cellPosition.z += TILE_SIZE / 2;
-                    }
-                    else if (cell == GHOST_O_C)
-                    {
-                        element = ghost;
-                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
-                        cellScale = GHOST_SCALE;
-                        texture = orangeGhostTexture;
-                        textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
+                            cellPosition.x += WALL_SCALE.x / 2;
+                            cellPosition.z += WALL_SCALE.z / 2;
+                        }
+                        else if (cell == GHOST_B_C)
+                        {
+                            element = ghost;
+                            cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
+                            cellScale = new Vector3(GHOST_SCALE.x, GHOST_SCALE.y, GHOST_SCALE.z);
+                            texture = blueGhostTexture;
+                            textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellPosition.x += TILE_SIZE / 2;
-                        cellPosition.z += TILE_SIZE / 2;
-                    }
-                    else if (cell == GHOST_P_C)
-                    {
-                        element = ghost;
-                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
-                        cellScale = GHOST_SCALE;
-                        texture = pinkGhostTexture;
-                        textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
+                            cellPosition.x += TILE_SIZE / 2;
+                            cellPosition.z += TILE_SIZE / 2;
+                        }
+                        else if (cell == GHOST_O_C)
+                        {
+                            element = ghost;
+                            cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
+                            cellScale = GHOST_SCALE;
+                            texture = orangeGhostTexture;
+                            textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellPosition.x += TILE_SIZE / 2;
-                        cellPosition.z += TILE_SIZE / 2;
-                    }
-                    else if (cell == GHOST_R_C)
-                    {
-                        element = ghost;
-                        cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
-                        cellScale = GHOST_SCALE;
-                        texture = redGhostTexture;
-                        textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
+                            cellPosition.x += TILE_SIZE / 2;
+                            cellPosition.z += TILE_SIZE / 2;
+                        }
+                        else if (cell == GHOST_P_C)
+                        {
+                            element = ghost;
+                            cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
+                            cellScale = GHOST_SCALE;
+                            texture = pinkGhostTexture;
+                            textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellPosition.x += TILE_SIZE / 2;
-                        cellPosition.z += TILE_SIZE / 2;
-                    }
-                    else if (cell == PACMAN_C)
-                    {
-                        element = pacman;
-                        cellPosition = new Vector3(tx * TILE_SIZE, PACMAN_Y_POS, tz * TILE_SIZE);
-                        cellScale = PACMAN_SCALE;
-                        texture = null;
-                        textureScale = PACMAN_TEXTURE_SCALE;
+                            cellPosition.x += TILE_SIZE / 2;
+                            cellPosition.z += TILE_SIZE / 2;
+                        }
+                        else if (cell == GHOST_R_C)
+                        {
+                            element = ghost;
+                            cellPosition = new Vector3(tx * TILE_SIZE, GHOST_Y_POS, tz * TILE_SIZE);
+                            cellScale = GHOST_SCALE;
+                            texture = redGhostTexture;
+                            textureScale = new Vector2(GHOST_TEXTURE_SCALE.x, GHOST_TEXTURE_SCALE.y);
 
-                        cellPosition.x += PACMAN_OFFSET_X * TILE_SIZE;
-                        cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
+                            cellPosition.x += TILE_SIZE / 2;
+                            cellPosition.z += TILE_SIZE / 2;
+                        }
+                        else if (cell == PACMAN_C)
+                        {
+                            element = pacman;
+                            cellPosition = new Vector3(tx * TILE_SIZE, PACMAN_Y_POS, tz * TILE_SIZE);
+                            cellScale = PACMAN_SCALE;
+                            texture = null;
+                            textureScale = PACMAN_TEXTURE_SCALE;
 
-                        // El mapa es de numTiles pares y asi colocamos al Pacman entre medio de dos tiles
-                        //if (tx < MAP_WIDTH / 2) cellPosition.x += TILE_SIZE / 2;
-                        //else cellPosition.x -= TILE_SIZE / 2;
-                    }
-                    else if (cell == COIN_C)
-                    {
-                        element = coin;
-                        cellPosition = new Vector3(tx * TILE_SIZE, COIN_Y_POS, tz * TILE_SIZE);
-                        cellScale = COIN_SCALE;
-                        texture = null;
-                        textureScale = COIN_TEXTURE_SCALE;
+                            cellPosition.x += PACMAN_OFFSET_X * TILE_SIZE;
+                            cellPosition.z += PACMAN_OFFSET_Z * TILE_SIZE;
 
-                        cellPosition.x += COIN_OFFSET * TILE_SIZE;
-                        cellPosition.z += COIN_OFFSET * TILE_SIZE;
-                    }
-                    else if (cell == BONUS_C)
-                    {
-                        element = bonus;
-                        cellPosition = new Vector3(tx * TILE_SIZE, BONUS_Y_POS, tz * TILE_SIZE);
-                        cellScale = BONUS_SCALE;
-                        texture = null;
-                        textureScale = BONUS_TEXTURE_SCALE;
+                            // El mapa es de numTiles pares y asi colocamos al Pacman entre medio de dos tiles
+                            //if (tx < MAP_WIDTH / 2) cellPosition.x += TILE_SIZE / 2;
+                            //else cellPosition.x -= TILE_SIZE / 2;
+                        }
+                        else if (cell == COIN_C)
+                        {
+                            element = coin;
+                            cellPosition = new Vector3(tx * TILE_SIZE, COIN_Y_POS, tz * TILE_SIZE);
+                            cellScale = COIN_SCALE;
+                            texture = null;
+                            textureScale = COIN_TEXTURE_SCALE;
 
-                        cellPosition.x -= 0.2f * TILE_SIZE;
-                        cellPosition.z += 0.5f * TILE_SIZE;
+                            cellPosition.x += COIN_OFFSET * TILE_SIZE;
+                            cellPosition.z += COIN_OFFSET * TILE_SIZE;
+                        }
+                        else if (cell == BONUS_C)
+                        {
+                            element = bonus;
+                            cellPosition = new Vector3(tx * TILE_SIZE, BONUS_Y_POS, tz * TILE_SIZE);
+                            cellScale = BONUS_SCALE;
+                            texture = null;
+                            textureScale = BONUS_TEXTURE_SCALE;
 
-                        cellPosition.y -= 4 * TILE_SIZE;
-                    }
-                    else if (cell == WALL_RES || cell == BASE_C) continue;
-                    else
-                    {
-                        Debug.LogError("Creating a non empty cell");
-                        element = null;
-                        cellPosition = Vector3.zero;
-                        cellScale = Vector3.zero;
-                        texture = null;
-                        textureScale = Vector2.zero;
-                    }
+                            cellPosition.x -= 0.2f * TILE_SIZE;
+                            cellPosition.z += 0.5f * TILE_SIZE;
 
-                    if ((cell == PACMAN_C || cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C))
-                    {
-                        if (playersCreated) RestartPlayer(cell, cellPosition, tx, tz);
+                            cellPosition.y -= 4 * TILE_SIZE;
+                        }
+                        else if (cell == WALL_RES || cell == BASE_C) continue;
                         else
+                        {
+                            Debug.LogError("Creating a non empty cell");
+                            element = null;
+                            cellPosition = Vector3.zero;
+                            cellScale = Vector3.zero;
+                            texture = null;
+                            textureScale = Vector2.zero;
+                        }
+
+                        if ((cell == PACMAN_C || cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C))
+                        {
+                            if (playersCreated) RestartPlayer(cell, cellPosition, tx, tz);
+                            else
+                            {
+                                GameObject newObject;
+                                newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
+                                newObject.transform.parent = transform;
+                                newObject.transform.localScale = cellScale;
+
+                                newObject.SetActive(true);
+
+                                if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
+                                {
+                                    GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
+                                    animationScript.SetBodyTexture(texture);
+                                    animationScript.Start();
+
+                                    if (cell == GHOST_B_C)
+                                    {
+                                        newObject.AddComponent<GhostBlueMove>();
+                                        newObject.tag = Globals.TAG_GHOST_BLUE;
+                                    }
+                                    else if (cell == GHOST_O_C)
+                                    {
+                                        newObject.AddComponent<GhostOrangeMove>();
+                                        newObject.tag = Globals.TAG_GHOST_ORANGE;
+                                    }
+                                    else if (cell == GHOST_P_C)
+                                    {
+                                        newObject.AddComponent<GhostPinkMove>();
+                                        newObject.tag = Globals.TAG_GHOST_PINK;
+                                    }
+                                    else if (cell == GHOST_R_C)
+                                    {
+                                        newObject.AddComponent<GhostRedMove>();
+                                        newObject.tag = Globals.TAG_GHOST_RED;
+                                    }
+                                }
+                                else
+                                {
+                                    newObject.AddComponent<PacmanMove>();
+                                }
+
+                                RestartPlayer(cell, cellPosition, tx, tz);
+                            }
+                        }
+                        else if (cell == WALL_H_C || cell == WALL_V_C)
                         {
                             GameObject newObject;
                             newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
@@ -702,109 +755,66 @@ public class LevelCreator : MonoBehaviour
 
                             newObject.SetActive(true);
 
-                            if (cell == GHOST_B_C || cell == GHOST_O_C || cell == GHOST_P_C || cell == GHOST_R_C)
+                            if (cell == WALL_V_C)
                             {
-                                GhostAnimate animationScript = newObject.GetComponent<GhostAnimate>();
-                                animationScript.SetBodyTexture(texture);
-                                animationScript.Start();
+                                Vector3 center = newObject.transform.position;
+                                //center -= new Vector3(WALL_SCALE.x / (5f * TILE_SIZE), 0, WALL_SCALE.z / 2);
+                                newObject.transform.RotateAround(center, transform.up, WALL_V_ANGLE);
+                            }
 
-                                if (cell == GHOST_B_C)
-                                {
-                                    newObject.AddComponent<GhostBlueMove>();
-                                    newObject.tag = Globals.TAG_GHOST_BLUE;
-                                }
-                                else if (cell == GHOST_O_C)
-                                {
-                                    newObject.AddComponent<GhostOrangeMove>();
-                                    newObject.tag = Globals.TAG_GHOST_ORANGE;
-                                }
-                                else if (cell == GHOST_P_C)
-                                {
-                                    newObject.AddComponent<GhostPinkMove>();
-                                    newObject.tag = Globals.TAG_GHOST_PINK;
-                                }
-                                else if (cell == GHOST_R_C)
-                                {
-                                    newObject.AddComponent<GhostRedMove>();
-                                    newObject.tag = Globals.TAG_GHOST_RED;
-                                }
+                            walls.Add(newObject);
+
+                            float rand = Random.value;
+                            Texture texLat1, texLat2, texUp;
+                            bool animLat1, animLat2, animUp;
+                            if (rand <= 0.33f)
+                            {
+                                texLat1 = texWallLatBig1;
+                                texLat2 = texWallLatBig3;
+                                animLat1 = true;
+                                animLat2 = false;
+
+                            }
+                            else if (rand <= 0.66f)
+                            {
+                                texLat1 = texWallLatBig2;
+                                texLat2 = texWallLatBig3;
+                                animLat1 = false;
+                                animLat2 = false;
                             }
                             else
                             {
-                                newObject.AddComponent<PacmanMove>();
+                                texLat1 = texWallLatBig3;
+                                texLat2 = texWallLatBig1;
+                                animLat1 = false;
+                                animLat2 = true;
                             }
 
-                            RestartPlayer(cell, cellPosition, tx, tz);
-                        }
-                    }
-                    else if (cell == WALL_H_C || cell == WALL_V_C)
-                    {
-                        GameObject newObject;
-                        newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
-                        newObject.transform.parent = transform;
-                        newObject.transform.localScale = cellScale;
+                            if (rand <= 0.5f)
+                            {
+                                texUp = texWallUp1;
+                                animUp = true;
+                            }
+                            else
+                            {
+                                texUp = texWallUp2;
+                                animUp = false;
+                            }
 
-                        newObject.SetActive(true);
-
-                        if (cell == WALL_V_C)
-                        {
-                            Vector3 center = newObject.transform.position;
-                            //center -= new Vector3(WALL_SCALE.x / (5f * TILE_SIZE), 0, WALL_SCALE.z / 2);
-                            newObject.transform.RotateAround(center, transform.up, WALL_V_ANGLE);
-                        }
-
-                        walls.Add(newObject);
-
-                        float rand = Random.value;
-                        Texture texLat1, texLat2, texUp;
-                        bool animLat1, animLat2, animUp;
-                        if (rand <= 0.33f)
-                        {
-                            texLat1 = texWallLatBig1;
-                            texLat2 = texWallLatBig3;
-                            animLat1 = true;
-                            animLat2 = false;
-
-                        }
-                        else if (rand <= 0.66f)
-                        {
-                            texLat1 = texWallLatBig2;
-                            texLat2 = texWallLatBig3;
-                            animLat1 = false;
-                            animLat2 = false;
+                            WallAnimate animationScript = newObject.GetComponent<WallAnimate>();
+                            animationScript.SetTextures(texUp, texLat1, texLat2, texWallLatSmall);
+                            animationScript.SetAnimatedWalls(animUp, animLat1, animLat2);
+                            animationScript.AnimateTexture();
                         }
                         else
                         {
-                            texLat1 = texWallLatBig3;
-                            texLat2 = texWallLatBig1;
-                            animLat1 = false;
-                            animLat2 = true;
-                        }
+                            GameObject newObject;
+                            newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
+                            newObject.transform.parent = transform;
+                            newObject.transform.localScale = cellScale;
 
-                        if (rand <= 0.5f)
-                        {
-                            texUp = texWallUp1;
-                            animUp = true;
+                            newObject.SetActive(true);
                         }
-                        else
-                        {
-                            texUp = texWallUp2;
-                            animUp = false;
-                        }
-
-                        WallAnimate animationScript = newObject.GetComponent<WallAnimate>();
-                        animationScript.SetTextures(texUp, texLat1, texLat2, texWallLatSmall);
-                        animationScript.SetAnimatedWalls(animUp, animLat1, animLat2);
-                        animationScript.AnimateTexture();
-                    }
-                    else
-                    {
-                        GameObject newObject;
-                        newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
-                        newObject.transform.parent = transform;
-                        newObject.transform.localScale = cellScale;
-
-                        newObject.SetActive(true);
                     }
                 }
             }
