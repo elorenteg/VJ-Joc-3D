@@ -34,7 +34,7 @@ public class GhostBlueMove : GhostMove
                 tz = Random.Range(0, LevelCreator.MAP_HEIGHT);
             } while (!isValid(Map, tx, tz, baseIsValid));
 
-            currentPath = BFS.calculatePath(Map, tileX, tileZ, tx, tz, baseIsValid);
+            currentPath = pathBFS(Map, tileX, tileZ, tx, tz, baseIsValid);
         }
 
         --timeChasingPacman;

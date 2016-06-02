@@ -41,7 +41,7 @@ public class GhostRedMove : GhostMove
                 LevelCreator.TileInSection(tileX, tileZ, newSection, out tx, out tz);
             } while (!isValid(Map, tx, tz, baseIsValid));
 
-            currentPath = BFS.calculatePath(Map, tileX, tileZ, tx, tz, baseIsValid);
+            currentPath = pathBFS(Map, tileX, tileZ, tx, tz, baseIsValid);
         }
 
         --timeChasingPacman;

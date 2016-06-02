@@ -96,8 +96,7 @@ public class BFS : MonoBehaviour
     private static int[] recoverPath(int[,] dist, int si, int sj, int di, int dj)
     {
         int numMoves = dist[di, dj];
-        if (numMoves <= 0) Debug.Log(numMoves);
-        if (numMoves == int.MaxValue) Debug.Log(numMoves);
+        if (numMoves <= 0 || numMoves == int.MaxValue) return new int[0];
 
         Position[] path = new Position[numMoves + 1];
         Position end = initPosition(di, dj);
@@ -125,15 +124,6 @@ public class BFS : MonoBehaviour
             }
         }
 
-        /*
-        Debug.Log("PATH");
-
-        for (int i = 0; i < path.Length; ++i)
-        {
-            Debug.Log(path[i].f + " " + path[i].c);
-        }
-        */
-
         int[] directions = new int[numMoves];
         for (int k = 0; k < numMoves; ++k)
         {
@@ -141,17 +131,6 @@ public class BFS : MonoBehaviour
             Position destin = path[k + 1];
             directions[k] = direction(source.f, source.c, destin.f, destin.c);
         }
-
-        /*
-        Debug.Log("DIRS ----------------- ");
-        for (int i = 0; i < directions.Length; ++i)
-        {
-            if (directions[i] == Globals.LEFT) Debug.Log("LEFT");
-            if (directions[i] == Globals.RIGHT) Debug.Log("RIGHT");
-            if (directions[i] == Globals.UP) Debug.Log("UP");
-            if (directions[i] == Globals.DOWN) Debug.Log("DOWN");
-        }
-        */
 
         return directions;
     }

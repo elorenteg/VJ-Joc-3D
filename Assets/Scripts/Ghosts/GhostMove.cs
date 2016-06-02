@@ -252,7 +252,7 @@ public class GhostMove : MonoBehaviour
         moveScript.ActualTile(out pactx, out pactz);
 
         // Nos quedamos con un camino de 5 tiles para ir actualizando el camino hasta el pacman cada 5
-        int[] allPath = BFS.calculatePath(Map, tileX, tileZ, pactx, pactz, baseIsValid);
+        int[] allPath = pathBFS(Map, tileX, tileZ, pactx, pactz, baseIsValid);
         int size = Mathf.Min(5, allPath.Length);
         currentPath = new int[size];
         for (int i = 0; i < size; ++i)
@@ -426,7 +426,7 @@ public class GhostMove : MonoBehaviour
         while (!isValid(Map, secTx, secTz, baseIsValid));
 
         // Nos quedamos con un camino de 5 tiles para ir actualizando el camino hasta el pacman cada 5
-        int[] allPath = BFS.calculatePath(Map, tileX, tileZ, secTx, secTz, baseIsValid);
+        int[] allPath = pathBFS(Map, tileX, tileZ, secTx, secTz, baseIsValid);
         int size = Mathf.Min(5, allPath.Length);
         currentPath = new int[size];
         for (int i = 0; i < size; ++i)
@@ -440,6 +440,19 @@ public class GhostMove : MonoBehaviour
         bool baseIsValid = true;
 
         currentPath = BFS.calculatePath(Map, tileX, tileZ, initTx, initTz, baseIsValid);
+    }
+
+    protected void completelyRandom(int[][] Map)
+    {
+        bool baseIsValid = false;
+        int tx, tz;
+        do
+        {
+            tx = Random.Range(0, LevelCreator.MAP_WIDTH);
+            tz = Random.Range(0, LevelCreator.MAP_HEIGHT);
+        } while (!isValid(Map, tx, tz, baseIsValid));
+
+        currentPath = BFS.calculatePath(Map, tileX, tileZ, tx, tz, baseIsValid);
     }
 
     public void initMove(int[][] Map)
@@ -552,5 +565,16 @@ public class GhostMove : MonoBehaviour
     public Vector3 boundsPosition()
     {
         return animationScript.boundsPosition();
+    }
+
+    public int[] pathBFS(int[][] Map, int fromTx, int fromTz, int toTx, int toTz, bool baseIsValid)
+    {
+        int[] allPath = BFS.calculatePath(Map, fromTx, fromTz, toTx, toTz, baseIsValid);
+        if (allPath.Length == 0)
+        {
+            completelyRandom(Map);
+            allPath = currentPath;
+        }
+        return allPath;
     }
 }
