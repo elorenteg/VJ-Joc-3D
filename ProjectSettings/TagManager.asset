@@ -16,6 +16,7 @@ TagManager:
   - ghost_red
   - cherry
   - battery
+  - turtle
   layers:
   - Default
   - TransparentFX

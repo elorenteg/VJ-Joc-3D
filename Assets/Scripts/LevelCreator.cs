@@ -29,6 +29,7 @@ public class LevelCreator : MonoBehaviour
     public GameObject bonus;
     public GameObject cherry;
     public GameObject battery;
+    public GameObject turtle;
 
     private static string levelPath = "..\\VJ-Joc-3D\\Assets\\Maps\\";
 
@@ -75,6 +76,7 @@ public class LevelCreator : MonoBehaviour
     private float BONUS_Y_POS = 13.0f;
     private float CHERRY_Y_POS = 3.5f;
     private float BATTERY_Y_POS = 0.0f;
+    private float TURTLE_Y_POS = 0.0f;
 
     private float FLOOR_HEIGHT = 1.0f;
     private const float WALL_HEIGHT = 7.5f;
@@ -98,6 +100,7 @@ public class LevelCreator : MonoBehaviour
 
     private Vector3 CHERRY_SCALE = new Vector3(0.23f, 0.23f, 0.23f);
     private Vector3 BATTERY_SCALE = new Vector3(1.5f, 1.5f, 1.5f);
+    private Vector3 TURTLE_SCALE = new Vector3(0.7f, 0.7f, 0.7f);
 
     public const int SECTION_TOP_LEFT = 0;
     public const int SECTION_TOP_RIGHT = 1;
@@ -529,7 +532,6 @@ public class LevelCreator : MonoBehaviour
 
     void placePlanes()
     {
-
         Vector4 xSca = new Vector4(MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE, MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
 
         Vector4 xPos = new Vector4(MAP_WIDTH * TILE_SIZE / 2, MAP_WIDTH * TILE_SIZE + PLANE_SEP, MAP_WIDTH * TILE_SIZE / 2, 0 - PLANE_SEP);
@@ -937,6 +939,19 @@ public class LevelCreator : MonoBehaviour
         newObject.transform.localScale = cellScale;
         //newObject.transform.parent = transform;
         newObject.tag = Globals.TAG_BATTERY;
+    }
+
+    public void instantiateTurtle()
+    {
+        GameObject element = turtle;
+        Vector3 cellPosition = generateValidRandomVector3(TURTLE_Y_POS);
+        Vector3 cellScale = TURTLE_SCALE;
+
+        GameObject newObject = Instantiate(element, cellPosition, element.transform.rotation) as GameObject;
+        newObject.SetActive(true);
+        newObject.transform.localScale = cellScale;
+        //newObject.transform.parent = transform;
+        newObject.tag = Globals.TAG_TURTLE;
     }
 
     public void destroyObject(string tag)

@@ -46,17 +46,23 @@ public class LevelManager : MonoBehaviour
     private bool bonusPacmanKillsGhost;
     private float bonusPacmanKillsGhostRemaining;
 
-    private static int TIME_BONUS_SHOWING_CHERRY = 6; //6 seconds
-    private static int TIME_BONUS_HIDING_CHERRY = 3; //3 seconds
+    private static int TIME_BONUS_SHOWING_CHERRY = 8; //8 seconds
+    private static int TIME_BONUS_HIDING_CHERRY = 2; //2 seconds
     private bool bonusCherryShowing;
     private float bonusCherryShowingRemaining;
     private float bonusCherryHidingRemaining;
 
-    private static int TIME_BONUS_SHOWING_BATTERY = 10; //5 seconds
-    private static int TIME_BONUS_HIDING_BATTERY = 1; //10 seconds
+    private static int TIME_BONUS_SHOWING_BATTERY = 10;
+    private static int TIME_BONUS_HIDING_BATTERY = 1;
     private bool bonusBatteryShowing;
     private float bonusBatteryShowingRemaining;
     private float bonusBatteryHidingRemaining;
+
+    private static int TIME_BONUS_SHOWING_TURTLE = 5;
+    private static int TIME_BONUS_HIDING_TURTLE = 3;
+    private bool bonusTurtleShowing;
+    private float bonusTurtleShowingRemaining;
+    private float bonusTurtleHidingRemaining;
 
     private bool showScoreBGhost;
     private bool showScoreOGhost;
@@ -103,6 +109,9 @@ public class LevelManager : MonoBehaviour
         bonusBatteryShowingRemaining = TIME_BONUS_SHOWING_BATTERY;
         bonusBatteryHidingRemaining = 0;
         bonusBatteryShowing = true;
+        bonusTurtleShowingRemaining = TIME_BONUS_SHOWING_TURTLE;
+        bonusTurtleHidingRemaining = 0;
+        bonusTurtleShowing = true;
         currentGhostScore = GHOST_SCORE;
 
         startGame();
@@ -171,7 +180,8 @@ public class LevelManager : MonoBehaviour
             updateIA();
             updateTimeBonus();
             updateTimeCherry();
-            updateTimebattery();
+            updateTimeBattery();
+            updateTimeTurtle();
         }
         else
         {
@@ -349,9 +359,8 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
-
-    private void updateTimebattery()
+    
+    private void updateTimeBattery()
     {
         if (bonusBatteryShowing)
         {
@@ -377,6 +386,36 @@ public class LevelManager : MonoBehaviour
                 levelCreator.instantiateBattery();
                 bonusBatteryShowingRemaining = TIME_BONUS_SHOWING_BATTERY;
                 bonusBatteryShowing = true;
+            }
+        }
+    }
+
+    private void updateTimeTurtle()
+    {
+        if (bonusTurtleShowing)
+        {
+            if (bonusTurtleShowingRemaining > 0)
+            {
+                bonusTurtleShowingRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                levelCreator.destroyObject(Globals.TAG_TURTLE);
+                bonusTurtleHidingRemaining = TIME_BONUS_HIDING_TURTLE;
+                bonusTurtleShowing = false;
+            }
+        }
+        else
+        {
+            if (bonusTurtleHidingRemaining > 0)
+            {
+                bonusTurtleHidingRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                levelCreator.instantiateTurtle();
+                bonusTurtleShowingRemaining = TIME_BONUS_SHOWING_TURTLE;
+                bonusTurtleShowing = true;
             }
         }
     }

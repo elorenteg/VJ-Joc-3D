@@ -270,12 +270,18 @@ public class PacmanMove : MonoBehaviour
         }
         else if (collider.gameObject.tag == Globals.TAG_BATTERY)
         {
-            Debug.Log("BATTERY");
             ObjectAnimate attractScript = collider.gameObject.GetComponent<ObjectAnimate>();
             attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
             attractScript.PlaySound();
 
             currentSpeed = currentSpeed + BATTERY_SPEED_INCREASE;
+        }
+        else if (collider.gameObject.tag == Globals.TAG_TURTLE)
+        {
+            ObjectAnimate attractScript = collider.gameObject.GetComponent<ObjectAnimate>();
+            attractScript.SetStateAttraction(skinnedMeshRenderer.bounds.center, 10.0f);
+
+            currentSpeed = currentSpeed - BATTERY_SPEED_INCREASE;
         }
     }
 
