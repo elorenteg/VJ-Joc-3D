@@ -5,7 +5,7 @@ using System.Collections;
 public class MachineShoot : MonoBehaviour {
     public GameObject gum;
 
-    private int MAX_TIME_BETWEEN_GUMS = 3;
+    private int MAX_TIME_BETWEEN_GUMS = 2;
     private float timeLastGum;
 
     private int shootDirection;
@@ -50,13 +50,20 @@ public class MachineShoot : MonoBehaviour {
         cellPosition.y = 5.0f;
         if (shootDirection == Globals.RIGHT) cellPosition.x += 4;
         else cellPosition.x -= 4;
-        Vector3 cellScale = new Vector3(3.0f, 3.0f, 3.0f);
+        Vector3 cellScale = new Vector3(2.5f, 2.5f, 2.5f);
 
         GameObject newObject = Instantiate(gum, cellPosition, gum.transform.rotation) as GameObject;
         newObject.SetActive(true);
         newObject.transform.localScale = cellScale;
         //newObject.transform.parent = transform;
         newObject.tag = Globals.TAG_GUM;
+
+        MeshRenderer rend = newObject.GetComponent<MeshRenderer>();
+        float rand = Random.value;
+        if (rand <= 0.25f) rend.material.SetColor("_Color", Color.red);
+        else if (rand <= 0.5f) rend.material.SetColor("_Color", Color.blue);
+        else if (rand <= 0.5f) rend.material.SetColor("_Color", Color.green);
+        else rend.material.SetColor("_Color", Color.yellow);
 
         shoots.Add(newObject);
     }
