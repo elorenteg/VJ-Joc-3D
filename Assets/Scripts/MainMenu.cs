@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
 {
 
     private string[] mainMenuLabels = { "play", "how to", "options", "credits", "exit" };
+    private const int MENU = -1;
     private const int JUGAR = 0;
     private const int INSTR = 1;
     private const int OPTNS = 2;
@@ -15,13 +16,12 @@ public class MainMenu : MonoBehaviour
     private int mainMenuSelected;
     private int mainMenuAction;
 
-    private HowTo howToMenu;
-
     private GUIStyle normalFont;
     private GUIStyle selectFont;
 
     public Texture2D selectTexture;
     public Texture2D backgroundTexture;
+    public Texture2D messageTexture;
 
     public AudioClip moveSound;
 
@@ -75,7 +75,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        mainMenuAction = -1;
+        mainMenuAction = MENU;
         mainMenuSelected = 0;
         textureState = 0;
         frameState = 0;
@@ -98,31 +98,51 @@ public class MainMenu : MonoBehaviour
         instantiatePacMan();
         instantiateGhosts();
         instantiateBonus();
-
-        howToMenu = gameObject.GetComponent<HowTo>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow) == true)
+        if (mainMenuAction == MENU)
         {
-            AudioSource.PlayClipAtPoint(moveSound, transform.position);
+            if (Input.GetKeyDown(KeyCode.DownArrow) == true)
+            {
+                AudioSource.PlayClipAtPoint(moveSound, transform.position);
 
-            mainMenuSelected++;
-            mainMenuSelected = Mathf.Min(mainMenuSelected, mainMenuLabels.Length - 1);
+                mainMenuSelected++;
+                mainMenuSelected = Mathf.Min(mainMenuSelected, mainMenuLabels.Length - 1);
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow) == true)
+            {
+                AudioSource.PlayClipAtPoint(moveSound, transform.position);
+
+                mainMenuSelected--;
+                mainMenuSelected = Mathf.Max(mainMenuSelected, 0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Return) == true)
+            {
+                mainMenuAction = mainMenuSelected;
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow) == true)
+        else if (mainMenuAction == INSTR)
         {
-            AudioSource.PlayClipAtPoint(moveSound, transform.position);
-
-            mainMenuSelected--;
-            mainMenuSelected = Mathf.Max(mainMenuSelected, 0);
+            if (Input.GetKeyDown(KeyCode.Escape) == true)
+            {
+                mainMenuAction = MENU;
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.Return) == true)
+        else if (mainMenuAction == OPTNS)
         {
-            mainMenuAction = mainMenuSelected;
+            if (Input.GetKeyDown(KeyCode.Escape) == true)
+            {
+                mainMenuAction = MENU;
+            }
+        }
+        else if (mainMenuAction == CREDS)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) == true)
+            {
+                mainMenuAction = MENU;
+            }
         }
 
         if (ghost.transform.position == GHOST_DEST_POS && currentPacmanState == State.Moving_to_bonus)
@@ -181,45 +201,80 @@ public class MainMenu : MonoBehaviour
     {
         switch (mainMenuAction)
         {
+            case MENU:
+                showMenu();
+                break;
             case JUGAR:
                 SceneManager.LoadScene("Level1");
                 break;
             case INSTR:
-
+                showInstructions();
                 break;
             case OPTNS:
+                showOptions();
                 break;
             case CREDS:
+                showCredits();
                 break;
             case SORTR:
                 Application.Quit();
                 break;
         }
+    }
 
-        if (mainMenuAction == -1)
+    private void showInstructions()
+    {
+        int positionmessageX = Screen.width / 4;
+        int positionmessageY = Screen.height / 4;
+        int widthmessage = Screen.width / 2;
+        int heightmessage = Screen.height / 2;
+
+        GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
+    }
+
+    private void showOptions()
+    {
+        int positionmessageX = Screen.width / 4;
+        int positionmessageY = Screen.height / 4;
+        int widthmessage = Screen.width / 2;
+        int heightmessage = Screen.height / 2;
+
+        GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
+    }
+
+    private void showCredits()
+    {
+        int positionmessageX = Screen.width / 4;
+        int positionmessageY = Screen.height / 4;
+        int widthmessage = Screen.width / 2;
+        int heightmessage = Screen.height / 2;
+
+        GUI.DrawTexture(new Rect(positionmessageX, positionmessageY, widthmessage, heightmessage), messageTexture);
+    }
+
+    private void showMenu()
+    {
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
+
+        float w_text = 200;
+        float h_text = 40;
+        float xo_text = Screen.width / 14;
+        float yo_text = Screen.height / 2;
+
+        //float w_sel = 250;
+        //float h_sel = 90;
+        float yo_sel = yo_text - h_text / 2;
+
+        float inc_sep = (Screen.height / 2.25f) / mainMenuLabels.Length;
+
+        for (int i = 0; i < mainMenuLabels.Length; i++)
         {
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), backgroundTexture);
-
-            float w_text = 200;
-            float h_text = 40;
-            float xo_text = Screen.width / 14;
-            float yo_text = Screen.height / 2;
-
-            //float w_sel = 250;
-            //float h_sel = 90;
-            float yo_sel = yo_text - h_text / 2;
-
-            float inc_sep = (Screen.height / 2.25f) / mainMenuLabels.Length;
-
-            for (int i = 0; i < mainMenuLabels.Length; i++)
+            if (mainMenuSelected == i)
             {
-                if (mainMenuSelected == i)
-                {
-                    //GUI.DrawTexture(new Rect(Screen.width / 4.5f - w_sel / 2, yo_sel + i * inc_sep, w_sel, h_sel), selectTexture);
-                    GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], selectFont);
-                }
-                else GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], normalFont);
+                //GUI.DrawTexture(new Rect(Screen.width / 4.5f - w_sel / 2, yo_sel + i * inc_sep, w_sel, h_sel), selectTexture);
+                GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], selectFont);
             }
+            else GUI.Label(new Rect(xo_text, yo_text + i * inc_sep, w_text, h_text), mainMenuLabels[i], normalFont);
         }
     }
 
