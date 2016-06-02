@@ -126,11 +126,18 @@ public class LevelCreator : MonoBehaviour
     private int timeState;
     private int MAX_TIME_STATE;
 
+    private AudioSource audioSource;
+    public AudioClip initAudio;
+
     void Start()
     {
         timeState = 0;
         MAX_TIME_STATE = 20;
         playersCreated = false;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = initAudio;
+        audioSource.volume = 1;
     }
 
     void Update()
@@ -150,6 +157,8 @@ public class LevelCreator : MonoBehaviour
 
     public void loadLevel(int level, bool resetCoins)
     {
+        audioSource.Stop();
+        audioSource.Play();
 
         if (resetCoins)
         {

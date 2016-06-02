@@ -105,7 +105,7 @@ public class MainMenu : MonoBehaviour
         normalFont = new GUIStyle();
         normalFont.fontSize = 24;
         normalFont.alignment = TextAnchor.UpperCenter;
-        normalFont.normal.textColor = new Color32(119, 136, 153, 255);
+        normalFont.normal.textColor = new Color32(100, 204, 100, 255);
         normalFont.font = (Font)Resources.Load("Fonts/namco", typeof(Font));
 
         menu_titleFont = new GUIStyle();
@@ -123,7 +123,7 @@ public class MainMenu : MonoBehaviour
         selectFont = new GUIStyle();
         selectFont.fontSize = 28;
         selectFont.alignment = TextAnchor.UpperCenter;
-        selectFont.normal.textColor = new Color32(47, 79, 79, 255);
+        selectFont.normal.textColor = new Color32(255, 255, 50, 255);
         selectFont.font = (Font)Resources.Load("Fonts/namco", typeof(Font));
 
         SetInitCameraPosition(CAMERA_INIT_POS);
@@ -137,6 +137,9 @@ public class MainMenu : MonoBehaviour
     {
         if (mainMenuAction == MENU)
         {
+            ghostAnimateScript.StopSound();
+            pacmanAnimateScript.StopSound();
+
             if (Input.GetKeyDown(KeyCode.DownArrow) == true)
             {
                 AudioSource.PlayClipAtPoint(moveSound, transform.position);

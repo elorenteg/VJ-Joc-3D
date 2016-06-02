@@ -86,48 +86,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &941503454
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 16.546806
-      objectReference: {fileID: 0}
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 92.73178
-      objectReference: {fileID: 0}
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 60.426395
-      objectReference: {fileID: 0}
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 420772, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1137912229
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +113,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!108 &1137912231
 Light:
   m_ObjectHideFlags: 0
@@ -246,6 +204,7 @@ MonoBehaviour:
   battery: {fileID: 139464, guid: a37b4968a1399a342a9b867759e11106, type: 2}
   turtle: {fileID: 109980, guid: 996767f9518abec4980e3ba49863bd2f, type: 2}
   machine: {fileID: 184070, guid: 4e1fddf446fb58340af01d100d366eaf, type: 2}
+  initAudio: {fileID: 8300000, guid: 516a4b599924e9e46bf2e7cd331aa8ec, type: 3}
 --- !u!4 &1160761899
 Transform:
   m_ObjectHideFlags: 0
@@ -257,7 +216,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!114 &1160761900
 MonoBehaviour:
   m_ObjectHideFlags: 0
