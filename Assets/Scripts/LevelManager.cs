@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -217,7 +218,7 @@ public class LevelManager : MonoBehaviour
                 }
                 else if (Input.GetKeyDown(KeyCode.Escape) == true)
                 {
-                    Application.Quit();
+                    SceneManager.LoadScene("MenuKeyboard");
                 }
             }
         }
